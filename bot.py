@@ -252,6 +252,15 @@ def bsky_login() -> Client:
 def main() -> None:
     tz = ZoneInfo("America/Los_Angeles")
     today = datetime.now(tz).date()
+
+    # Optional test override (YYYY-MM-DD)
+    override_start = os.getenv("OVERRIDE_START_DATE")
+    override_end = os.getenv("OVERRIDE_END_DATE")
+
+if override_start and override_end:
+    start = date.fromisoformat(override_start)
+    end = date.fromisoformat(override_end)
+else:
     start = today - timedelta(days=LOOKBACK_DAYS)
     end = today
 
