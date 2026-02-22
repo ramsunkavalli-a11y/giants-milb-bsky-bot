@@ -5,7 +5,7 @@ import time
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone, date
 from zoneinfo import ZoneInfo
-from typing import Dict, List, Any, Tuple, Optional
+from typing import Dict, List, Any, Tuple, Optional, Set
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -26,31 +26,38 @@ API_BASE = "https://statsapi.mlb.com/api/v1"
 # Giants affiliates we care about
 DSL_BLACK = 2134
 DSL_ORANGE = 615
-TRACKED_TEAM_IDS = {DSL_BLACK, DSL_ORANGE, 408, 476, 461, 3410, 105}
+ACL = 408
+SAN_JOSE = 476
+EUGENE = 461
+RICHMOND = 3410
+SACRAMENTO = 105
 
-# Headers (display)
+TRACKED_TEAM_IDS: Set[int] = {DSL_BLACK, DSL_ORANGE, ACL, SAN_JOSE, EUGENE, RICHMOND, SACRAMENTO}
+
+# Display headers (DSL combines Orange+Black)
 TEAM_HEADER: Dict[int, str] = {
-    DSL_BLACK: "DSL Giants",    # combined
-    DSL_ORANGE: "DSL Giants",   # combined
-    408: "ACL Giants",
-    476: "San Jose",
-    461: "Eugene",
-    3410: "Richmond",
-    105: "Sacramento",
+    DSL_BLACK: "DSL Giants",
+    DSL_ORANGE: "DSL Giants",
+    ACL: "ACL Giants",
+    SAN_JOSE: "San Jose",
+    EUGENE: "Eugene",
+    RICHMOND: "Richmond",
+    SACRAMENTO: "Sacramento",
 }
 
 # Short names used in "from X"
 TEAM_SHORT: Dict[int, str] = {
     DSL_BLACK: "DSL",
     DSL_ORANGE: "DSL",
-    408: "ACL",
-    476: "San Jose",
-    461: "Eugene",
-    3410: "Richmond",
-    105: "Sacramento",
+    ACL: "ACL",
+    SAN_JOSE: "San Jose",
+    EUGENE: "Eugene",
+    RICHMOND: "Richmond",
+    SACRAMENTO: "Sacramento",
     137: "SF",
 }
 
+# Order of sections inside posts
 SECTION_ORDER = ["DSL Giants", "ACL Giants", "San Jose", "Eugene", "Richmond", "Sacramento"]
 
 
@@ -95,6 +102,7 @@ class TxnLine:
     id: int
     sort_date: str
     display_team_id: int
+    header: str
     text: str
 
 
@@ -127,7 +135,7 @@ def short_team(team_id: Optional[int], team_name: Optional[str]) -> str:
     if team_id is not None and int(team_id) in TEAM_SHORT:
         return TEAM_SHORT[int(team_id)]
     n = normalize(team_name or "")
-    # fallback: strip common suffixes
+    # fallback: strip some common suffixes to keep it short
     n = re.sub(r"\bFlying Squirrels\b", "", n).strip()
     n = re.sub(r"\bRiver Cats\b", "", n).strip()
     n = re.sub(r"\bEmeralds\b", "", n).strip()
@@ -135,14 +143,20 @@ def short_team(team_id: Optional[int], team_name: Optional[str]) -> str:
     return n or "?"
 
 
-def is_internal_dsl_move(from_id: Optional[int], to_id: Optional[int]) -> bool:
-    return (from_id in {DSL_BLACK, DSL_ORANGE}) and (to_id in {DSL_BLACK, DSL_ORANGE}) and (from_id != to_id)
+def is_internal_dsl_move(from_id: Optional[int], to_id: Optional[int], desc_lower: str) -> bool:
+    # Prefer structured
+    if (from_id in {DSL_BLACK, DSL_ORANGE}) and (to_id in {DSL_BLACK, DSL_ORANGE}) and (from_id != to_id):
+        return True
+    # Fallback: description contains both teams
+    if ("dsl giants black" in desc_lower) and ("dsl giants orange" in desc_lower):
+        return True
+    return False
 
 
 def choose_display_team_id(from_id: Optional[int], to_id: Optional[int], query_team_id: int) -> Optional[int]:
     """
     Prevent duplicates:
-    - If toTeam is tracked => show under toTeam only.
+    - If toTeam is a tracked affiliate => show under toTeam only.
     - Else if fromTeam is tracked => show under fromTeam.
     - Else fallback to queried team if tracked.
     """
@@ -155,10 +169,23 @@ def choose_display_team_id(from_id: Optional[int], to_id: Optional[int], query_t
     return None
 
 
-def format_assignment(person: str, from_id: Optional[int], from_name: Optional[str]) -> str:
-    if from_id or from_name:
-        return f"{person} assigned from {short_team(from_id, from_name)}."
-    return f"{person} assigned."
+def parse_from_team_from_description(desc: str) -> Optional[str]:
+    """
+    Best-effort parse of trailing 'from X' in MLBAM description.
+    Example: '... assigned ... from Eugene Emeralds.'
+    Returns a shortened team string like 'Eugene' if possible.
+    """
+    d = normalize(desc)
+    m = re.search(r"\bfrom\s+([A-Za-z0-9 .'-]+)\.?\s*$", d)
+    if not m:
+        return None
+    s = m.group(1).strip()
+    # compress common suffixes
+    s = re.sub(r"\bFlying Squirrels\b", "", s).strip()
+    s = re.sub(r"\bRiver Cats\b", "", s).strip()
+    s = re.sub(r"\bEmeralds\b", "", s).strip()
+    s = re.sub(r"\bGiants\b", "", s).strip()
+    return s or None
 
 
 def make_compact_line(
@@ -168,38 +195,73 @@ def make_compact_line(
     from_id: Optional[int],
     from_name: Optional[str],
     to_id: Optional[int],
+    to_name: Optional[str],
 ) -> str:
     """
-    Priority formatting:
-    - If looks like 'assigned' and there is a real fromTeam != toTeam => 'Name assigned from X.'
-    - Else: strip leading team name (header), and for DSL combined remove Orange/Black prefix if present.
+    Compact output for an 'in-the-know' audience.
+    Core rules:
+      - Never include 'assigned to <destination>' (header already implies destination)
+      - For assignments: '<Name> assigned from <Origin>.' (if known) else '<Name> assigned.'
+      - For non-assignments: strip leading redundant team prefixes.
     """
     d = normalize(desc)
-
-    # Assignment detection based on description + presence of from/to teams
     dl = d.lower()
-    if (" assigned " in f" {dl} ") and from_id and to_id and from_id != to_id:
-        return format_assignment(person_name, from_id, from_name)
 
-    # Otherwise: reduce redundancy but keep meaning
+    # Assignment-like detection (best effort)
+    is_assigned = (" assigned " in f" {dl} ") or dl.startswith("assigned ")
+
+    # Destination names we should strip if they appear after "assigned to"
+    dest_names: List[str] = []
+    if to_name:
+        dest_names.append(to_name)
+    if header == "DSL Giants":
+        dest_names.extend(["DSL Giants Orange", "DSL Giants Black"])
+
+    # Origin: prefer structured fromTeam when it differs from toTeam
+    origin: Optional[str] = None
+    if from_id and (to_id is None or from_id != to_id):
+        origin = short_team(from_id, from_name)
+    elif from_name and (to_name is None or from_name.lower() != to_name.lower()):
+        origin = short_team(from_id, from_name)
+
+    # If no structured origin, try parse from description
+    parsed_from = parse_from_team_from_description(d)
+
+    if is_assigned:
+        # Strip "assigned to <dest>" redundancy (keep "from X" if present)
+        for dn in dest_names:
+            if dn:
+                d = re.sub(rf"\bassigned to (the )?{re.escape(dn)}\b", "assigned", d, flags=re.IGNORECASE)
+
+        origin_final = origin or parsed_from
+        if origin_final:
+            return f"{person_name} assigned from {origin_final}."
+        return f"{person_name} assigned."
+
+    # Non-assignment: reduce redundancy but keep meaning
+    # Remove leading affiliate chunk if it happens to start with the header
     if d.lower().startswith(header.lower()):
         d = d[len(header):].lstrip()
 
     if header == "DSL Giants":
-        # remove leading "DSL Giants Black/Orange" if it appears
+        # remove leading "DSL Giants Black/Orange" if present
         for prefix in ("DSL Giants Black", "DSL Giants Orange"):
             if d.lower().startswith(prefix.lower()):
                 d = d[len(prefix):].lstrip()
                 break
 
+    # Clean minor spacing issues
     d = re.sub(r"\s+\.", ".", d).strip()
-    return d
+    return normalize(d)
 
 
 # -----------------------------
 # Packing into fewer posts (cram)
 # -----------------------------
 def wrap_long_line(line: str, max_len: int) -> List[str]:
+    """
+    Wrap a single bullet into multiple lines without truncation.
+    """
     if len(line) <= max_len:
         return [line]
     words = line.split(" ")
@@ -218,15 +280,22 @@ def wrap_long_line(line: str, max_len: int) -> List[str]:
     return chunks
 
 
-def build_sections(lines_by_header: Dict[str, List[TxnLine]]) -> List[List[str]]:
+def build_sections(lines: List[TxnLine]) -> List[List[str]]:
+    """
+    Convert TxnLines to sections: [Header, bullet, bullet...]
+    """
+    by_header: Dict[str, List[TxnLine]] = {}
+    for tl in lines:
+        by_header.setdefault(tl.header, []).append(tl)
+
     sections: List[List[str]] = []
     for header in SECTION_ORDER:
-        lines = lines_by_header.get(header, [])
-        if not lines:
+        items = by_header.get(header, [])
+        if not items:
             continue
-        lines.sort(key=lambda x: (x.sort_date, x.id))
+        items.sort(key=lambda x: (x.sort_date, x.id))
         sec = [header]
-        for tl in lines:
+        for tl in items:
             bullet = f"• {tl.text}"
             sec.extend(wrap_long_line(bullet, MAX_CHARS - 1))
         sections.append(sec)
@@ -234,6 +303,10 @@ def build_sections(lines_by_header: Dict[str, List[TxnLine]]) -> List[List[str]]
 
 
 def pack_sections_into_posts(sections: List[List[str]], max_chars: int) -> List[str]:
+    """
+    Pack multiple sections into as few posts as possible.
+    Separate sections with a blank line.
+    """
     posts: List[str] = []
     cur_lines: List[str] = []
     cur_len = 0
@@ -262,7 +335,7 @@ def pack_sections_into_posts(sections: List[List[str]], max_chars: int) -> List[
                 cur_lines = sec[:]
                 cur_len = len(sec_text)
             else:
-                # split big section line-by-line across posts
+                # Split large section line-by-line across multiple posts
                 tmp: List[str] = []
                 tmp_len = 0
                 for line in sec:
@@ -295,6 +368,7 @@ def main() -> None:
     tz = ZoneInfo("America/Los_Angeles")
     today = datetime.now(tz).date()
 
+    # Optional test override (YYYY-MM-DD)
     override_start = os.getenv("OVERRIDE_START_DATE")
     override_end = os.getenv("OVERRIDE_END_DATE")
 
@@ -310,23 +384,24 @@ def main() -> None:
 
     s = make_session()
 
-    # Collect + bucket each txn to ONE display team (destination if available)
-    lines_by_header: Dict[str, List[TxnLine]] = {}
+    collected: Dict[int, TxnLine] = {}  # txn_id -> TxnLine (dedupe across queries)
     discovered_ids: List[int] = []
 
-    # Query each tracked team (the API expects a teamId filter)
+    # Query each tracked team to find transactions in window
     for query_team_id in TRACKED_TEAM_IDS:
         txns = fetch_transactions(s, query_team_id, start, end)
         for t in txns:
             tid = int(t.get("id"))
-            if tid in seen:
+            if tid in seen or tid in collected:
                 continue
 
+            desc = normalize(t.get("description", ""))
+            dl = desc.lower()
             from_id, from_name, to_id, to_name = get_team_fields(t)
 
-            # Skip internal DSL Orange<->Black moves entirely
-            if is_internal_dsl_move(from_id, to_id):
-                seen.add(tid)  # mark as seen so we don't keep reconsidering it
+            # Skip internal DSL Orange<->Black moves
+            if is_internal_dsl_move(from_id, to_id, dl):
+                seen.add(tid)
                 continue
 
             display_team_id = choose_display_team_id(from_id, to_id, query_team_id)
@@ -340,40 +415,35 @@ def main() -> None:
                 continue
 
             person = (t.get("person") or {}).get("fullName") or ""
-            desc = normalize(t.get("description", ""))
-            if not desc or not person:
-                # If no person name, fallback to raw description
-                person = person or ""
-                desc = desc or ""
             sort_date = pick_sort_date(t)
+
+            # If person missing, fallback to raw desc (rare)
+            person_for_line = person or desc
 
             text = make_compact_line(
                 desc=desc,
-                person_name=person if person else desc,
+                person_name=person_for_line,
                 header=header,
                 from_id=from_id,
                 from_name=from_name,
                 to_id=to_id,
-            )
-            text = normalize(text)
-
-            # Store line
-            lines_by_header.setdefault(header, []).append(
-                TxnLine(
-                    id=tid,
-                    sort_date=sort_date,
-                    display_team_id=display_team_id,
-                    text=text,
-                )
+                to_name=to_name,
             )
 
+            collected[tid] = TxnLine(
+                id=tid,
+                sort_date=sort_date,
+                display_team_id=display_team_id,
+                header=header,
+                text=text,
+            )
             discovered_ids.append(tid)
 
-    new_count = len(set(discovered_ids))
+    new_count = len(collected)
 
     # Bootstrap: mark everything seen, no posts.
     if not state.get("bootstrapped", False):
-        for tid in discovered_ids:
+        for tid in collected.keys():
             seen.add(tid)
         state["bootstrapped"] = True
         state["seen_transaction_ids"] = sorted(seen)
@@ -388,7 +458,7 @@ def main() -> None:
         print("No new transactions.")
         return
 
-    sections = build_sections(lines_by_header)
+    sections = build_sections(list(collected.values()))
     posts = pack_sections_into_posts(sections, max_chars=MAX_CHARS)
 
     client = bsky_login()
@@ -397,7 +467,7 @@ def main() -> None:
         time.sleep(SLEEP_BETWEEN_POSTS_SEC)
 
     # Mark as seen after posting
-    for tid in discovered_ids:
+    for tid in collected.keys():
         seen.add(tid)
 
     state["seen_transaction_ids"] = sorted(seen)
