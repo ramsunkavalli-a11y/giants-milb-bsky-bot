@@ -12,10 +12,14 @@ from urllib3.util.retry import Retry
 
 from atproto import Client
 
-MAX_POSTS_PER_RUN = 10
+# -----------------------------
+# Config
+# -----------------------------
 MAX_CHARS = 300
 LOOKBACK_DAYS = 14  # rolling two weeks
+SLEEP_BETWEEN_POSTS_SEC = 1.2
 
+# Ordered from DSL -> AAA (as you wanted, DSL to Sacramento)
 AFFILIATES: Dict[int, str] = {
     2134: "DSL Giants Black",
     615: "DSL Giants Orange",
@@ -30,6 +34,9 @@ STATE_PATH = "state.json"
 API_BASE = "https://statsapi.mlb.com/api/v1"
 
 
+# -----------------------------
+# HTTP helpers (retries)
+# -----------------------------
 def make_session() -> requests.Session:
     s = requests.Session()
     retry = Retry(
@@ -44,6 +51,9 @@ def make_session() -> requests.Session:
     return s
 
 
+# -----------------------------
+# State
+# -----------------------------
 def load_state() -> Dict[str, Any]:
     if not os.path.exists(STATE_PATH):
         return {"bootstrapped": False, "seen_transaction_ids": [], "last_run_iso": None}
@@ -57,9 +67,14 @@ def save_state(state: Dict[str, Any]) -> None:
         f.write("\n")
 
 
+# -----------------------------
+# Transactions fetch
+# -----------------------------
 @dataclass(frozen=True)
 class Txn:
     id: int
+    team_id: int
+    team_label: str
     sort_date: str  # YYYY-MM-DD (best effort)
     description: str
 
@@ -77,49 +92,157 @@ def normalize(desc: str) -> str:
 
 
 def pick_sort_date(t: Dict[str, Any]) -> str:
-    """
-    Prefer effectiveDate for ordering; fall back to date then resolutionDate.
-    All are typically YYYY-MM-DD in this API.
-    """
+    # Prefer effectiveDate for ordering; fall back to date then resolutionDate
     return (t.get("effectiveDate") or t.get("date") or t.get("resolutionDate") or "")
 
 
-def chunk_lines(lines: List[str], max_chars: int, max_posts: int) -> List[str]:
-    posts: List[str] = []
-    cur: List[str] = []
-    cur_len = 0
+def strip_team_prefix(team_label: str, desc: str) -> str:
+    """
+    If description starts with the affiliate name, remove it to avoid redundancy.
+    Example:
+      "DSL Giants Black activated C X ..." -> "activated C X ..."
+    """
+    d = desc.strip()
+    tl = team_label.strip()
+    if not tl:
+        return d
+    if d.lower().startswith(tl.lower()):
+        d = d[len(tl):].lstrip()
+        # common pattern: "<team> activated..." so now it starts with verb
+    return d
 
-    def flush():
-        nonlocal cur, cur_len
-        if cur:
-            posts.append("\n".join(cur))
-            cur = []
-            cur_len = 0
 
-    for line in lines:
-        line = line.strip()
-        if not line:
-            continue
-        add_len = len(line) + (1 if cur else 0)
-        if cur_len + add_len <= max_chars:
-            cur.append(line)
-            cur_len += add_len
-        else:
-            flush()
-            if len(line) > max_chars:
-                posts.append(line[: max_chars - 1] + "…")
+def collect_new_by_affiliate(
+    s: requests.Session,
+    seen_ids: set,
+    start_date: date,
+    end_date: date,
+) -> Dict[int, List[Txn]]:
+    out: Dict[int, List[Txn]] = {tid: [] for tid in AFFILIATES.keys()}
+
+    for team_id, label in AFFILIATES.items():
+        txns = fetch_transactions(s, team_id, start_date, end_date)
+        for t in txns:
+            tid = int(t.get("id"))
+            if tid in seen_ids:
+                continue
+            desc = normalize(t.get("description", ""))
+            if not desc:
+                continue
+
+            out[team_id].append(
+                Txn(
+                    id=tid,
+                    team_id=team_id,
+                    team_label=label,
+                    sort_date=pick_sort_date(t),
+                    description=desc,
+                )
+            )
+
+        # Stable ordering inside each affiliate
+        out[team_id].sort(key=lambda x: (x.sort_date, x.id))
+
+    return out
+
+
+# -----------------------------
+# Post building / chunking
+# -----------------------------
+def build_affiliate_lines(team_label: str, txns: List[Txn]) -> List[Tuple[str, int]]:
+    """
+    Returns list of (line_text, txn_id) for this affiliate.
+    """
+    lines: List[Tuple[str, int]] = []
+    for t in txns:
+        short = strip_team_prefix(team_label, t.description)
+        # bullet for readability
+        line = f"• {short}"
+        lines.append((line, t.id))
+    return lines
+
+
+def chunk_affiliate_posts(
+    header: str,
+    lines_with_ids: List[Tuple[str, int]],
+    max_chars: int,
+) -> List[Tuple[str, List[int]]]:
+    """
+    Splits one affiliate's lines into multiple posts.
+    Each post returns (text, txn_ids_included).
+    Never drops lines.
+    """
+    posts: List[Tuple[str, List[int]]] = []
+
+    def make_header(is_cont: bool) -> str:
+        return f"{header} (cont.)" if is_cont else header
+
+    i = 0
+    cont = False
+    while i < len(lines_with_ids):
+        hdr = make_header(cont)
+        # Start post with header
+        text_lines = [hdr]
+        ids_in_post: List[int] = []
+
+        cur_len = len(hdr)
+        # Add lines until full
+        while i < len(lines_with_ids):
+            line, tid = lines_with_ids[i]
+            add = "\n" + line
+            if cur_len + len(add) <= max_chars:
+                text_lines.append(line)
+                ids_in_post.append(tid)
+                cur_len += len(add)
+                i += 1
             else:
-                cur = [line]
-                cur_len = len(line)
-        if len(posts) >= max_posts:
-            break
+                # If a single line can't fit even in an empty post (rare), truncate that line safely
+                # but DO NOT drop the transaction.
+                if cur_len == len(hdr):
+                    # allow header + truncated line
+                    budget = max_chars - (len(hdr) + 1)  # minus newline
+                    if budget <= 1:
+                        # Extreme edge case: header alone fills the post. Make a minimal post then continue.
+                        posts.append(("\n".join(text_lines)[:max_chars], ids_in_post))
+                        cont = True
+                        break
+                    truncated = (line[: budget - 1] + "…") if len(line) > budget else line
+                    text_lines.append(truncated)
+                    ids_in_post.append(tid)
+                    i += 1
+                break
 
-    if len(posts) < max_posts:
-        flush()
+        posts.append(("\n".join(text_lines), ids_in_post))
+        cont = True
 
-    return posts[:max_posts]
+    return posts
 
 
+def build_all_posts_grouped(
+    txns_by_team: Dict[int, List[Txn]],
+    max_chars: int,
+) -> List[Tuple[str, List[int]]]:
+    """
+    Returns list of (post_text, txn_ids_included), grouped by affiliate
+    in the order of AFFILIATES.
+    """
+    all_posts: List[Tuple[str, List[int]]] = []
+
+    for team_id, label in AFFILIATES.items():
+        txns = txns_by_team.get(team_id, [])
+        if not txns:
+            continue
+
+        lines_with_ids = build_affiliate_lines(label, txns)
+        posts = chunk_affiliate_posts(label, lines_with_ids, max_chars=max_chars)
+        all_posts.extend(posts)
+
+    return all_posts
+
+
+# -----------------------------
+# Bluesky posting
+# -----------------------------
 def bsky_login() -> Client:
     client = Client()
     client.login(os.environ["BSKY_HANDLE"], os.environ["BSKY_APP_PASSWORD"])
@@ -137,55 +260,54 @@ def main() -> None:
 
     s = make_session()
 
-    new: List[Txn] = []
-    for team_id in AFFILIATES:
-        txns = fetch_transactions(s, team_id, start, end)
-        for t in txns:
-            tid = int(t.get("id"))
-            if tid in seen:
-                continue
-            desc = normalize(t.get("description", ""))
-            if not desc:
-                continue
-            new.append(Txn(id=tid, sort_date=pick_sort_date(t), description=desc))
+    txns_by_team = collect_new_by_affiliate(s, seen, start, end)
 
-    # Stable ordering: by effective/date then id
-    new.sort(key=lambda x: (x.sort_date, x.id))
+    # Flatten count
+    new_count = sum(len(v) for v in txns_by_team.values())
 
     # First run bootstrap: mark everything in the window as seen, no posts.
     if not state.get("bootstrapped", False):
-        for t in new:
-            seen.add(t.id)
+        for v in txns_by_team.values():
+            for t in v:
+                seen.add(t.id)
         state["bootstrapped"] = True
         state["seen_transaction_ids"] = sorted(seen)
         state["last_run_iso"] = datetime.now(timezone.utc).isoformat()
         save_state(state)
-        print(f"Bootstrapped: marked {len(new)} transactions as seen (no posts).")
+        print(f"Bootstrapped: marked {new_count} transactions as seen (no posts).")
         return
 
-    if not new:
+    if new_count == 0:
         state["last_run_iso"] = datetime.now(timezone.utc).isoformat()
         save_state(state)
         print("No new transactions.")
         return
 
-    lines = [t.description for t in new]
-    posts = chunk_lines(lines, MAX_CHARS, MAX_POSTS_PER_RUN)
+    # Build ALL posts needed (no cap)
+    posts_with_ids = build_all_posts_grouped(txns_by_team, max_chars=MAX_CHARS)
 
     client = bsky_login()
-    for p in posts:
-        client.send_post(text=p)
-        time.sleep(1.2)
 
-    # Mark all discovered txns as seen to avoid backlog spam
-    for t in new:
-        seen.add(t.id)
+    # Post everything, and only mark IDs seen after the post that contains them succeeds
+    posted_posts = 0
+    posted_txn_ids: List[int] = []
+
+    for text, ids_in_post in posts_with_ids:
+        client.send_post(text=text)
+        posted_posts += 1
+        posted_txn_ids.extend(ids_in_post)
+
+        # Mark these as seen now (so a failure later doesn't cause partial repost spam)
+        for tid in ids_in_post:
+            seen.add(tid)
+
+        time.sleep(SLEEP_BETWEEN_POSTS_SEC)
 
     state["seen_transaction_ids"] = sorted(seen)
     state["last_run_iso"] = datetime.now(timezone.utc).isoformat()
     save_state(state)
 
-    print(f"Posted {len(posts)} post(s). Marked {len(new)} txns as seen.")
+    print(f"Posted {posted_posts} posts, covering {len(set(posted_txn_ids))} transactions.")
 
 
 if __name__ == "__main__":
