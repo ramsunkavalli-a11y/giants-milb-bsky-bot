@@ -1,9 +1,5 @@
 {
   "bootstrapped": true,
-  "last_run_iso": "2026-02-22T05:52:37.306987+00:00",
-  "seen_transaction_ids": [
-    886594,
-    886595,
-    886908
-  ]
+  "last_run_iso": null,
+  "seen_transaction_ids": []
 }
