@@ -4,7 +4,7 @@ import time
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone, date
 from zoneinfo import ZoneInfo
-from typing import Dict, List, Any, Optional, Tuple
+from typing import Dict, List, Any, Tuple
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -19,7 +19,7 @@ MAX_CHARS = 300
 LOOKBACK_DAYS = 14  # rolling two weeks
 SLEEP_BETWEEN_POSTS_SEC = 1.2
 
-# Ordered from DSL -> AAA (as you wanted, DSL to Sacramento)
+# Ordered from DSL -> AAA
 AFFILIATES: Dict[int, str] = {
     2134: "DSL Giants Black",
     615: "DSL Giants Orange",
@@ -75,7 +75,7 @@ class Txn:
     id: int
     team_id: int
     team_label: str
-    sort_date: str  # YYYY-MM-DD (best effort)
+    sort_date: str
     description: str
 
 
@@ -92,23 +92,14 @@ def normalize(desc: str) -> str:
 
 
 def pick_sort_date(t: Dict[str, Any]) -> str:
-    # Prefer effectiveDate for ordering; fall back to date then resolutionDate
     return (t.get("effectiveDate") or t.get("date") or t.get("resolutionDate") or "")
 
 
 def strip_team_prefix(team_label: str, desc: str) -> str:
-    """
-    If description starts with the affiliate name, remove it to avoid redundancy.
-    Example:
-      "DSL Giants Black activated C X ..." -> "activated C X ..."
-    """
     d = desc.strip()
     tl = team_label.strip()
-    if not tl:
-        return d
-    if d.lower().startswith(tl.lower()):
+    if tl and d.lower().startswith(tl.lower()):
         d = d[len(tl):].lstrip()
-        # common pattern: "<team> activated..." so now it starts with verb
     return d
 
 
@@ -126,6 +117,7 @@ def collect_new_by_affiliate(
             tid = int(t.get("id"))
             if tid in seen_ids:
                 continue
+
             desc = normalize(t.get("description", ""))
             if not desc:
                 continue
@@ -140,7 +132,6 @@ def collect_new_by_affiliate(
                 )
             )
 
-        # Stable ordering inside each affiliate
         out[team_id].sort(key=lambda x: (x.sort_date, x.id))
 
     return out
@@ -150,15 +141,10 @@ def collect_new_by_affiliate(
 # Post building / chunking
 # -----------------------------
 def build_affiliate_lines(team_label: str, txns: List[Txn]) -> List[Tuple[str, int]]:
-    """
-    Returns list of (line_text, txn_id) for this affiliate.
-    """
     lines: List[Tuple[str, int]] = []
     for t in txns:
         short = strip_team_prefix(team_label, t.description)
-        # bullet for readability
-        line = f"• {short}"
-        lines.append((line, t.id))
+        lines.append((f"• {short}", t.id))
     return lines
 
 
@@ -167,11 +153,6 @@ def chunk_affiliate_posts(
     lines_with_ids: List[Tuple[str, int]],
     max_chars: int,
 ) -> List[Tuple[str, List[int]]]:
-    """
-    Splits one affiliate's lines into multiple posts.
-    Each post returns (text, txn_ids_included).
-    Never drops lines.
-    """
     posts: List[Tuple[str, List[int]]] = []
 
     def make_header(is_cont: bool) -> str:
@@ -181,12 +162,10 @@ def chunk_affiliate_posts(
     cont = False
     while i < len(lines_with_ids):
         hdr = make_header(cont)
-        # Start post with header
         text_lines = [hdr]
         ids_in_post: List[int] = []
 
         cur_len = len(hdr)
-        # Add lines until full
         while i < len(lines_with_ids):
             line, tid = lines_with_ids[i]
             add = "\n" + line
@@ -196,15 +175,11 @@ def chunk_affiliate_posts(
                 cur_len += len(add)
                 i += 1
             else:
-                # If a single line can't fit even in an empty post (rare), truncate that line safely
-                # but DO NOT drop the transaction.
+                # If even the first line doesn't fit, truncate it but still include the txn
                 if cur_len == len(hdr):
-                    # allow header + truncated line
-                    budget = max_chars - (len(hdr) + 1)  # minus newline
+                    budget = max_chars - (len(hdr) + 1)
                     if budget <= 1:
-                        # Extreme edge case: header alone fills the post. Make a minimal post then continue.
                         posts.append(("\n".join(text_lines)[:max_chars], ids_in_post))
-                        cont = True
                         break
                     truncated = (line[: budget - 1] + "…") if len(line) > budget else line
                     text_lines.append(truncated)
@@ -222,21 +197,13 @@ def build_all_posts_grouped(
     txns_by_team: Dict[int, List[Txn]],
     max_chars: int,
 ) -> List[Tuple[str, List[int]]]:
-    """
-    Returns list of (post_text, txn_ids_included), grouped by affiliate
-    in the order of AFFILIATES.
-    """
     all_posts: List[Tuple[str, List[int]]] = []
-
     for team_id, label in AFFILIATES.items():
         txns = txns_by_team.get(team_id, [])
         if not txns:
             continue
-
         lines_with_ids = build_affiliate_lines(label, txns)
-        posts = chunk_affiliate_posts(label, lines_with_ids, max_chars=max_chars)
-        all_posts.extend(posts)
-
+        all_posts.extend(chunk_affiliate_posts(label, lines_with_ids, max_chars=max_chars))
     return all_posts
 
 
@@ -257,24 +224,21 @@ def main() -> None:
     override_start = os.getenv("OVERRIDE_START_DATE")
     override_end = os.getenv("OVERRIDE_END_DATE")
 
-if override_start and override_end:
-    start = date.fromisoformat(override_start)
-    end = date.fromisoformat(override_end)
-else:
-    start = today - timedelta(days=LOOKBACK_DAYS)
-    end = today
+    if override_start and override_end:
+        start = date.fromisoformat(override_start)
+        end = date.fromisoformat(override_end)
+    else:
+        start = today - timedelta(days=LOOKBACK_DAYS)
+        end = today
 
     state = load_state()
     seen = set(state.get("seen_transaction_ids", []))
 
     s = make_session()
-
     txns_by_team = collect_new_by_affiliate(s, seen, start, end)
-
-    # Flatten count
     new_count = sum(len(v) for v in txns_by_team.values())
 
-    # First run bootstrap: mark everything in the window as seen, no posts.
+    # First run bootstrap: mark everything as seen, no posts.
     if not state.get("bootstrapped", False):
         for v in txns_by_team.values():
             for t in v:
@@ -292,12 +256,10 @@ else:
         print("No new transactions.")
         return
 
-    # Build ALL posts needed (no cap)
     posts_with_ids = build_all_posts_grouped(txns_by_team, max_chars=MAX_CHARS)
 
     client = bsky_login()
 
-    # Post everything, and only mark IDs seen after the post that contains them succeeds
     posted_posts = 0
     posted_txn_ids: List[int] = []
 
@@ -306,7 +268,7 @@ else:
         posted_posts += 1
         posted_txn_ids.extend(ids_in_post)
 
-        # Mark these as seen now (so a failure later doesn't cause partial repost spam)
+        # Mark these as seen immediately after successful post
         for tid in ids_in_post:
             seen.add(tid)
 
