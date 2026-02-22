@@ -135,7 +135,6 @@ def short_team(team_id: Optional[int], team_name: Optional[str]) -> str:
     if team_id is not None and int(team_id) in TEAM_SHORT:
         return TEAM_SHORT[int(team_id)]
     n = normalize(team_name or "")
-    # fallback: strip some common suffixes to keep it short
     n = re.sub(r"\bFlying Squirrels\b", "", n).strip()
     n = re.sub(r"\bRiver Cats\b", "", n).strip()
     n = re.sub(r"\bEmeralds\b", "", n).strip()
@@ -170,22 +169,46 @@ def choose_display_team_id(from_id: Optional[int], to_id: Optional[int], query_t
 
 
 def parse_from_team_from_description(desc: str) -> Optional[str]:
-    """
-    Best-effort parse of trailing 'from X' in MLBAM description.
-    Example: '... assigned ... from Eugene Emeralds.'
-    Returns a shortened team string like 'Eugene' if possible.
-    """
     d = normalize(desc)
     m = re.search(r"\bfrom\s+([A-Za-z0-9 .'-]+)\.?\s*$", d)
     if not m:
         return None
     s = m.group(1).strip()
-    # compress common suffixes
     s = re.sub(r"\bFlying Squirrels\b", "", s).strip()
     s = re.sub(r"\bRiver Cats\b", "", s).strip()
     s = re.sub(r"\bEmeralds\b", "", s).strip()
     s = re.sub(r"\bGiants\b", "", s).strip()
     return s or None
+
+
+def replace_injured_list_with_il(desc: str) -> str:
+    # Replace "injured list" with "IL" in a few common phrasings
+    d = desc
+    d = re.sub(r"\binjured list\b", "IL", d, flags=re.IGNORECASE)
+    d = re.sub(r"\b7-day IL\b", "7-day IL", d, flags=re.IGNORECASE)
+    d = re.sub(r"\b60-day IL\b", "60-day IL", d, flags=re.IGNORECASE)
+    d = re.sub(r"\b10-day IL\b", "10-day IL", d, flags=re.IGNORECASE)
+    d = re.sub(r"\b15-day IL\b", "15-day IL", d, flags=re.IGNORECASE)
+    return normalize(d)
+
+
+def name_with_pos(desc: str, full_name: str) -> str:
+    """
+    Extract a position token directly before player's name in description:
+      '... RHP Trey Dillard ...' => 'RHP Trey Dillard'
+      '... 2B Israel Alfonse ...' => '2B Israel Alfonse'
+    """
+    if not desc or not full_name:
+        return full_name
+
+    d = normalize(desc)
+    name_pat = re.escape(full_name)
+
+    m = re.search(rf"\b([A-Z]{{1,3}}HP|[1-3]B|SS|LF|CF|RF|OF|IF|C|P|DH|INF)\s+{name_pat}\b", d)
+    if m:
+        return f"{m.group(1)} {full_name}"
+
+    return full_name
 
 
 def make_compact_line(
@@ -197,38 +220,27 @@ def make_compact_line(
     to_id: Optional[int],
     to_name: Optional[str],
 ) -> str:
-    """
-    Compact output for an 'in-the-know' audience.
-    Core rules:
-      - Never include 'assigned to <destination>' (header already implies destination)
-      - For assignments: '<Name> assigned from <Origin>.' (if known) else '<Name> assigned.'
-      - For non-assignments: strip leading redundant team prefixes.
-    """
-    d = normalize(desc)
+    d = replace_injured_list_with_il(normalize(desc))
     dl = d.lower()
 
-    # Assignment-like detection (best effort)
     is_assigned = (" assigned " in f" {dl} ") or dl.startswith("assigned ")
 
-    # Destination names we should strip if they appear after "assigned to"
     dest_names: List[str] = []
     if to_name:
         dest_names.append(to_name)
     if header == "DSL Giants":
         dest_names.extend(["DSL Giants Orange", "DSL Giants Black"])
 
-    # Origin: prefer structured fromTeam when it differs from toTeam
     origin: Optional[str] = None
     if from_id and (to_id is None or from_id != to_id):
         origin = short_team(from_id, from_name)
     elif from_name and (to_name is None or from_name.lower() != to_name.lower()):
         origin = short_team(from_id, from_name)
 
-    # If no structured origin, try parse from description
     parsed_from = parse_from_team_from_description(d)
 
     if is_assigned:
-        # Strip "assigned to <dest>" redundancy (keep "from X" if present)
+        # Strip "assigned to <dest>" redundancy
         for dn in dest_names:
             if dn:
                 d = re.sub(rf"\bassigned to (the )?{re.escape(dn)}\b", "assigned", d, flags=re.IGNORECASE)
@@ -238,30 +250,24 @@ def make_compact_line(
             return f"{person_name} assigned from {origin_final}."
         return f"{person_name} assigned."
 
-    # Non-assignment: reduce redundancy but keep meaning
-    # Remove leading affiliate chunk if it happens to start with the header
+    # Non-assignment: strip leading redundancy
     if d.lower().startswith(header.lower()):
         d = d[len(header):].lstrip()
 
     if header == "DSL Giants":
-        # remove leading "DSL Giants Black/Orange" if present
         for prefix in ("DSL Giants Black", "DSL Giants Orange"):
             if d.lower().startswith(prefix.lower()):
                 d = d[len(prefix):].lstrip()
                 break
 
-    # Clean minor spacing issues
     d = re.sub(r"\s+\.", ".", d).strip()
     return normalize(d)
 
 
 # -----------------------------
-# Packing into fewer posts (cram)
+# Packing into fewer posts
 # -----------------------------
 def wrap_long_line(line: str, max_len: int) -> List[str]:
-    """
-    Wrap a single bullet into multiple lines without truncation.
-    """
     if len(line) <= max_len:
         return [line]
     words = line.split(" ")
@@ -281,9 +287,6 @@ def wrap_long_line(line: str, max_len: int) -> List[str]:
 
 
 def build_sections(lines: List[TxnLine]) -> List[List[str]]:
-    """
-    Convert TxnLines to sections: [Header, bullet, bullet...]
-    """
     by_header: Dict[str, List[TxnLine]] = {}
     for tl in lines:
         by_header.setdefault(tl.header, []).append(tl)
@@ -303,10 +306,6 @@ def build_sections(lines: List[TxnLine]) -> List[List[str]]:
 
 
 def pack_sections_into_posts(sections: List[List[str]], max_chars: int) -> List[str]:
-    """
-    Pack multiple sections into as few posts as possible.
-    Separate sections with a blank line.
-    """
     posts: List[str] = []
     cur_lines: List[str] = []
     cur_len = 0
@@ -335,7 +334,6 @@ def pack_sections_into_posts(sections: List[List[str]], max_chars: int) -> List[
                 cur_lines = sec[:]
                 cur_len = len(sec_text)
             else:
-                # Split large section line-by-line across multiple posts
                 tmp: List[str] = []
                 tmp_len = 0
                 for line in sec:
@@ -368,7 +366,6 @@ def main() -> None:
     tz = ZoneInfo("America/Los_Angeles")
     today = datetime.now(tz).date()
 
-    # Optional test override (YYYY-MM-DD)
     override_start = os.getenv("OVERRIDE_START_DATE")
     override_end = os.getenv("OVERRIDE_END_DATE")
 
@@ -384,10 +381,9 @@ def main() -> None:
 
     s = make_session()
 
-    collected: Dict[int, TxnLine] = {}  # txn_id -> TxnLine (dedupe across queries)
+    collected: Dict[int, TxnLine] = {}
     discovered_ids: List[int] = []
 
-    # Query each tracked team to find transactions in window
     for query_team_id in TRACKED_TEAM_IDS:
         txns = fetch_transactions(s, query_team_id, start, end)
         for t in txns:
@@ -397,9 +393,10 @@ def main() -> None:
 
             desc = normalize(t.get("description", ""))
             dl = desc.lower()
+
             from_id, from_name, to_id, to_name = get_team_fields(t)
 
-            # Skip internal DSL Orange<->Black moves
+            # Skip internal DSL moves entirely
             if is_internal_dsl_move(from_id, to_id, dl):
                 seen.add(tid)
                 continue
@@ -417,8 +414,8 @@ def main() -> None:
             person = (t.get("person") or {}).get("fullName") or ""
             sort_date = pick_sort_date(t)
 
-            # If person missing, fallback to raw desc (rare)
-            person_for_line = person or desc
+            # Include position if possible
+            person_for_line = name_with_pos(desc, person) if person else desc
 
             text = make_compact_line(
                 desc=desc,
@@ -441,7 +438,6 @@ def main() -> None:
 
     new_count = len(collected)
 
-    # Bootstrap: mark everything seen, no posts.
     if not state.get("bootstrapped", False):
         for tid in collected.keys():
             seen.add(tid)
@@ -466,7 +462,6 @@ def main() -> None:
         client.send_post(text=text)
         time.sleep(SLEEP_BETWEEN_POSTS_SEC)
 
-    # Mark as seen after posting
     for tid in collected.keys():
         seen.add(tid)
 
