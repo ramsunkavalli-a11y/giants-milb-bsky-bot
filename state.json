@@ -9,7 +9,12 @@
       "posted_suspended": false
     }
   },
-  "recaps": {},
+  "recaps": {
+    "2026-02-22": {
+      "note": "no_games",
+      "posted": false
+    }
+  },
   "seen_transaction_ids": [
     886594,
     886595,
