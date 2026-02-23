@@ -1,0 +1,69 @@
+name: DSL Giants Orange Final/Suspended Box Score
+
+on:
+  workflow_dispatch:
+    inputs:
+      override_gamepk:
+        description: "Optional gamePk override (e.g., 811804)"
+        required: false
+        type: string
+      override_date:
+        description: "Optional date override YYYY-MM-DD (find first DSL Orange game that date)"
+        required: false
+        type: string
+      dry_run:
+        description: "Dry run (no Bluesky post)"
+        required: false
+        default: false
+        type: boolean
+      force_repost:
+        description: "Force repost even if state.json already marked game/status as posted"
+        required: false
+        default: false
+        type: boolean
+  schedule:
+    - cron: "*/30 * * * *"
+
+concurrency:
+  group: dsl-orange-gameday
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run DSL Orange gameday bot
+        env:
+          BSKY_HANDLE: ${{ secrets.BSKY_HANDLE }}
+          BSKY_APP_PASSWORD: ${{ secrets.BSKY_APP_PASSWORD }}
+          OVERRIDE_GAMEPK: ${{ github.event.inputs.override_gamepk || '' }}
+          OVERRIDE_DATE: ${{ github.event.inputs.override_date || '' }}
+          DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
+          FORCE_REPOST: ${{ github.event.inputs.force_repost == 'true' && '1' || '0' }}
+        run: python gameday_dsl_orange.py
+
+      - name: Commit updated state
+        run: |
+          if git diff --quiet; then
+            echo "No state changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add state.json
+          git commit -m "Update DSL Orange gameday state"
+          git push
