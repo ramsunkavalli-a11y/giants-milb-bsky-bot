@@ -376,6 +376,15 @@ def _get_game_from_overrides(session: requests.Session) -> List[int]:
         print(f"Using OVERRIDE_DATE={override_date}")
         games = fetch_schedule_games(session, target_date=override_date)
         return [int(g["gamePk"]) for g in games if g.get("gamePk")]
+
+    # Manual GitHub Actions runs often need an immediate reproducible test target.
+    # If no override is supplied and this is a workflow_dispatch run, default to the
+    # real 2025 DSL Orange game so the run can still produce output.
+    if (os.getenv("GITHUB_EVENT_NAME") or "") == "workflow_dispatch":
+        default_gamepk = "811804"
+        print(f"No override provided on workflow_dispatch; defaulting OVERRIDE_GAMEPK={default_gamepk}")
+        return [int(default_gamepk)]
+
     return []
 
 
