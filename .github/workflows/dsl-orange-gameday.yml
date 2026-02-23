@@ -6,7 +6,6 @@ on:
       override_gamepk:
         description: "Optional gamePk override (e.g., 811804)"
         required: false
-        default: "811804"
         type: string
       override_date:
         description: "Optional date override YYYY-MM-DD (used if override_gamepk is empty)"

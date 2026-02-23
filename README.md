@@ -50,4 +50,4 @@ python gameday_dsl_orange.py --recap
 If you do not see input fields in GitHub UI, you are running an old workflow revision/branch. Pick the branch containing this file update first.
 
 
-If you click **Run workflow** and leave overrides blank, manual runs now default to `gamePk=811804` for a reproducible 2025 test.
+If you click **Run workflow** and leave overrides blank, manual runs now auto-pick the most recent DSL Orange game in the lookback window.
