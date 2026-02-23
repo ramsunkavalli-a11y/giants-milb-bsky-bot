@@ -45,3 +45,6 @@ python gameday_dsl_orange.py --recap
    - set `force_repost=true` if the game was already posted before.
 
 > `force_repost=true` bypasses state dedupe for that run only.
+
+
+If you do not see input fields in GitHub UI, you are running an old workflow revision/branch. Pick the branch containing this file update first.

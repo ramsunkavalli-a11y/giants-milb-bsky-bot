@@ -6,9 +6,10 @@ on:
       override_gamepk:
         description: "Optional gamePk override (e.g., 811804)"
         required: false
+        default: "811804"
         type: string
       override_date:
-        description: "Optional date override YYYY-MM-DD (find first DSL Orange game that date)"
+        description: "Optional date override YYYY-MM-DD (used if override_gamepk is empty)"
         required: false
         type: string
       dry_run:
@@ -45,6 +46,14 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+
+      - name: Show effective run settings
+        run: |
+          echo "override_gamepk='${{ github.event.inputs.override_gamepk || '' }}'"
+          echo "override_date='${{ github.event.inputs.override_date || '' }}'"
+          echo "dry_run='${{ github.event.inputs.dry_run || 'false' }}'"
+          echo "force_repost='${{ github.event.inputs.force_repost || 'false' }}'"
 
       - name: Run DSL Orange gameday bot
         env:

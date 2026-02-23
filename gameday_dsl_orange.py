@@ -367,11 +367,13 @@ def post_to_bluesky_with_image(client: Client, text: str, image_path: str, alt_t
 
 
 def _get_game_from_overrides(session: requests.Session) -> List[int]:
-    override_gamepk = os.getenv("OVERRIDE_GAMEPK")
-    override_date = os.getenv("OVERRIDE_DATE")
+    override_gamepk = (os.getenv("OVERRIDE_GAMEPK") or "").strip()
+    override_date = (os.getenv("OVERRIDE_DATE") or "").strip()
     if override_gamepk:
+        print(f"Using OVERRIDE_GAMEPK={override_gamepk}")
         return [int(override_gamepk)]
     if override_date:
+        print(f"Using OVERRIDE_DATE={override_date}")
         games = fetch_schedule_games(session, target_date=override_date)
         return [int(g["gamePk"]) for g in games if g.get("gamePk")]
     return []
