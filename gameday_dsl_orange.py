@@ -367,17 +367,30 @@ def post_to_bluesky_with_image(client: Client, text: str, image_path: str, alt_t
 
 
 def _get_game_from_overrides(session: requests.Session) -> List[int]:
-    override_gamepk = os.getenv("OVERRIDE_GAMEPK")
-    override_date = os.getenv("OVERRIDE_DATE")
+    override_gamepk = (os.getenv("OVERRIDE_GAMEPK") or "").strip()
+    override_date = (os.getenv("OVERRIDE_DATE") or "").strip()
     if override_gamepk:
+        print(f"Using OVERRIDE_GAMEPK={override_gamepk}")
         return [int(override_gamepk)]
     if override_date:
+        print(f"Using OVERRIDE_DATE={override_date}")
         games = fetch_schedule_games(session, target_date=override_date)
         return [int(g["gamePk"]) for g in games if g.get("gamePk")]
+
+    # Manual GitHub Actions runs often need an immediate reproducible test target.
+    # If no override is supplied and this is a workflow_dispatch run, default to the
+    # real 2025 DSL Orange game so the run can still produce output.
+    if (os.getenv("GITHUB_EVENT_NAME") or "") == "workflow_dispatch":
+        default_gamepk = "811804"
+        print(f"No override provided on workflow_dispatch; defaulting OVERRIDE_GAMEPK={default_gamepk}")
+        return [int(default_gamepk)]
+
     return []
 
 
-def _should_post_game(state_entry: Dict[str, Any], status: str) -> bool:
+def _should_post_game(state_entry: Dict[str, Any], status: str, force_repost: bool = False) -> bool:
+    if force_repost:
+        return True
     if status == "Suspended" and not state_entry.get("posted_suspended", False):
         return True
     if status == "Final" and not state_entry.get("posted_final", False):
@@ -418,6 +431,7 @@ def run_finals_mode() -> None:
     client: Optional[Client] = None
     posted_count = 0
     dry_run = os.getenv("DRY_RUN", "0") == "1"
+    force_repost = os.getenv("FORCE_REPOST", "0") == "1"
 
     for game_pk in game_pks:
         feed = fetch_game_feed(session, game_pk)
@@ -438,7 +452,7 @@ def run_finals_mode() -> None:
             str(game_pk),
             {"posted_suspended": False, "posted_final": False, "last_status": None, "last_seen_iso": None},
         )
-        if not _should_post_game(entry, status):
+        if not _should_post_game(entry, status, force_repost=force_repost):
             update_state(state, game_pk, status, posted=False)
             continue
 

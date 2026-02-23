@@ -32,3 +32,22 @@ python gameday_dsl_orange.py --recap
 - `state.json` stores transaction seen IDs and DSL game/recap dedupe state.
 - `prospects.json` is editable and used to prioritize top prospects in summaries.
 - If `prospects.json` is stale (older than 45 days), the bot logs a warning.
+
+
+### GitHub Actions (run now from GitHub web UI)
+1. Go to **Actions** → **DSL Giants Orange Final/Suspended Box Score**.
+2. Click **Run workflow**.
+3. Set either:
+   - `override_gamepk=811804` (recommended), or
+   - `override_date=2025-07-18`
+4. For a real post now:
+   - set `dry_run=false`
+   - set `force_repost=true` if the game was already posted before.
+
+> `force_repost=true` bypasses state dedupe for that run only.
+
+
+If you do not see input fields in GitHub UI, you are running an old workflow revision/branch. Pick the branch containing this file update first.
+
+
+If you click **Run workflow** and leave overrides blank, manual runs now default to `gamePk=811804` for a reproducible 2025 test.

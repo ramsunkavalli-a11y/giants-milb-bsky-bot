@@ -2,6 +2,26 @@ name: DSL Giants Orange Final/Suspended Box Score
 
 on:
   workflow_dispatch:
+    inputs:
+      override_gamepk:
+        description: "Optional gamePk override (e.g., 811804)"
+        required: false
+        default: "811804"
+        type: string
+      override_date:
+        description: "Optional date override YYYY-MM-DD (used if override_gamepk is empty)"
+        required: false
+        type: string
+      dry_run:
+        description: "Dry run (no Bluesky post)"
+        required: false
+        default: false
+        type: boolean
+      force_repost:
+        description: "Force repost even if state.json already marked game/status as posted"
+        required: false
+        default: false
+        type: boolean
   schedule:
     - cron: "*/30 * * * *"
 
@@ -27,10 +47,22 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+
+      - name: Show effective run settings
+        run: |
+          echo "override_gamepk='${{ github.event.inputs.override_gamepk || '' }}'"
+          echo "override_date='${{ github.event.inputs.override_date || '' }}'"
+          echo "dry_run='${{ github.event.inputs.dry_run || 'false' }}'"
+          echo "force_repost='${{ github.event.inputs.force_repost || 'false' }}'"
+
       - name: Run DSL Orange gameday bot
         env:
           BSKY_HANDLE: ${{ secrets.BSKY_HANDLE }}
           BSKY_APP_PASSWORD: ${{ secrets.BSKY_APP_PASSWORD }}
+          OVERRIDE_GAMEPK: ${{ github.event.inputs.override_gamepk || '' }}
+          OVERRIDE_DATE: ${{ github.event.inputs.override_date || '' }}
+          DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
+          FORCE_REPOST: ${{ github.event.inputs.force_repost == 'true' && '1' || '0' }}
         run: python gameday_dsl_orange.py
 
       - name: Commit updated state
