@@ -47,6 +47,7 @@ python gameday_dsl_orange.py --recap
   ```
 - `player_cache.json` caches per-player metadata (pitch hand/position).
 - `data/tango_we.json` is the vendored WE lookup table used for WPA key moments (no live win-probability endpoint calls).
+- `templates/boxscore_card.html` controls the single-column sharp newspaper card style (tight crop of `#card`).
 
 ### GitHub Actions (run now from GitHub web UI)
 1. Go to **Actions** → **DSL Giants Orange Final/Suspended Box Score**.

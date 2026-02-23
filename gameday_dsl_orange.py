@@ -16,7 +16,7 @@ from bot import STATE_PATH, SLEEP_BETWEEN_POSTS_SEC, make_session
 # Local testing quick-start:
 #   DRY_RUN=1 python gameday_dsl_orange.py
 #   DRY_RUN=1 OVERRIDE_DATE=2025-07-18 python gameday_dsl_orange.py
-#   DRY_RUN=1 OVERRIDE_GAMEPK=811804 FORCE_REPOST=1 python gameday_dsl_orange.py
+#   DRY_RUN=1 OVERRIDE_GAMEPK=811804 FORCE_REPOST=1 DEBUG_WPA=1 python gameday_dsl_orange.py
 
 API_BASE = "https://statsapi.mlb.com"
 DSL_ORANGE_TEAM_ID = 615
@@ -26,6 +26,7 @@ PROSPECTS_PATH = Path("prospects.json")
 PROSPECTS_STALE_DAYS = 45
 PLAYER_CACHE_PATH = Path("player_cache.json")
 TANGO_WE_PATH = Path("data/tango_we.json")
+CARD_TEMPLATE_PATH = Path("templates/boxscore_card.html")
 
 
 def _normalize_name(name: str) -> str:
@@ -132,14 +133,6 @@ def classify_terminal_status(feed: Dict[str, Any]) -> Optional[str]:
     return None
 
 
-def _player_season_slash(player: Dict[str, Any]) -> Optional[str]:
-    season_bat = ((player.get("seasonStats") or {}).get("batting") or {})
-    avg, obp, slg = season_bat.get("avg"), season_bat.get("obp"), season_bat.get("slg")
-    if avg and obp and slg:
-        return f"{avg}/{obp}/{slg}"
-    return None
-
-
 def _load_prospects() -> Dict[str, Any]:
     return _load_json(PROSPECTS_PATH, {"updated": "", "prospects": []})
 
@@ -151,10 +144,58 @@ def _prospect_maps() -> Tuple[Dict[str, Dict[str, Any]], Dict[int, Dict[str, Any
         nm = _normalize_name(p.get("name", ""))
         if nm:
             name_map[nm] = p
-        pid = p.get("personId")
-        if pid is not None:
-            id_map[_safe_int(pid)] = p
+        if p.get("personId") is not None:
+            id_map[_safe_int(p.get("personId"))] = p
     return name_map, id_map
+
+
+def _load_player_cache() -> Dict[str, Any]:
+    return _load_json(PLAYER_CACHE_PATH, {"players": {}})
+
+
+def _save_player_cache(cache: Dict[str, Any]) -> None:
+    _save_json(PLAYER_CACHE_PATH, cache)
+
+
+def _extract_season_era_from_people_payload(payload: Dict[str, Any]) -> str:
+    people = payload.get("people") or []
+    if not people:
+        return ""
+    stats = people[0].get("stats") or []
+    for grp in stats:
+        splits = grp.get("splits") or []
+        if not splits:
+            continue
+        stat = splits[0].get("stat") or {}
+        era = stat.get("era")
+        if era:
+            return str(era)
+    return ""
+
+
+def _get_person_details(session: requests.Session, person_id: int, cache: Dict[str, Any]) -> Dict[str, Any]:
+    key = str(person_id)
+    players = cache.setdefault("players", {})
+    if key in players:
+        return players[key]
+
+    detail = {"pitchHand": "", "seasonEra": ""}
+    try:
+        res = session.get(
+            f"{API_BASE}/api/v1/people/{person_id}",
+            params={"hydrate": "stats(group=[pitching],type=[season],sportId=16)"},
+            timeout=30,
+        )
+        res.raise_for_status()
+        payload = res.json() or {}
+        person = (payload.get("people") or [{}])[0]
+        detail["pitchHand"] = ((person.get("pitchHand") or {}).get("code") or "").upper()
+        detail["seasonEra"] = _extract_season_era_from_people_payload(payload)
+    except requests.RequestException:
+        pass
+
+    players[key] = detail
+    return detail
 
 
 def maybe_warn_stale_prospects() -> None:
@@ -167,32 +208,12 @@ def maybe_warn_stale_prospects() -> None:
         print(f"WARNING: prospects.json is {age_days} days old; consider refreshing rankings.")
 
 
-def _load_player_cache() -> Dict[str, Any]:
-    return _load_json(PLAYER_CACHE_PATH, {"players": {}})
-
-
-def _save_player_cache(cache: Dict[str, Any]) -> None:
-    _save_json(PLAYER_CACHE_PATH, cache)
-
-
-def _get_person_details(session: requests.Session, person_id: int, cache: Dict[str, Any]) -> Dict[str, Any]:
-    key = str(person_id)
-    players = cache.setdefault("players", {})
-    if key in players:
-        return players[key]
-    detail = {"pitchHand": "", "primaryPos": ""}
-    try:
-        res = session.get(f"{API_BASE}/api/v1/people/{person_id}", timeout=30)
-        res.raise_for_status()
-        person = ((res.json() or {}).get("people") or [{}])[0]
-        detail = {
-            "pitchHand": ((person.get("pitchHand") or {}).get("code") or "").upper(),
-            "primaryPos": ((person.get("primaryPosition") or {}).get("abbreviation") or ""),
-        }
-    except requests.RequestException:
-        pass
-    players[key] = detail
-    return detail
+def _player_season_slash(player: Dict[str, Any]) -> Optional[str]:
+    season_bat = ((player.get("seasonStats") or {}).get("batting") or {})
+    avg, obp, slg = season_bat.get("avg"), season_bat.get("obp"), season_bat.get("slg")
+    if avg and obp and slg:
+        return f"{avg}/{obp}/{slg}"
+    return None
 
 
 def _derive_pitch_metrics(feed: Dict[str, Any]) -> Dict[int, Dict[str, int]]:
@@ -216,19 +237,19 @@ def _derive_pitch_metrics(feed: Dict[str, Any]) -> Dict[int, Dict[str, int]]:
     return metrics
 
 
-def _primary_hitter_position(all_positions: List[Dict[str, Any]]) -> str:
-    non_p = [p.get("abbreviation", "") for p in all_positions if p.get("abbreviation") not in {"P", ""}]
-    return (non_p[0] if non_p else (all_positions[0].get("abbreviation", "") if all_positions else "")) or "-"
-
-
-def _sub_position(all_positions: List[Dict[str, Any]]) -> str:
+def _is_pitcher_only(all_positions: List[Dict[str, Any]]) -> bool:
     if not all_positions:
-        return "-"
-    for p in reversed(all_positions):
-        abbr = p.get("abbreviation") or ""
-        if abbr and abbr != "P":
-            return abbr
-    return all_positions[-1].get("abbreviation") or "-"
+        return False
+    vals = [p.get("abbreviation") for p in all_positions if p.get("abbreviation")]
+    return bool(vals) and all(v == "P" for v in vals)
+
+
+def _primary_non_pitcher_pos(all_positions: List[Dict[str, Any]]) -> str:
+    for p in all_positions:
+        ab = p.get("abbreviation") or ""
+        if ab and ab != "P":
+            return ab
+    return "-"
 
 
 def extract_player_lines(feed: Dict[str, Any], session: requests.Session) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], Dict[str, Any]]:
@@ -244,7 +265,6 @@ def extract_player_lines(feed: Dict[str, Any], session: requests.Session) -> Tup
 
     batters_set = {_safe_int(x, -1) for x in (orange_team.get("batters") or [])}
     pitchers_order = [_safe_int(x, -1) for x in (orange_team.get("pitchers") or [])]
-    pitchers_set = set(pitchers_order)
     pitch_metrics = _derive_pitch_metrics(feed)
     cache = _load_player_cache()
 
@@ -257,24 +277,28 @@ def extract_player_lines(feed: Dict[str, Any], session: requests.Session) -> Tup
         pid = _safe_int(person.get("id"), -1)
         name = person.get("fullName", "Unknown")
         all_positions = pdata.get("allPositions") or []
+        game_status = pdata.get("gameStatus") or {}
         batting = ((pdata.get("stats") or {}).get("batting") or {})
         pitching = ((pdata.get("stats") or {}).get("pitching") or {})
         bo_raw = str(pdata.get("battingOrder") or "").strip()
-        game_status = pdata.get("gameStatus") or {}
 
+        pa = _safe_int(batting.get("plateAppearances"), _safe_int(batting.get("atBats")) + _safe_int(batting.get("baseOnBalls")))
         appeared_hitter = bool(bo_raw) or bool(all_positions) or (game_status.get("isOnBench") is False) or pid in batters_set
+
+        # Exclude pitcher-only entries from hitters unless they actually batted.
+        if appeared_hitter and _is_pitcher_only(all_positions) and pa <= 0:
+            appeared_hitter = False
+
         if appeared_hitter:
-            pa = _safe_int(batting.get("plateAppearances"), _safe_int(batting.get("atBats")) + _safe_int(batting.get("baseOnBalls")))
             doubles = _safe_int(batting.get("doubles"))
             triples = _safe_int(batting.get("triples"))
             hr = _safe_int(batting.get("homeRuns"))
             hits = _safe_int(batting.get("hits"))
             tb = _safe_int(batting.get("totalBases"), hits + doubles + 2 * triples + 3 * hr)
-            hitter_row = {
+            row = {
                 "id": pid,
                 "name": name,
-                "pos": _primary_hitter_position(all_positions),
-                "pos_sub": _sub_position(all_positions),
+                "pos": _primary_non_pitcher_pos(all_positions),
                 "pa": pa,
                 "ab": _safe_int(batting.get("atBats")),
                 "r": _safe_int(batting.get("runs")),
@@ -286,35 +310,28 @@ def extract_player_lines(feed: Dict[str, Any], session: requests.Session) -> Tup
                 "hr": hr,
                 "sb": _safe_int(batting.get("stolenBases")),
                 "tb": max(0, tb),
-                "season_slash": _player_season_slash(pdata),
-                "batting_order": bo_raw,
-                "is_sub": False,
+                "season_slash": _player_season_slash(pdata) or "",
                 "indent": False,
+                "slot": None,
+                "seq": 999,
             }
             if bo_raw.isdigit():
                 bo = int(bo_raw)
-                slot = bo // 100
-                seq = bo % 100
-                hitter_row["seq"] = seq
-                hitter_row["is_sub"] = seq > 0
+                slot, seq = bo // 100, bo % 100
+                row["slot"] = slot
+                row["seq"] = seq
                 if 1 <= slot <= 9:
-                    slot_groups[slot].append(hitter_row)
+                    slot_groups[slot].append(row)
                 else:
-                    unknown_subs.append(hitter_row)
+                    unknown_subs.append(row)
             else:
-                unknown_subs.append(hitter_row)
+                unknown_subs.append(row)
 
-        appeared_pitcher = pid in pitchers_set or bool(pitching) or any(k in pitching for k in ("inningsPitched", "numberOfPitches", "strikeOuts"))
+        appeared_pitcher = pid in set(pitchers_order) or bool(pitching) or any(k in pitching for k in ("inningsPitched", "numberOfPitches", "strikeOuts"))
         if appeared_pitcher:
-            pmeta = _get_person_details(session, pid, cache)
-            hand_code = pmeta.get("pitchHand") or ""
-            hand = "RHP" if hand_code == "R" else "LHP" if hand_code == "L" else "P"
+            meta = _get_person_details(session, pid, cache)
+            hand = "RHP" if meta.get("pitchHand") == "R" else "LHP" if meta.get("pitchHand") == "L" else "P"
             ip = str(pitching.get("inningsPitched") or "0.0")
-            outs = _ip_to_outs(ip)
-            hits_allowed = _safe_int(pitching.get("hits"))
-            walks = _safe_int(pitching.get("baseOnBalls"))
-            ip_val = max(outs / 3.0, 0.001)
-            whip = round((hits_allowed + walks) / ip_val, 2)
             pm = pitch_metrics.get(pid, {})
             pitchers.append(
                 {
@@ -322,14 +339,14 @@ def extract_player_lines(feed: Dict[str, Any], session: requests.Session) -> Tup
                     "name": name,
                     "hand": hand,
                     "ip": ip,
-                    "ip_outs": outs,
-                    "h": hits_allowed,
+                    "ip_outs": _ip_to_outs(ip),
+                    "h": _safe_int(pitching.get("hits")),
                     "r": _safe_int(pitching.get("runs")),
                     "er": _safe_int(pitching.get("earnedRuns")),
-                    "bb": walks,
+                    "bb": _safe_int(pitching.get("baseOnBalls")),
                     "k": _safe_int(pitching.get("strikeOuts")),
                     "bf": _safe_int(pitching.get("battersFaced")),
-                    "whip": f"{whip:.2f}",
+                    "season_era": str(((pdata.get("seasonStats") or {}).get("pitching") or {}).get("era") or meta.get("seasonEra") or ""),
                     "swstr": pm.get("swstr") or "",
                     "gb": pm.get("gb") or "",
                 }
@@ -337,23 +354,18 @@ def extract_player_lines(feed: Dict[str, Any], session: requests.Session) -> Tup
 
     hitters: List[Dict[str, Any]] = []
     for slot in range(1, 10):
-        rows = sorted(slot_groups[slot], key=lambda x: (x.get("seq", 999), x["name"]))
-        for i, row in enumerate(rows):
-            row["slot"] = slot
-            row["indent"] = i > 0
-            if row["indent"]:
-                row["pos"] = row.get("pos_sub") or row.get("pos")
+        rows = sorted(slot_groups[slot], key=lambda r: (r["seq"], r["name"]))
+        for idx, row in enumerate(rows):
+            row["indent"] = idx > 0
             hitters.append(row)
-
-    for row in unknown_subs:
-        row["slot"] = None
+    for row in sorted(unknown_subs, key=lambda r: r["name"]):
         row["indent"] = True
-    hitters.extend(sorted(unknown_subs, key=lambda x: x["name"]))
+        hitters.append(row)
 
-    pitcher_order_index = {pid: idx for idx, pid in enumerate(pitchers_order)}
-    pitchers.sort(key=lambda p: pitcher_order_index.get(p["id"], 9999))
-
+    order_map = {pid: idx for idx, pid in enumerate(pitchers_order)}
+    pitchers.sort(key=lambda p: order_map.get(p["id"], 9999))
     _save_player_cache(cache)
+
     return hitters, pitchers, {"orange_is_home": orange_is_home, "side_key": side_key}
 
 
@@ -364,16 +376,16 @@ def _prospect_info(player: Dict[str, Any], name_map: Dict[str, Dict[str, Any]], 
     return name_map.get(_normalize_name(player.get("name", "")))
 
 
-def _hitter_line(h: Dict[str, Any], with_slash: bool = True) -> str:
-    base = f"{h.get('pos', '-') or '-'} {h['name']} {h['h']}-{h['ab']}"
-    if with_slash and h.get("season_slash"):
-        base += f" | {h['season_slash']}"
-    return base
+def _hitter_text_line(h: Dict[str, Any], include_slash: bool = True) -> str:
+    line = f"{h.get('pos','-')} {h['name']} {h['h']}-{h['ab']}"
+    if include_slash and h.get("season_slash"):
+        line += f" | {h['season_slash']}"
+    return line
 
 
-def _pitcher_line(p: Dict[str, Any], with_secondaries: bool = True) -> str:
+def _pitcher_text_line(p: Dict[str, Any], include_secondaries: bool = True) -> str:
     line = f"{p['hand']} {p['name']} {p['ip']} IP, {p['k']} K"
-    if with_secondaries and (p.get("swstr") or p.get("gb")):
+    if include_secondaries and (p.get("swstr") or p.get("gb")):
         parts = []
         if p.get("swstr"):
             parts.append(f"SwStr {p['swstr']}")
@@ -383,246 +395,255 @@ def _pitcher_line(p: Dict[str, Any], with_secondaries: bool = True) -> str:
     return line
 
 
-def compose_post_text(
-    status: str,
-    orange_runs: int,
-    opp_name: str,
-    opp_runs: int,
-    hitters: List[Dict[str, Any]],
-    pitchers: List[Dict[str, Any]],
-) -> str:
-    line1 = f"{status}: DSL Giants Orange {orange_runs}, {opp_name} {opp_runs}"
+def compose_post_text(status: str, orange_runs: int, opp_name: str, opp_runs: int, hitters: List[Dict[str, Any]], pitchers: List[Dict[str, Any]]) -> str:
+    first = f"{status}: DSL Giants Orange {orange_runs}, {opp_name} {opp_runs}"
     name_map, id_map = _prospect_maps()
 
-    candidates: List[Dict[str, Any]] = []
+    lines: List[Dict[str, Any]] = []
     for h in hitters:
-        pinfo = _prospect_info(h, name_map, id_map)
-        if pinfo:
-            pr = _safe_int(pinfo.get("priority"), 9)
-            candidates.append(
+        p = _prospect_info(h, name_map, id_map)
+        if p:
+            lines.append(
                 {
-                    "is_prospect": True,
-                    "priority": pr,
-                    "is_pitcher": False,
+                    "priority": _safe_int(p.get("priority"), 9),
+                    "pitcher": False,
                     "perf": h["h"] * 3 + h["hr"] * 2 + h["bb"],
-                    "full": _hitter_line(h, with_slash=True),
-                    "no_slash": _hitter_line(h, with_slash=False),
-                    "min": _hitter_line(h, with_slash=False),
+                    "full": _hitter_text_line(h, include_slash=True),
+                    "compact": _hitter_text_line(h, include_slash=False),
                 }
             )
-
     for p in pitchers:
-        pinfo = _prospect_info(p, name_map, id_map)
-        if pinfo:
-            pr = _safe_int(pinfo.get("priority"), 9)
-            candidates.append(
+        pp = _prospect_info(p, name_map, id_map)
+        if pp:
+            lines.append(
                 {
-                    "is_prospect": True,
-                    "priority": pr,
-                    "is_pitcher": True,
+                    "priority": _safe_int(pp.get("priority"), 9),
+                    "pitcher": True,
                     "perf": p["k"] * 2 + p["ip_outs"] / 3,
-                    "full": _pitcher_line(p, with_secondaries=True),
-                    "no_slash": _pitcher_line(p, with_secondaries=True),
-                    "min": _pitcher_line(p, with_secondaries=False),
+                    "full": _pitcher_text_line(p, include_secondaries=True),
+                    "compact": _pitcher_text_line(p, include_secondaries=False),
                 }
             )
 
-    chosen = sorted(candidates, key=lambda x: (x["priority"], -x["perf"], x["full"]))[:4]
+    chosen = sorted(lines, key=lambda x: (x["priority"], -x["perf"], x["full"]))[:4]
 
-    if any(_prospect_info(p, name_map, id_map) for p in pitchers) and not any(c["is_pitcher"] for c in chosen):
-        prospect_pitchers = [p for p in pitchers if _prospect_info(p, name_map, id_map)]
-        if prospect_pitchers:
-            p = sorted(prospect_pitchers, key=lambda x: (-x["ip_outs"], -x["k"]))[0]
-            chosen[-1:] = [
-                {
-                    "is_prospect": True,
-                    "priority": 99,
-                    "is_pitcher": True,
-                    "perf": 0,
-                    "full": _pitcher_line(p, with_secondaries=True),
-                    "no_slash": _pitcher_line(p, with_secondaries=True),
-                    "min": _pitcher_line(p, with_secondaries=False),
-                }
-            ]
-
-    if pitchers and not any(c["is_pitcher"] for c in chosen):
+    if pitchers and not any(c["pitcher"] for c in chosen):
         lead = sorted(pitchers, key=lambda p: (-p["ip_outs"], -p["k"]))[0]
         chosen.append(
             {
-                "is_prospect": False,
                 "priority": 99,
-                "is_pitcher": True,
+                "pitcher": True,
                 "perf": 0,
-                "full": _pitcher_line(lead, with_secondaries=True),
-                "no_slash": _pitcher_line(lead, with_secondaries=True),
-                "min": _pitcher_line(lead, with_secondaries=False),
+                "full": _pitcher_text_line(lead, include_secondaries=True),
+                "compact": _pitcher_text_line(lead, include_secondaries=False),
+                "is_non_prospect": True,
             }
         )
 
     chosen = chosen[:4]
 
-    for mode in ("full", "no_slash", "min"):
-        lines = [line1] + [c[mode] for c in chosen]
-        text = "\n".join(lines)
-        if len(text) <= MAX_POST_CHARS:
-            return text
+    # First pass: rich format.
+    text = "\n".join([first] + [c["full"] for c in chosen])
+    if len(text) <= MAX_POST_CHARS:
+        return text
 
+    # Remove non-prospect fallback first.
+    chosen = [c for c in chosen if not c.get("is_non_prospect")]
+    text = "\n".join([first] + [c["full"] for c in chosen])
+    if len(text) <= MAX_POST_CHARS:
+        return text
+
+    # Remove slash/secondary metrics.
+    text = "\n".join([first] + [c["compact"] for c in chosen])
+    if len(text) <= MAX_POST_CHARS:
+        return text
+
+    # Drop from bottom until fit.
     working = chosen[:]
-    while working and len("\n".join([line1] + [c["min"] for c in working])) > MAX_POST_CHARS:
-        nonpros = [i for i, c in enumerate(working) if not c["is_prospect"]]
-        drop_idx = nonpros[-1] if nonpros else len(working) - 1
-        working.pop(drop_idx)
-
-    return "\n".join([line1] + [c["min"] for c in working])[:MAX_POST_CHARS]
+    while working and len("\n".join([first] + [c["compact"] for c in working])) > MAX_POST_CHARS:
+        working.pop()
+    return "\n".join([first] + [c["compact"] for c in working])[:MAX_POST_CHARS]
 
 
 def _load_tango_table() -> Dict[Tuple[int, str, int, int, int], float]:
     payload = _load_json(TANGO_WE_PATH, {"rows": []})
     table: Dict[Tuple[int, str, int, int, int], float] = {}
-    for r in payload.get("rows", []):
-        k = (_safe_int(r.get("inning"), 1), str(r.get("half") or "top").lower(), _safe_int(r.get("outs"), 0), _safe_int(r.get("base"), 0), _safe_int(r.get("scoreDiffHome"), 0))
-        table[k] = _safe_float(r.get("weHome"), 0.5)
+    for row in payload.get("rows", []):
+        key = (
+            _safe_int(row.get("inning"), 1),
+            str(row.get("half") or "top").lower(),
+            _safe_int(row.get("outs"), 0),
+            _safe_int(row.get("base"), 0),
+            _safe_int(row.get("scoreDiffHome"), 0),
+        )
+        table[key] = _safe_float(row.get("weHome"), 0.5)
     return table
 
 
 def _lookup_we(table: Dict[Tuple[int, str, int, int, int], float], inning: int, half: str, outs: int, base: int, score_diff_home: int) -> float:
-    inning_c = min(max(inning, 1), 9)
-    outs_c = min(max(outs, 0), 2)
-    base_c = min(max(base, 0), 7)
-    diff_c = min(max(score_diff_home, -10), 10)
-    return table.get((inning_c, half.lower(), outs_c, base_c, diff_c), 0.5)
+    inning = min(max(inning, 1), 9)
+    outs = min(max(outs, 0), 2)
+    base = min(max(base, 0), 7)
+    score_diff_home = min(max(score_diff_home, -10), 10)
+    return table.get((inning, half, outs, base, score_diff_home), 0.5)
 
 
 def _bases_from_runners(play: Dict[str, Any]) -> int:
-    base = 0
+    mask = 0
     for r in play.get("runners") or []:
-        movement = r.get("movement") or {}
-        if movement.get("isOut"):
+        move = r.get("movement") or {}
+        if move.get("isOut"):
             continue
-        end = str(movement.get("end") or "")
+        end = str(move.get("end") or "")
         if end == "1B":
-            base |= 1
+            mask |= 1
         elif end == "2B":
-            base |= 2
+            mask |= 2
         elif end == "3B":
-            base |= 4
-    return base
+            mask |= 4
+    return mask
 
 
-def _short_moment(play: Dict[str, Any], we_before: float, we_after: float, wpa: float) -> str:
+def _moment_text(play: Dict[str, Any], we_before: float, we_after: float, wpa: float) -> str:
     about = play.get("about") or {}
     result = play.get("result") or {}
     batter = ((play.get("matchup") or {}).get("batter") or {}).get("fullName") or "Player"
     surname = batter.split()[-1]
     event = (result.get("event") or "play").lower()
     runs = _safe_int(result.get("rbi"), 0)
-    run_txt = f" {runs}-run" if runs > 1 else ""
+    run_prefix = f" {runs}-run" if runs > 1 else ""
     inning = _safe_int(about.get("inning"), 1)
     half = "T" if (about.get("halfInning") or "").lower() == "top" else "B"
-    return f"{half}{inning}: {surname}{run_txt} {event} — WE {round(we_before*100):d}%→{round(we_after*100):d}% ({wpa*100:+.0f}%)"
+    return f"{half}{inning}: {surname}{run_prefix} {event} — Orange WE {round(we_before*100):d}%→{round(we_after*100):d}% ({wpa*100:+.0f}%)"
 
 
 def generate_key_moments_wpa(feed: Dict[str, Any], orange_is_home: bool) -> List[str]:
     table = _load_tango_table()
-    all_plays = ((feed.get("liveData") or {}).get("plays") or {}).get("allPlays") or []
+    plays = ((feed.get("liveData") or {}).get("plays") or {}).get("allPlays") or []
+    debug = os.getenv("DEBUG_WPA", "0") == "1"
 
     inning, half = 1, "top"
     outs_before = 0
-    bases_before = 0
-    home_score_before = 0
-    away_score_before = 0
-    debug = os.getenv("DEBUG_WPA", "0") == "1"
-    debug_rows = []
+    base_before = 0
+    home_score = 0
+    away_score = 0
 
-    candidates: List[Tuple[float, str]] = []
+    positive: List[Tuple[float, str, Dict[str, Any]]] = []
+    fallback: List[Tuple[float, str, Dict[str, Any]]] = []
 
-    for play in all_plays:
-        score_diff_before = home_score_before - away_score_before
-        we_home_before = _lookup_we(table, inning, half, outs_before, bases_before, score_diff_before)
-        we_orange_before = we_home_before if orange_is_home else (1 - we_home_before)
+    for play in plays:
+        diff_before = home_score - away_score
+        we_home_before = _lookup_we(table, inning, half, outs_before, base_before, diff_before)
+        we_orange_before = we_home_before if orange_is_home else (1.0 - we_home_before)
 
-        about = play.get("about") or {}
-        count = play.get("count") or {}
         result = play.get("result") or {}
+        count = play.get("count") or {}
 
-        home_after = _safe_int(result.get("homeScore"), home_score_before)
-        away_after = _safe_int(result.get("awayScore"), away_score_before)
+        home_after = _safe_int(result.get("homeScore"), home_score)
+        away_after = _safe_int(result.get("awayScore"), away_score)
         outs_after = _safe_int(count.get("outs"), outs_before)
-        bases_after = _bases_from_runners(play)
+        base_after = _bases_from_runners(play)
 
         next_inning, next_half = inning, half
-        lookup_outs_after, lookup_bases_after = outs_after, bases_after
+        look_outs, look_base = outs_after, base_after
         if outs_after >= 3:
-            lookup_outs_after = 0
-            lookup_bases_after = 0
+            look_outs, look_base = 0, 0
             if half == "top":
                 next_half = "bottom"
             else:
                 next_half = "top"
                 next_inning += 1
 
-        score_diff_after = home_after - away_after
-        we_home_after = _lookup_we(table, next_inning, next_half, lookup_outs_after, lookup_bases_after, score_diff_after)
-        we_orange_after = we_home_after if orange_is_home else (1 - we_home_after)
+        diff_after = home_after - away_after
+        we_home_after = _lookup_we(table, next_inning, next_half, look_outs, look_base, diff_after)
+        we_orange_after = we_home_after if orange_is_home else (1.0 - we_home_after)
         wpa = we_orange_after - we_orange_before
 
         if abs(wpa) > 0.001:
-            candidates.append((abs(wpa), _short_moment(play, we_orange_before, we_orange_after, wpa)))
-
-        if debug and len(debug_rows) < 8:
-            debug_rows.append(
-                f"{half[0].upper()}{inning} outs:{outs_before}->{outs_after} base:{bases_before}->{bases_after} diff:{score_diff_before}->{score_diff_after} we:{we_orange_before:.3f}->{we_orange_after:.3f}"
-            )
+            detail = {
+                "inning": inning,
+                "half": half,
+                "outs_before": outs_before,
+                "outs_after": outs_after,
+                "base_before": base_before,
+                "base_after": base_after,
+                "diff_before": diff_before,
+                "diff_after": diff_after,
+                "we_home_before": we_home_before,
+                "we_home_after": we_home_after,
+                "we_orange_before": we_orange_before,
+                "we_orange_after": we_orange_after,
+                "wpa": wpa,
+                "text": _moment_text(play, we_orange_before, we_orange_after, wpa),
+            }
+            if wpa > 0:
+                positive.append((wpa, detail["text"], detail))
+            else:
+                fallback.append((abs(wpa), detail["text"], detail))
 
         inning, half = next_inning, next_half
-        outs_before = lookup_outs_after
-        bases_before = lookup_bases_after
-        home_score_before = home_after
-        away_score_before = away_after
+        outs_before, base_before = look_outs, look_base
+        home_score, away_score = home_after, away_after
+
+    positive.sort(key=lambda x: x[0], reverse=True)
+    fallback.sort(key=lambda x: x[0], reverse=True)
+
+    picked = positive[:3]
+    if len(picked) < 3:
+        picked.extend(fallback[: 3 - len(picked)])
 
     if debug:
-        print("DEBUG_WPA samples:")
-        for row in debug_rows:
-            print(f"  {row}")
+        print("DEBUG_WPA selected moments:")
+        for _, _, d in picked:
+            print(
+                "  "
+                f"{d['half'][0].upper()}{d['inning']} outs:{d['outs_before']}->{d['outs_after']} "
+                f"base:{d['base_before']}->{d['base_after']} scoreDiffHome:{d['diff_before']}->{d['diff_after']} "
+                f"WE_home:{d['we_home_before']:.3f}->{d['we_home_after']:.3f} "
+                f"WE_orange:{d['we_orange_before']:.3f}->{d['we_orange_after']:.3f} WPA:{d['wpa']:+.3f}"
+            )
 
-    candidates.sort(key=lambda x: x[0], reverse=True)
-    moments = [c[1] for c in candidates[:3]]
+    moments = [p[1] for p in picked]
     while len(moments) < 3:
         moments.append("No high-leverage plate appearance found")
     return moments
 
 
-def _prospect_name_ids(hitters: List[Dict[str, Any]], pitchers: List[Dict[str, Any]]) -> set:
+def _prospect_ids(hitters: List[Dict[str, Any]], pitchers: List[Dict[str, Any]]) -> set:
     name_map, id_map = _prospect_maps()
     ids = set()
-    for h in hitters + pitchers:
-        if _prospect_info(h, name_map, id_map):
-            ids.add(h.get("id"))
+    for pl in hitters + pitchers:
+        if _prospect_info(pl, name_map, id_map):
+            ids.add(pl.get("id"))
     return ids
 
 
-def _to_html_table_rows_hitters(hitters: List[Dict[str, Any]], prospect_ids: set) -> str:
+def _build_hitter_rows(hitters: List[Dict[str, Any]], prospect_ids: set) -> str:
     rows = []
     for h in hitters:
-        classes = "sub" if h.get("indent") else ""
-        name_cls = "hl" if h.get("id") in prospect_ids else ""
-        display_name = f"↳ {h['name']}" if h.get("indent") else h["name"]
+        row_cls = "sub" if h.get("indent") else ""
+        prefix = html.escape(h.get("pos", "-"))
+        name = html.escape(h["name"])
+        hl_cls = "hl" if h.get("id") in prospect_ids else ""
+        indent_cls = "indent" if h.get("indent") else ""
+        player_cell = f"<span class='name-wrap {indent_cls}'>{prefix} <span class='{hl_cls}'>{name}</span></span>"
         rows.append(
-            f"<tr class='{classes}'><td class='name {name_cls}'>{html.escape(display_name)}</td>"
-            f"<td>{html.escape(h.get('pos','-'))}</td><td>{h['pa']}</td><td>{h['ab']}</td><td>{h['r']}</td><td>{h['h']}</td>"
-            f"<td>{h['bb']}</td><td>{h['k']}</td><td>{h['2b']}</td><td>{h['3b']}</td><td>{h['hr']}</td><td>{h['sb']}</td><td>{h['tb']}</td>"
-            f"<td>{html.escape(h.get('season_slash') or '')}</td></tr>"
+            f"<tr class='{row_cls}'><td>{player_cell}</td>"
+            f"<td>{h['pa']}</td><td>{h['ab']}</td><td>{h['r']}</td><td>{h['h']}</td><td>{h['bb']}</td><td>{h['k']}</td>"
+            f"<td>{h['2b']}</td><td>{h['3b']}</td><td>{h['hr']}</td><td>{h['sb']}</td><td>{h['tb']}</td><td>{html.escape(h.get('season_slash',''))}</td></tr>"
         )
     return "\n".join(rows)
 
 
-def _to_html_table_rows_pitchers(pitchers: List[Dict[str, Any]], prospect_ids: set) -> str:
+def _build_pitcher_rows(pitchers: List[Dict[str, Any]], prospect_ids: set) -> str:
     rows = []
     for p in pitchers:
-        name_cls = "hl" if p.get("id") in prospect_ids else ""
+        name = html.escape(p["name"])
+        hl_cls = "hl" if p.get("id") in prospect_ids else ""
+        first_cell = f"{p['hand']} <span class='{hl_cls}'>{name}</span>"
         rows.append(
-            f"<tr><td class='name {name_cls}'>{html.escape(p['name'])}</td><td>{p['hand']}</td><td>{p['ip']}</td><td>{p['h']}</td><td>{p['r']}</td>"
-            f"<td>{p['er']}</td><td>{p['bb']}</td><td>{p['k']}</td><td>{p['bf']}</td><td>{p['whip']}</td><td>{p.get('swstr','')}</td><td>{p.get('gb','')}</td></tr>"
+            f"<tr><td>{first_cell}</td><td>{p['ip']}</td><td>{p['h']}</td><td>{p['r']}</td><td>{p['er']}</td><td>{p['bb']}</td><td>{p['k']}</td>"
+            f"<td>{p['bf']}</td><td>{html.escape(p.get('season_era',''))}</td><td>{p.get('swstr','')}</td><td>{p.get('gb','')}</td></tr>"
         )
     return "\n".join(rows)
 
@@ -637,64 +658,20 @@ def _render_html_card(
     pitchers: List[Dict[str, Any]],
     key_moments: List[str],
 ) -> str:
-    prospect_ids = _prospect_name_ids(hitters, pitchers)
-    hitter_rows = _to_html_table_rows_hitters(hitters, prospect_ids)
-    pitcher_rows = _to_html_table_rows_pitchers(pitchers, prospect_ids)
-    moment_items = "".join(f"<li>{html.escape(m)}</li>" for m in key_moments[:3])
-
-    return f"""
-<!doctype html><html><head><meta charset='utf-8'/>
-<style>
-body {{ margin:0; padding:0; background:white; }}
-#card {{ width: 980px; padding: 20px 24px 18px 24px; font-family: Georgia, 'Times New Roman', serif; color:#141414; }}
-.hdr1 {{ font-size: 30px; font-weight: 700; line-height: 1.05; margin: 0 0 4px 0; }}
-.hdr2 {{ font-size: 15px; letter-spacing: .03em; color:#333; margin-bottom: 4px; }}
-.hdr3 {{ font-size: 20px; font-weight: 700; margin-bottom: 6px; }}
-.rule {{ border-top: 1px solid #1d1d1d; margin: 6px 0 10px 0; }}
-.section {{ margin-top: 10px; }}
-.section h3 {{ font-variant: small-caps; letter-spacing: .07em; font-size: 15px; margin: 0 0 4px 0; border-bottom:1px solid #ccc; padding-bottom:2px; }}
-table {{ width:100%; border-collapse: collapse; font-size: 13px; line-height:1.15; font-variant-numeric: tabular-nums; }}
-th, td {{ padding: 2px 4px; text-align: right; border-bottom: 1px solid #efefef; white-space: nowrap; }}
-th:first-child, td:first-child {{ text-align: left; }}
-tr:nth-child(even) td {{ background: #fcfcfc; }}
-.name.subtext {{ color:#555; }}
-tr.sub td {{ color:#666; font-size:12px; }}
-tr.sub td.name {{ padding-left: 14px; }}
-.hl {{ position:relative; z-index:0; display:inline-block; }}
-.hl::before {{ content:''; position:absolute; left:-2px; right:-2px; top:55%; height:0.95em; background:rgba(255,235,59,0.55); transform:rotate(-1.2deg); border-radius:2px; z-index:-1; }}
-.moments ol {{ margin: 4px 0 0 18px; padding:0; }}
-.moments li {{ margin: 2px 0; font-size: 13px; line-height:1.2; }}
-</style></head><body>
-<div id='card'>
-  <div class='hdr1'>{html.escape(matchup)}</div>
-  <div class='hdr2'>{html.escape(game_date)} · {html.escape(status)}</div>
-  <div class='hdr3'>{html.escape(score_line)}</div>
-  <div class='hdr2'>{html.escape(linescore)}</div>
-  <div class='rule'></div>
-
-  <div class='section'>
-    <h3>Hitters (all appearances)</h3>
-    <table>
-      <thead><tr><th>Player</th><th>Pos</th><th>PA</th><th>AB</th><th>R</th><th>H</th><th>BB</th><th>K</th><th>2B</th><th>3B</th><th>HR</th><th>SB</th><th>TB</th><th>Season</th></tr></thead>
-      <tbody>{hitter_rows}</tbody>
-    </table>
-  </div>
-
-  <div class='section'>
-    <h3>Pitchers (all appearances)</h3>
-    <table>
-      <thead><tr><th>Pitcher</th><th>Hand</th><th>IP</th><th>H</th><th>R</th><th>ER</th><th>BB</th><th>K</th><th>BF</th><th>WHIP</th><th>SwStr</th><th>GB</th></tr></thead>
-      <tbody>{pitcher_rows}</tbody>
-    </table>
-  </div>
-
-  <div class='section moments'>
-    <h3>Key moments (WPA via Tango WE table)</h3>
-    <ol>{moment_items}</ol>
-  </div>
-</div>
-</body></html>
-"""
+    tpl = CARD_TEMPLATE_PATH.read_text(encoding="utf-8")
+    pids = _prospect_ids(hitters, pitchers)
+    payload = {
+        "__MATCHUP__": html.escape(matchup),
+        "__DATE_STATUS__": html.escape(f"{game_date} · {status}"),
+        "__SCORE_LINE__": html.escape(score_line),
+        "__RH_E__": html.escape(linescore),
+        "__HITTER_ROWS__": _build_hitter_rows(hitters, pids),
+        "__PITCHER_ROWS__": _build_pitcher_rows(pitchers, pids),
+        "__MOMENT_ROWS__": "".join(f"<li>{html.escape(m)}</li>" for m in key_moments[:3]),
+    }
+    for k, v in payload.items():
+        tpl = tpl.replace(k, v)
+    return tpl
 
 
 def render_boxscore_card_image(
@@ -714,7 +691,7 @@ def render_boxscore_card_image(
 
         with sync_playwright() as pw:
             browser = pw.chromium.launch(headless=True)
-            page = browser.new_page(viewport={"width": 1200, "height": 4200})
+            page = browser.new_page(viewport={"width": 1200, "height": 4600})
             page.set_content(html_doc, wait_until="load")
             card = page.locator("#card")
             box = card.bounding_box()
@@ -730,7 +707,7 @@ def render_boxscore_card_image(
                 quality -= 7
                 page.screenshot(path=output_path, type="jpeg", quality=quality, clip=clip)
             browser.close()
-            return output_path
+        return output_path
     except Exception as exc:
         print(f"WARNING: Playwright render failed ({exc}); using Pillow fallback")
 
