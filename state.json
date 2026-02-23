@@ -1,20 +1,8 @@
 {
   "bootstrapped": true,
-  "last_run_iso": "2026-02-23T22:19:10.767687+00:00",
-  "posted_games": {
-    "811804": {
-      "last_seen_iso": "2026-02-23T22:19:10.767665+00:00",
-      "last_status": "Final",
-      "posted_final": true,
-      "posted_suspended": false
-    }
-  },
-  "recaps": {
-    "2026-02-22": {
-      "note": "no_games",
-      "posted": false
-    }
-  },
+  "last_run_iso": "2026-02-22T23:38:31.121359+00:00",
+  "posted_games": {},
+  "recaps": {},
   "seen_transaction_ids": [
     886594,
     886595,
