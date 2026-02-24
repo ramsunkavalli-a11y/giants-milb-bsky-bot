@@ -6,30 +6,33 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
+  html, body { margin:0; padding:0; background:transparent; }
   body {
-    margin: 0;
-    background: #f9f7f1;
+    display:inline-block;
     font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    line-height: 1.1;
+    line-height: 1.08;
   }
+
   #card {
+    display:inline-block;
     width: 980px;
-    margin: 8px;
-    padding: 10px 12px 10px 12px;
+    margin: 0;
+    padding: 8px 10px;
     background: #fff;
     color: #111;
-    box-shadow: 0 1px 4px rgba(0,0,0,.16);
+    box-shadow: 0 1px 4px rgba(0,0,0,.14);
   }
-  .title { font-size: 28px; font-weight: 800; margin: 0 0 2px 0; }
-  .meta { font-size: 13px; margin: 0 0 2px 0; }
-  .score { font-size: 21px; font-weight: 800; margin: 0 0 2px 0; }
-  .rhe { font-size: 13px; margin: 0 0 4px 0; }
-  .rule { border-top: 2px solid #000; margin: 4px 0 6px 0; }
 
-  .section { margin-top: 6px; }
+  .title { font-size: 27px; font-weight: 800; margin: 0 0 1px 0; }
+  .meta { font-size: 12px; margin: 0 0 1px 0; }
+  .score { font-size: 20px; font-weight: 800; margin: 0 0 1px 0; }
+  .rhe { font-size: 12px; margin: 0; }
+  .rule { border-top: 2px solid #000; margin: 4px 0 4px 0; }
+
+  .section { margin-top: 4px; }
   .section h3 {
     margin: 0 0 2px 0;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 800;
     letter-spacing: .02em;
     text-transform: uppercase;
@@ -39,16 +42,17 @@
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
-    font-size: 13px;
-    font-variant-numeric: tabular-nums;
     border: 1px solid #000;
+    font-variant-numeric: tabular-nums;
   }
+
   thead th {
-    font-weight: 700;
-    padding: 2px 3px;
-    border-bottom: 2px solid #000;
+    padding: 1px 4px;
     border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
     text-align: right;
+    font-size: 13px;
+    font-weight: 700;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -57,24 +61,34 @@
   thead th:last-child { border-right: 0; }
 
   tbody td {
-    padding: 1px 3px;
-    border-top: 1px solid #d6d6d6;
+    padding: 1px 4px;
+    border-top: 1px solid #d9d9d9;
     border-right: 1px solid #ececec;
     text-align: right;
+    font-size: 12px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  tbody td:first-child { text-align: left; }
   tbody td:last-child { border-right: 0; }
-  tbody tr:nth-child(even) td { background: #fcfcfc; }
+  tbody td.player { text-align: left; font-size: 13px; }
+  tbody td.num { text-align: right; font-size: 11px; }
+  tbody td.season { text-align: right; font-size: 11px; color: #444; }
 
-  tbody tr.sub td {
-    color: #666;
-    font-size: 12px;
-  }
+  tbody tr:nth-child(even) td { background: #fcfcfc; }
+  tbody tr.sub td { color:#666; }
   .name-wrap { display: inline-block; }
   .name-wrap.indent { padding-left: 12px; }
+
+  .hcell .h { font-size: 12px; font-weight: 700; }
+  .hcell .xbh {
+    font-size: 10px;
+    color: #666;
+    margin-left: 3px;
+    white-space: nowrap;
+  }
+
+  .season .lite { font-size: 10px; color: #777; margin-left: 3px; }
 
   .hl { position: relative; z-index: 0; }
   .hl::before {
@@ -90,18 +104,18 @@
     z-index: -1;
   }
 
-  .moments { margin-top: 6px; }
+  .moments { margin-top: 4px; }
   .moments h3 {
     margin: 0 0 2px 0;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 800;
     text-transform: uppercase;
   }
   .moments ol {
-    margin: 0 0 0 16px;
+    margin: 0 0 0 15px;
     padding: 0;
-    font-size: 13px;
-    line-height: 1.15;
+    font-size: 12px;
+    line-height: 1.12;
   }
   .moments li { margin: 1px 0; }
 </style>
@@ -119,11 +133,9 @@
     <table>
       <thead>
       <tr>
-        <th style="width:22%">Player</th>
-        <th style="width:4%">PA</th><th style="width:4%">AB</th><th style="width:4%">R</th><th style="width:4%">H</th>
-        <th style="width:4%">BB</th><th style="width:4%">K</th><th style="width:4%">2B</th><th style="width:4%">3B</th>
-        <th style="width:4%">HR</th><th style="width:4%">SB</th><th style="width:4%">TB</th>
-        <th style="width:14%">Season</th>
+        <th style="width:28%">Player</th>
+        <th style="width:5%">PA</th><th style="width:5%">AB</th><th style="width:5%">R</th><th style="width:16%">H</th>
+        <th style="width:5%">BB</th><th style="width:5%">K</th><th style="width:5%">SB</th><th style="width:26%">Season</th>
       </tr>
       </thead>
       <tbody>
@@ -138,8 +150,8 @@
       <thead>
       <tr>
         <th style="width:23%">Pitcher</th><th style="width:5%">IP</th><th style="width:4%">H</th><th style="width:4%">R</th><th style="width:4%">ER</th>
-        <th style="width:4%">BB</th><th style="width:4%">K</th><th style="width:5%">BF</th><th style="width:8%">Season ERA</th>
-        <th style="width:6%">SwStr</th><th style="width:5%">GB</th>
+        <th style="width:4%">BB</th><th style="width:4%">K</th><th style="width:5%">BF</th><th style="width:6%">SwStr</th><th style="width:5%">GB</th>
+        <th style="width:36%">Season</th>
       </tr>
       </thead>
       <tbody>

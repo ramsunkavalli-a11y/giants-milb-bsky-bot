@@ -216,6 +216,42 @@ def _player_season_slash(player: Dict[str, Any]) -> Optional[str]:
     return None
 
 
+def _hitter_season_compact(player: Dict[str, Any]) -> str:
+    season_bat = ((player.get("seasonStats") or {}).get("batting") or {})
+    tokens = []
+    pa = season_bat.get("plateAppearances")
+    ops = season_bat.get("ops")
+    hr = season_bat.get("homeRuns")
+    sb = season_bat.get("stolenBases")
+    if pa not in (None, ""):
+        tokens.append(f"PA {pa}")
+    if ops not in (None, ""):
+        tokens.append(f"OPS {ops}")
+    if hr not in (None, ""):
+        tokens.append(f"HR {hr}")
+    if sb not in (None, ""):
+        tokens.append(f"SB {sb}")
+    return " ".join(tokens)
+
+
+def _pitcher_season_metrics(pdata: Dict[str, Any], people_era: str) -> Dict[str, str]:
+    season_p = ((pdata.get("seasonStats") or {}).get("pitching") or {})
+    era = str(season_p.get("era") or people_era or "")
+
+    k = _safe_float(season_p.get("strikeOuts"), 0.0)
+    bb = _safe_float(season_p.get("baseOnBalls"), 0.0)
+    bf = _safe_float(season_p.get("battersFaced"), 0.0)
+    ip = str(season_p.get("inningsPitched") or "0.0")
+    outs = _ip_to_outs(ip)
+    ip_val = outs / 3.0 if outs > 0 else 0.0
+
+    k_pct = f"{(k / bf) * 100:.1f}" if bf > 0 else ""
+    bb_pct = f"{(bb / bf) * 100:.1f}" if bf > 0 else ""
+    k9 = f"{(k / ip_val) * 9:.1f}" if ip_val > 0 else ""
+    bb9 = f"{(bb / ip_val) * 9:.1f}" if ip_val > 0 else ""
+
+    return {"era": era, "k_pct": k_pct, "bb_pct": bb_pct, "k9": k9, "bb9": bb9}
+
 def _derive_pitch_metrics(feed: Dict[str, Any]) -> Dict[int, Dict[str, int]]:
     metrics: Dict[int, Dict[str, int]] = {}
     plays = ((feed.get("liveData") or {}).get("plays") or {}).get("allPlays") or []
@@ -285,7 +321,6 @@ def extract_player_lines(feed: Dict[str, Any], session: requests.Session) -> Tup
         pa = _safe_int(batting.get("plateAppearances"), _safe_int(batting.get("atBats")) + _safe_int(batting.get("baseOnBalls")))
         appeared_hitter = bool(bo_raw) or bool(all_positions) or (game_status.get("isOnBench") is False) or pid in batters_set
 
-        # Exclude pitcher-only entries from hitters unless they actually batted.
         if appeared_hitter and _is_pitcher_only(all_positions) and pa <= 0:
             appeared_hitter = False
 
@@ -311,6 +346,7 @@ def extract_player_lines(feed: Dict[str, Any], session: requests.Session) -> Tup
                 "sb": _safe_int(batting.get("stolenBases")),
                 "tb": max(0, tb),
                 "season_slash": _player_season_slash(pdata) or "",
+                "season_compact": _hitter_season_compact(pdata),
                 "indent": False,
                 "slot": None,
                 "seq": 999,
@@ -333,6 +369,7 @@ def extract_player_lines(feed: Dict[str, Any], session: requests.Session) -> Tup
             hand = "RHP" if meta.get("pitchHand") == "R" else "LHP" if meta.get("pitchHand") == "L" else "P"
             ip = str(pitching.get("inningsPitched") or "0.0")
             pm = pitch_metrics.get(pid, {})
+            season = _pitcher_season_metrics(pdata, meta.get("seasonEra") or "")
             pitchers.append(
                 {
                     "id": pid,
@@ -346,7 +383,11 @@ def extract_player_lines(feed: Dict[str, Any], session: requests.Session) -> Tup
                     "bb": _safe_int(pitching.get("baseOnBalls")),
                     "k": _safe_int(pitching.get("strikeOuts")),
                     "bf": _safe_int(pitching.get("battersFaced")),
-                    "season_era": str(((pdata.get("seasonStats") or {}).get("pitching") or {}).get("era") or meta.get("seasonEra") or ""),
+                    "season_era": season["era"],
+                    "season_k_pct": season["k_pct"],
+                    "season_bb_pct": season["bb_pct"],
+                    "season_k9": season["k9"],
+                    "season_bb9": season["bb9"],
                     "swstr": pm.get("swstr") or "",
                     "gb": pm.get("gb") or "",
                 }
@@ -367,7 +408,6 @@ def extract_player_lines(feed: Dict[str, Any], session: requests.Session) -> Tup
     _save_player_cache(cache)
 
     return hitters, pitchers, {"orange_is_home": orange_is_home, "side_key": side_key}
-
 
 def _prospect_info(player: Dict[str, Any], name_map: Dict[str, Dict[str, Any]], id_map: Dict[int, Dict[str, Any]]) -> Optional[Dict[str, Any]]:
     pid = _safe_int(player.get("id"), -1)
@@ -528,8 +568,7 @@ def generate_key_moments_wpa(feed: Dict[str, Any], orange_is_home: bool) -> List
     home_score = 0
     away_score = 0
 
-    positive: List[Tuple[float, str, Dict[str, Any]]] = []
-    fallback: List[Tuple[float, str, Dict[str, Any]]] = []
+    candidates: List[Tuple[float, str, Dict[str, Any]]] = []
 
     for play in plays:
         diff_before = home_score - away_score
@@ -576,21 +615,14 @@ def generate_key_moments_wpa(feed: Dict[str, Any], orange_is_home: bool) -> List
                 "wpa": wpa,
                 "text": _moment_text(play, we_orange_before, we_orange_after, wpa),
             }
-            if wpa > 0:
-                positive.append((wpa, detail["text"], detail))
-            else:
-                fallback.append((abs(wpa), detail["text"], detail))
+            candidates.append((abs(wpa), detail["text"], detail))
 
         inning, half = next_inning, next_half
         outs_before, base_before = look_outs, look_base
         home_score, away_score = home_after, away_after
 
-    positive.sort(key=lambda x: x[0], reverse=True)
-    fallback.sort(key=lambda x: x[0], reverse=True)
-
-    picked = positive[:3]
-    if len(picked) < 3:
-        picked.extend(fallback[: 3 - len(picked)])
+    candidates.sort(key=lambda x: x[0], reverse=True)
+    picked = candidates[:3]
 
     if debug:
         print("DEBUG_WPA selected moments:")
@@ -607,7 +639,6 @@ def generate_key_moments_wpa(feed: Dict[str, Any], orange_is_home: bool) -> List
     while len(moments) < 3:
         moments.append("No high-leverage plate appearance found")
     return moments
-
 
 def _prospect_ids(hitters: List[Dict[str, Any]], pitchers: List[Dict[str, Any]]) -> set:
     name_map, id_map = _prospect_maps()
@@ -626,14 +657,25 @@ def _build_hitter_rows(hitters: List[Dict[str, Any]], prospect_ids: set) -> str:
         name = html.escape(h["name"])
         hl_cls = "hl" if h.get("id") in prospect_ids else ""
         indent_cls = "indent" if h.get("indent") else ""
+
+        xbh_bits = []
+        if h.get("2b", 0) > 0:
+            xbh_bits.append(f"{h['2b']} 2B")
+        if h.get("3b", 0) > 0:
+            xbh_bits.append(f"{h['3b']} 3B")
+        if h.get("hr", 0) > 0:
+            xbh_bits.append(f"{h['hr']} HR")
+        xbh = f"<span class='xbh'> ({html.escape(', '.join(xbh_bits))})</span>" if xbh_bits else ""
+
         player_cell = f"<span class='name-wrap {indent_cls}'>{prefix} <span class='{hl_cls}'>{name}</span></span>"
+        h_cell = f"<span class='h'>{h['h']}</span>{xbh}"
+
         rows.append(
-            f"<tr class='{row_cls}'><td>{player_cell}</td>"
-            f"<td>{h['pa']}</td><td>{h['ab']}</td><td>{h['r']}</td><td>{h['h']}</td><td>{h['bb']}</td><td>{h['k']}</td>"
-            f"<td>{h['2b']}</td><td>{h['3b']}</td><td>{h['hr']}</td><td>{h['sb']}</td><td>{h['tb']}</td><td>{html.escape(h.get('season_slash',''))}</td></tr>"
+            f"<tr class='{row_cls}'><td class='player'>{player_cell}</td>"
+            f"<td class='num'>{h['pa']}</td><td class='num'>{h['ab']}</td><td class='num'>{h['r']}</td><td class='num hcell'>{h_cell}</td>"
+            f"<td class='num'>{h['bb']}</td><td class='num'>{h['k']}</td><td class='num'>{h['sb']}</td><td class='season'>{html.escape(h.get('season_compact',''))}</td></tr>"
         )
     return "\n".join(rows)
-
 
 def _build_pitcher_rows(pitchers: List[Dict[str, Any]], prospect_ids: set) -> str:
     rows = []
@@ -641,12 +683,30 @@ def _build_pitcher_rows(pitchers: List[Dict[str, Any]], prospect_ids: set) -> st
         name = html.escape(p["name"])
         hl_cls = "hl" if p.get("id") in prospect_ids else ""
         first_cell = f"{p['hand']} <span class='{hl_cls}'>{name}</span>"
+
+        season_tokens = []
+        if p.get("season_era"):
+            season_tokens.append(f"ERA {p['season_era']}")
+        if p.get("season_k_pct"):
+            season_tokens.append(f"K% {p['season_k_pct']}")
+        if p.get("season_bb_pct"):
+            season_tokens.append(f"BB% {p['season_bb_pct']}")
+
+        lite_tokens = []
+        if p.get("season_k9"):
+            lite_tokens.append(f"k9 {p['season_k9']}")
+        if p.get("season_bb9"):
+            lite_tokens.append(f"bb9 {p['season_bb9']}")
+
+        season_html = html.escape(" ".join(season_tokens))
+        if lite_tokens:
+            season_html += f" <span class='lite'>{html.escape(' '.join(lite_tokens))}</span>"
+
         rows.append(
-            f"<tr><td>{first_cell}</td><td>{p['ip']}</td><td>{p['h']}</td><td>{p['r']}</td><td>{p['er']}</td><td>{p['bb']}</td><td>{p['k']}</td>"
-            f"<td>{p['bf']}</td><td>{html.escape(p.get('season_era',''))}</td><td>{p.get('swstr','')}</td><td>{p.get('gb','')}</td></tr>"
+            f"<tr><td class='player'>{first_cell}</td><td class='num'>{p['ip']}</td><td class='num'>{p['h']}</td><td class='num'>{p['r']}</td><td class='num'>{p['er']}</td><td class='num'>{p['bb']}</td><td class='num'>{p['k']}</td>"
+            f"<td class='num'>{p['bf']}</td><td class='num'>{p.get('swstr','')}</td><td class='num'>{p.get('gb','')}</td><td class='season'>{season_html}</td></tr>"
         )
     return "\n".join(rows)
-
 
 def _render_html_card(
     matchup: str,
@@ -691,21 +751,17 @@ def render_boxscore_card_image(
 
         with sync_playwright() as pw:
             browser = pw.chromium.launch(headless=True)
-            page = browser.new_page(viewport={"width": 1200, "height": 4600})
+            page = browser.new_page(viewport={"width": 1200, "height": 5000})
             page.set_content(html_doc, wait_until="load")
             card = page.locator("#card")
             box = card.bounding_box()
-            clip = {
-                "x": max(0, box["x"] - 2),
-                "y": max(0, box["y"] - 2),
-                "width": box["width"] + 4,
-                "height": box["height"] + 4,
-            }
+            if box:
+                print(f"CARD_BBOX: x={box['x']:.1f} y={box['y']:.1f} w={box['width']:.1f} h={box['height']:.1f}")
             quality = 88
-            page.screenshot(path=output_path, type="jpeg", quality=quality, clip=clip)
+            card.screenshot(path=output_path, type="jpeg", quality=quality, scale="device")
             while os.path.getsize(output_path) > 1_000_000 and quality > 45:
                 quality -= 7
-                page.screenshot(path=output_path, type="jpeg", quality=quality, clip=clip)
+                card.screenshot(path=output_path, type="jpeg", quality=quality, scale="device")
             browser.close()
         return output_path
     except Exception as exc:
@@ -722,7 +778,6 @@ def render_boxscore_card_image(
         y += 22
     img.save(output_path, format="JPEG", quality=80, optimize=True)
     return output_path
-
 
 def post_to_bluesky_with_image(client: Client, text: str, image_path: str, alt_text: str) -> None:
     with open(image_path, "rb") as f:
