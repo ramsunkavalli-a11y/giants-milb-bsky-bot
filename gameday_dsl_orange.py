@@ -8,8 +8,13 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
 import requests
 from atproto import Client, models
+from PIL import Image, ImageDraw, ImageFont
 
 from bot import STATE_PATH, SLEEP_BETWEEN_POSTS_SEC, make_session
 
@@ -532,6 +537,20 @@ def _bases_from_runners(play: Dict[str, Any]) -> int:
     mask = 0
     for r in play.get("runners") or []:
         move = r.get("movement") or {}
+        start = str(move.get("start") or "")
+        if start == "1B":
+            mask |= 1
+        elif start == "2B":
+            mask |= 2
+        elif start == "3B":
+            mask |= 4
+    return mask
+
+
+def _bases_after_from_runners(play: Dict[str, Any]) -> int:
+    mask = 0
+    for r in play.get("runners") or []:
+        move = r.get("movement") or {}
         if move.get("isOut"):
             continue
         end = str(move.get("end") or "")
@@ -557,68 +576,76 @@ def _moment_text(play: Dict[str, Any], we_before: float, we_after: float, wpa: f
     return f"{half}{inning}: {surname}{run_prefix} {event} — Orange WE {round(we_before*100):d}%→{round(we_after*100):d}% ({wpa*100:+.0f}%)"
 
 
+def _outs_on_play(play: Dict[str, Any]) -> int:
+    result = play.get("result") or {}
+    if result.get("outs") is not None:
+        return _safe_int(result.get("outs"), 0)
+    return sum(1 for r in (play.get("runners") or []) if (r.get("movement") or {}).get("isOut"))
+
+
+def _advance_half_inning(inning: int, half: str) -> Tuple[int, str]:
+    if half == "top":
+        return inning, "bottom"
+    return inning + 1, "top"
+
+
 def generate_key_moments_wpa(feed: Dict[str, Any], orange_is_home: bool) -> List[str]:
     table = _load_tango_table()
     plays = ((feed.get("liveData") or {}).get("plays") or {}).get("allPlays") or []
     debug = os.getenv("DEBUG_WPA", "0") == "1"
 
-    inning, half = 1, "top"
-    outs_before = 0
-    base_before = 0
     home_score = 0
     away_score = 0
-
     candidates: List[Tuple[float, str, Dict[str, Any]]] = []
 
     for play in plays:
+        about = play.get("about") or {}
+        inning = _safe_int(about.get("inning"), 1)
+        half = str(about.get("halfInning") or "top").lower()
+
+        outs_after = _safe_int((play.get("count") or {}).get("outs"), 0)
+        outs_on_play = _outs_on_play(play)
+        outs_before = max(0, outs_after - outs_on_play)
+        base_before = _bases_from_runners(play)
+        base_after = _bases_after_from_runners(play)
+
         diff_before = home_score - away_score
         we_home_before = _lookup_we(table, inning, half, outs_before, base_before, diff_before)
         we_orange_before = we_home_before if orange_is_home else (1.0 - we_home_before)
 
         result = play.get("result") or {}
-        count = play.get("count") or {}
-
         home_after = _safe_int(result.get("homeScore"), home_score)
         away_after = _safe_int(result.get("awayScore"), away_score)
-        outs_after = _safe_int(count.get("outs"), outs_before)
-        base_after = _bases_from_runners(play)
 
-        next_inning, next_half = inning, half
+        look_inning, look_half = inning, half
         look_outs, look_base = outs_after, base_after
         if outs_after >= 3:
+            look_inning, look_half = _advance_half_inning(inning, half)
             look_outs, look_base = 0, 0
-            if half == "top":
-                next_half = "bottom"
-            else:
-                next_half = "top"
-                next_inning += 1
 
         diff_after = home_after - away_after
-        we_home_after = _lookup_we(table, next_inning, next_half, look_outs, look_base, diff_after)
+        we_home_after = _lookup_we(table, look_inning, look_half, look_outs, look_base, diff_after)
         we_orange_after = we_home_after if orange_is_home else (1.0 - we_home_after)
         wpa = we_orange_after - we_orange_before
 
-        if abs(wpa) > 0.001:
-            detail = {
-                "inning": inning,
-                "half": half,
-                "outs_before": outs_before,
-                "outs_after": outs_after,
-                "base_before": base_before,
-                "base_after": base_after,
-                "diff_before": diff_before,
-                "diff_after": diff_after,
-                "we_home_before": we_home_before,
-                "we_home_after": we_home_after,
-                "we_orange_before": we_orange_before,
-                "we_orange_after": we_orange_after,
-                "wpa": wpa,
-                "text": _moment_text(play, we_orange_before, we_orange_after, wpa),
-            }
-            candidates.append((abs(wpa), detail["text"], detail))
+        detail = {
+            "inning": inning,
+            "half": half,
+            "outs_before": outs_before,
+            "outs_after": outs_after,
+            "base_before": base_before,
+            "base_after": base_after,
+            "diff_before": diff_before,
+            "diff_after": diff_after,
+            "we_home_before": we_home_before,
+            "we_home_after": we_home_after,
+            "we_orange_before": we_orange_before,
+            "we_orange_after": we_orange_after,
+            "wpa": wpa,
+            "text": _moment_text(play, we_orange_before, we_orange_after, wpa),
+        }
+        candidates.append((abs(wpa), detail["text"], detail))
 
-        inning, half = next_inning, next_half
-        outs_before, base_before = look_outs, look_base
         home_score, away_score = home_after, away_after
 
     candidates.sort(key=lambda x: x[0], reverse=True)
@@ -665,7 +692,8 @@ def _build_hitter_rows(hitters: List[Dict[str, Any]], prospect_ids: set) -> str:
             xbh_bits.append(f"{h['3b']} 3B")
         if h.get("hr", 0) > 0:
             xbh_bits.append(f"{h['hr']} HR")
-        xbh = f"<span class='xbh'> ({html.escape(', '.join(xbh_bits))})</span>" if xbh_bits else ""
+        xbh_total = h.get("2b", 0) + h.get("3b", 0) + h.get("hr", 0)
+        xbh = f"<span class='xbh'> {xbh_total} ({html.escape(', '.join(xbh_bits))})</span>" if xbh_bits else ""
 
         player_cell = f"<span class='name-wrap {indent_cls}'>{prefix} <span class='{hl_cls}'>{name}</span></span>"
         h_cell = f"<span class='h'>{h['h']}</span>{xbh}"
@@ -734,6 +762,172 @@ def _render_html_card(
     return tpl
 
 
+def _hitter_xbh_compact(h: Dict[str, Any]) -> str:
+    two_b = _safe_int(h.get("2b"), 0)
+    three_b = _safe_int(h.get("3b"), 0)
+    hr = _safe_int(h.get("hr"), 0)
+    total = two_b + three_b + hr
+    if total <= 0:
+        return str(h.get("h", 0))
+    details = []
+    if two_b > 0:
+        details.append(f"{two_b} 2B")
+    if three_b > 0:
+        details.append(f"{three_b} 3B")
+    if hr > 0:
+        details.append(f"{hr} HR")
+    return f"{h.get('h', 0)} {total} ({', '.join(details)})"
+
+
+def _pitcher_season_tokens(p: Dict[str, Any]) -> Tuple[str, str]:
+    primary: List[str] = []
+    secondary: List[str] = []
+    if p.get("season_era"):
+        primary.append(f"ERA {p['season_era']}")
+    if p.get("season_k_pct"):
+        primary.append(f"K% {p['season_k_pct']}")
+    if p.get("season_bb_pct"):
+        primary.append(f"BB% {p['season_bb_pct']}")
+    if p.get("season_k9"):
+        secondary.append(f"k9 {p['season_k9']}")
+    if p.get("season_bb9"):
+        secondary.append(f"bb9 {p['season_bb9']}")
+    return " ".join(primary), " ".join(secondary)
+
+
+def render_boxscore_card_matplotlib(
+    output_path: str,
+    matchup: str,
+    game_date: str,
+    status: str,
+    score_line: str,
+    linescore: str,
+    hitters: List[Dict[str, Any]],
+    pitchers: List[Dict[str, Any]],
+    key_moments: List[str],
+) -> str:
+    width_px = 1200
+    dpi = 200
+    row_h = 0.0185
+    height_in = max(4.2, 1.6 + len(hitters) * row_h + len(pitchers) * row_h + min(3, len(key_moments)) * 0.06)
+
+    fig, ax = plt.subplots(figsize=(width_px / dpi, height_in), dpi=dpi)
+    fig.patch.set_facecolor("white")
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.axis("off")
+
+    mono = "DejaVu Sans Mono"
+    sans = "DejaVu Sans"
+    pids = _prospect_ids(hitters, pitchers)
+
+    y = 0.985
+    ax.text(0.01, y, matchup, ha="left", va="top", fontsize=13, fontfamily=sans, fontweight="bold")
+    y -= 0.038
+    ax.text(0.01, y, f"{game_date} · {status}", ha="left", va="top", fontsize=9, fontfamily=sans)
+    ax.text(0.99, y, score_line, ha="right", va="top", fontsize=11, fontfamily=sans, fontweight="bold")
+    y -= 0.024
+    ax.text(0.99, y, linescore, ha="right", va="top", fontsize=8.4, fontfamily=mono)
+    y -= 0.014
+    ax.hlines(y, 0.01, 0.99, color="black", linewidth=1.4)
+
+    def draw_hitter_table() -> None:
+        nonlocal y
+        cols = [0.01, 0.55, 0.61, 0.66, 0.74, 0.80, 0.85, 0.90, 0.99]
+        y -= 0.017
+        ax.text(0.01, y, "Hitters", ha="left", va="top", fontsize=10, fontfamily=sans, fontweight="bold")
+        y -= 0.015
+        headers = ["Player", "PA", "AB", "R", "H", "BB", "K", "SB", "Season"]
+        ax.text(cols[0], y, headers[0], ha="left", va="top", fontsize=7.7, fontfamily=sans, fontweight="bold")
+        for i, h in enumerate(headers[1:], start=1):
+            ax.text(cols[i], y, h, ha="right", va="top", fontsize=7.0, fontfamily=mono, fontweight="bold")
+        y -= 0.010
+        ax.hlines(y, 0.01, 0.99, color="#222", linewidth=1.0)
+        for idx, row in enumerate(hitters):
+            y -= 0.015
+            if idx % 2 == 1:
+                ax.add_patch(Rectangle((0.01, y - 0.010), 0.98, 0.0165, facecolor="#fafafa", edgecolor="none"))
+            name = f"{row.get('pos','-')} {row['name']}"
+            if row.get("id") in pids:
+                ax.add_patch(Rectangle((0.012, y - 0.010), 0.31, 0.0158, facecolor="#fff2a8", edgecolor="none", alpha=0.75))
+            ax.text(cols[0], y, name, ha="left", va="top", fontsize=7.9, fontfamily=sans)
+            vals = [row.get("pa", ""), row.get("ab", ""), row.get("r", ""), _hitter_xbh_compact(row), row.get("bb", ""), row.get("k", ""), row.get("sb", ""), row.get("season_compact", "")]
+            for i, val in enumerate(vals, start=1):
+                ax.text(cols[i], y, str(val), ha="right", va="top", fontsize=6.9, fontfamily=mono if i < 8 else sans)
+        y -= 0.008
+        ax.hlines(y, 0.01, 0.99, color="black", linewidth=1.2)
+
+    def draw_pitcher_table() -> None:
+        nonlocal y
+        cols = [0.01, 0.52, 0.58, 0.63, 0.68, 0.73, 0.78, 0.83, 0.87, 0.91, 0.99]
+        y -= 0.017
+        ax.text(0.01, y, "Pitchers", ha="left", va="top", fontsize=10, fontfamily=sans, fontweight="bold")
+        y -= 0.015
+        headers = ["Pitcher", "IP", "H", "R", "ER", "BB", "K", "BF", "SwStr", "GB", "Season"]
+        ax.text(cols[0], y, headers[0], ha="left", va="top", fontsize=7.7, fontfamily=sans, fontweight="bold")
+        for i, h in enumerate(headers[1:], start=1):
+            ax.text(cols[i], y, h, ha="right", va="top", fontsize=7.0, fontfamily=mono, fontweight="bold")
+        y -= 0.010
+        ax.hlines(y, 0.01, 0.99, color="#222", linewidth=1.0)
+        for idx, row in enumerate(pitchers):
+            y -= 0.015
+            if idx % 2 == 1:
+                ax.add_patch(Rectangle((0.01, y - 0.010), 0.98, 0.0165, facecolor="#fafafa", edgecolor="none"))
+            name = f"{row.get('hand','P')} {row['name']}"
+            if row.get("id") in pids:
+                ax.add_patch(Rectangle((0.012, y - 0.010), 0.31, 0.0158, facecolor="#fff2a8", edgecolor="none", alpha=0.75))
+            ax.text(cols[0], y, name, ha="left", va="top", fontsize=7.9, fontfamily=sans)
+            vals = [row.get("ip", ""), row.get("h", ""), row.get("r", ""), row.get("er", ""), row.get("bb", ""), row.get("k", ""), row.get("bf", ""), row.get("swstr", ""), row.get("gb", "")]
+            for i, val in enumerate(vals, start=1):
+                ax.text(cols[i], y, str(val), ha="right", va="top", fontsize=6.9, fontfamily=mono)
+            primary, secondary = _pitcher_season_tokens(row)
+            ax.text(cols[-1], y, primary, ha="right", va="top", fontsize=6.9, fontfamily=sans)
+            if secondary:
+                ax.text(cols[-1], y - 0.0082, secondary, ha="right", va="top", fontsize=6.1, fontfamily=mono, color="#666")
+                y -= 0.0082
+        y -= 0.008
+        ax.hlines(y, 0.01, 0.99, color="black", linewidth=1.2)
+
+    draw_hitter_table()
+    draw_pitcher_table()
+
+    y -= 0.018
+    ax.text(0.01, y, "Key moments (WPA)", ha="left", va="top", fontsize=10, fontfamily=sans, fontweight="bold")
+    for km in key_moments[:3]:
+        y -= 0.022
+        ax.text(0.02, y, f"• {km}", ha="left", va="top", fontsize=8.0, fontfamily=sans)
+
+    fig.savefig(output_path, dpi=dpi, bbox_inches="tight", pad_inches=0, facecolor="white")
+    plt.close(fig)
+
+    quality = 88
+    while os.path.getsize(output_path) > 1_000_000 and quality > 45:
+        with Image.open(output_path) as im:
+            im.convert("RGB").save(output_path, format="JPEG", quality=quality, optimize=True)
+        quality -= 7
+
+    if os.getenv("DEBUG_RENDER", "0") == "1":
+        with Image.open(output_path) as im:
+            gray = im.convert("L")
+            w, h = gray.size
+            pix = gray.load()
+            xs, ys = [], []
+            for xx in range(w):
+                for yy in range(h):
+                    if pix[xx, yy] < 250:
+                        xs.append(xx)
+                        ys.append(yy)
+            print(f"DEBUG_RENDER dimensions: {w}x{h}")
+            if xs and ys:
+                bw = max(xs) - min(xs) + 1
+                bh = max(ys) - min(ys) + 1
+                fill = (bw * bh) / float(w * h)
+                print(f"DEBUG_RENDER content bbox: {bw}x{bh} fill={fill:.3f}")
+                if fill < 0.7:
+                    print("WARNING: render content appears to have excessive white border")
+    return output_path
+
+
 def render_boxscore_card_image(
     output_path: str,
     matchup: str,
@@ -745,6 +939,10 @@ def render_boxscore_card_image(
     pitchers: List[Dict[str, Any]],
     key_moments: List[str],
 ) -> str:
+    engine = (os.getenv("RENDER_ENGINE") or "matplotlib").strip().lower()
+    if engine != "playwright":
+        return render_boxscore_card_matplotlib(output_path, matchup, game_date, status, score_line, linescore, hitters, pitchers, key_moments)
+
     html_doc = _render_html_card(matchup, game_date, status, score_line, linescore, hitters, pitchers, key_moments)
     try:
         from playwright.sync_api import sync_playwright
@@ -766,8 +964,6 @@ def render_boxscore_card_image(
         return output_path
     except Exception as exc:
         print(f"WARNING: Playwright render failed ({exc}); using Pillow fallback")
-
-    from PIL import Image, ImageDraw, ImageFont
 
     img = Image.new("RGB", (1080, 1600), "white")
     d = ImageDraw.Draw(img)
