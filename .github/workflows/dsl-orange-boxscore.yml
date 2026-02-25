@@ -77,11 +77,33 @@ jobs:
 
       - name: Detect Chrome/Chromium for chromote
         run: |
-          CHROME_BIN="$(command -v chromium || command -v chromium-browser || command -v google-chrome || command -v google-chrome-stable || true)"
+          CANDIDATES=(
+            /usr/bin/chromium
+            /usr/bin/chromium-browser
+            /usr/bin/google-chrome
+            /usr/bin/google-chrome-stable
+            "$(command -v chromium || true)"
+            "$(command -v chromium-browser || true)"
+            "$(command -v google-chrome || true)"
+            "$(command -v google-chrome-stable || true)"
+          )
+
+          CHROME_BIN=""
+          for c in "${CANDIDATES[@]}"; do
+            [ -n "$c" ] || continue
+            [ -x "$c" ] || continue
+            case "$c" in
+              /snap/*) continue ;;
+            esac
+            CHROME_BIN="$c"
+            break
+          done
+
           if [ -z "$CHROME_BIN" ]; then
-            echo "No Chrome/Chromium binary found in PATH"
+            echo "No usable non-snap Chrome/Chromium binary found"
             exit 1
           fi
+
           echo "CHROMOTE_CHROME=$CHROME_BIN" >> "$GITHUB_ENV"
           echo "CHROMOTE_CHROME_ARGS=--no-sandbox --disable-dev-shm-usage --disable-gpu --headless=new" >> "$GITHUB_ENV"
           echo "Using chromote browser: $CHROME_BIN"

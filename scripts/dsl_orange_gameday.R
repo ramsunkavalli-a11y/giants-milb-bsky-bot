@@ -376,10 +376,9 @@ render_card <- function(feed, hitters, pitchers, moments, outfile) {
   tpl <- sub("\\{\\{pitchers_rows\\}\\}", pitcher_rows_html, tpl)
   tpl <- sub("\\{\\{moments_rows\\}\\}", moments_rows_html, tpl)
 
-  html_file <- tempfile(fileext = ".html")
-  writeLines(tpl, html_file)
-
-  file.copy(css_path, file.path(dirname(html_file), "boxscore_card.css"), overwrite = TRUE)
+  css <- paste(readLines(css_path, warn = FALSE), collapse = "\n")
+  tpl <- sub("</head>", paste0("<style>\n", css, "\n</style></head>"), tpl, fixed = TRUE)
+  tpl <- gsub('<link rel="stylesheet" href="boxscore_card.css" />', "", tpl, fixed = TRUE)
 
   chrome_bin <- Sys.getenv("CHROMOTE_CHROME", "")
   if (nzchar(chrome_bin)) cat(sprintf("Chromote browser: %s\n", chrome_bin))
@@ -389,13 +388,14 @@ render_card <- function(feed, hitters, pitchers, moments, outfile) {
   b <- ChromoteSession$new()
   on.exit(try(b$close(), silent = TRUE), add = TRUE)
 
-  # Load page robustly: Page.loadEventFired can be missed if listener attaches too late.
+  # Use data URL to avoid file:// and local path edge cases in CI containers.
   b$Page$enable()
   b$Runtime$enable()
-  b$Page$navigate(paste0("file://", normalizePath(html_file)))
+  encoded <- jsonlite::base64_enc(charToRaw(enc2utf8(tpl)))
+  b$Page$navigate(paste0("data:text/html;base64,", encoded))
 
   ready <- FALSE
-  for (i in 1:50) {
+  for (i in 1:150) {
     st <- try(
       b$Runtime$evaluate(
         "(() => document.readyState === 'complete' && !!document.querySelector('#card'))()",
@@ -410,7 +410,7 @@ render_card <- function(feed, hitters, pitchers, moments, outfile) {
     Sys.sleep(0.1)
   }
   if (!ready) {
-    stop("Chromote: timed out waiting for #card to be ready")
+    stop("Chromote: timed out waiting for #card to be ready (data URL render)")
   }
 
   rect <- b$Runtime$evaluate("(() => { const el=document.querySelector('#card'); const r=el.getBoundingClientRect(); return {x:r.x,y:r.y,width:Math.max(1,r.width),height:Math.max(1,r.height),scale:window.devicePixelRatio||1}; })()", returnByValue = TRUE)$result$value
