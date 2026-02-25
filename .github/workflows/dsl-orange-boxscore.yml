@@ -60,7 +60,8 @@ jobs:
             libxml2-dev \
             libfontconfig1-dev \
             libharfbuzz-dev \
-            libfribidi-dev
+            libfribidi-dev \
+            chromium
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
@@ -74,6 +75,17 @@ jobs:
         run: |
           Rscript -e 'stopifnot(requireNamespace("httr", quietly = TRUE), requireNamespace("jsonlite", quietly = TRUE), requireNamespace("chromote", quietly = TRUE), requireNamespace("bskyr", quietly = TRUE)); cat("R deps OK\n")'
 
+      - name: Detect Chrome/Chromium for chromote
+        run: |
+          CHROME_BIN="$(command -v chromium || command -v chromium-browser || command -v google-chrome || command -v google-chrome-stable || true)"
+          if [ -z "$CHROME_BIN" ]; then
+            echo "No Chrome/Chromium binary found in PATH"
+            exit 1
+          fi
+          echo "CHROMOTE_CHROME=$CHROME_BIN" >> "$GITHUB_ENV"
+          echo "CHROMOTE_CHROME_ARGS=--no-sandbox --disable-dev-shm-usage --disable-gpu --headless=new" >> "$GITHUB_ENV"
+          echo "Using chromote browser: $CHROME_BIN"
+
       - name: Show effective run settings
         run: |
           echo "override_gamepk='${{ github.event.inputs.override_gamepk || '' }}'"
@@ -82,6 +94,8 @@ jobs:
           echo "force_repost='${{ github.event.inputs.force_repost || 'false' }}'"
           echo "force_post='${{ github.event.inputs.force_post || 'false' }}'"
           echo "debug_wpa='${{ github.event.inputs.debug_wpa || 'false' }}'"
+          echo "chromote_chrome='${CHROMOTE_CHROME:-}'"
+          echo "chromote_args='${CHROMOTE_CHROME_ARGS:-}'"
 
       - name: Run DSL Orange box score pipeline
         env:

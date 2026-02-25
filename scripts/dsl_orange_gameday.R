@@ -381,6 +381,11 @@ render_card <- function(feed, hitters, pitchers, moments, outfile) {
 
   file.copy(css_path, file.path(dirname(html_file), "boxscore_card.css"), overwrite = TRUE)
 
+  chrome_bin <- Sys.getenv("CHROMOTE_CHROME", "")
+  if (nzchar(chrome_bin)) cat(sprintf("Chromote browser: %s\n", chrome_bin))
+  chrome_args <- Sys.getenv("CHROMOTE_CHROME_ARGS", "")
+  if (nzchar(chrome_args)) cat(sprintf("Chromote args: %s\n", chrome_args))
+
   b <- ChromoteSession$new()
   on.exit(try(b$close(), silent = TRUE), add = TRUE)
 
