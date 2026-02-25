@@ -1,3 +1,20 @@
 {
-  "players": {}
+  "players": {
+    "829810": {
+      "pitchHand": "R",
+      "seasonEra": "4.50"
+    },
+    "833067": {
+      "pitchHand": "R",
+      "seasonEra": "4.02"
+    },
+    "821662": {
+      "pitchHand": "R",
+      "seasonEra": "4.28"
+    },
+    "703082": {
+      "pitchHand": "R",
+      "seasonEra": "3.81"
+    }
+  }
 }
