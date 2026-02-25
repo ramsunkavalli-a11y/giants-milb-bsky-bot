@@ -1,0 +1,130 @@
+name: DSL Giants Orange R Box Score
+
+on:
+  workflow_dispatch:
+    inputs:
+      override_gamepk:
+        description: "Optional gamePk override"
+        required: false
+        type: string
+      override_date:
+        description: "Optional date override YYYY-MM-DD"
+        required: false
+        type: string
+      dry_run:
+        description: "Dry run (no Bluesky post)"
+        required: false
+        default: false
+        type: boolean
+      force_repost:
+        description: "Force repost even if already marked posted"
+        required: false
+        default: false
+        type: boolean
+      force_post:
+        description: "Alias of force_repost to force posting when already posted"
+        required: false
+        default: false
+        type: boolean
+      debug_wpa:
+        description: "Enable WPA debug logging"
+        required: false
+        default: false
+        type: boolean
+  schedule:
+    - cron: "*/30 * * * *"
+
+concurrency:
+  group: dsl-orange-r-boxscore
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: r-lib/actions/setup-r@v2
+
+      - name: Install system libraries required by R HTTP/browser packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libcurl4-openssl-dev \
+            libssl-dev \
+            libxml2-dev \
+            libfontconfig1-dev \
+            libharfbuzz-dev \
+            libfribidi-dev
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            any::httr
+            any::jsonlite
+            any::chromote
+            any::bskyr
+
+      - name: Verify R dependencies are available
+        run: |
+          Rscript -e 'stopifnot(requireNamespace("httr", quietly = TRUE), requireNamespace("jsonlite", quietly = TRUE), requireNamespace("chromote", quietly = TRUE), requireNamespace("bskyr", quietly = TRUE)); cat("R deps OK\n")'
+
+      - name: Show effective run settings
+        run: |
+          echo "override_gamepk='${{ github.event.inputs.override_gamepk || '' }}'"
+          echo "override_date='${{ github.event.inputs.override_date || '' }}'"
+          echo "dry_run='${{ github.event.inputs.dry_run || 'false' }}'"
+          echo "force_repost='${{ github.event.inputs.force_repost || 'false' }}'"
+          echo "force_post='${{ github.event.inputs.force_post || 'false' }}'"
+          echo "debug_wpa='${{ github.event.inputs.debug_wpa || 'false' }}'"
+
+      - name: Run DSL Orange box score pipeline
+        env:
+          BSKY_HANDLE: ${{ secrets.BSKY_HANDLE }}
+          BSKY_APP_PASSWORD: ${{ secrets.BSKY_APP_PASSWORD }}
+          OVERRIDE_GAMEPK: ${{ github.event.inputs.override_gamepk || '' }}
+          OVERRIDE_DATE: ${{ github.event.inputs.override_date || '' }}
+          DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
+          FORCE_REPOST: ${{ github.event.inputs.force_repost == 'true' && '1' || '0' }}
+          FORCE_POST: ${{ github.event.inputs.force_post == 'true' && '1' || '0' }}
+          DEBUG_WPA: ${{ github.event.inputs.debug_wpa == 'true' && '1' || '0' }}
+        run: Rscript scripts/dsl_orange_gameday.R
+
+      - name: Commit updated state
+        run: |
+          if git diff --quiet; then
+            echo "No state changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          for attempt in 1 2 3; do
+            echo "Commit/push attempt ${attempt}"
+
+            git add state.json player_cache.json
+            if git diff --cached --quiet; then
+              echo "No staged state/cache changes to commit."
+              exit 0
+            fi
+
+            git commit -m "Update DSL Orange R gameday state" || true
+
+            if git push; then
+              echo "Push succeeded."
+              exit 0
+            fi
+
+            echo "Push failed (likely non-fast-forward). Rebasing and retrying..."
+            git fetch origin "$GITHUB_REF_NAME"
+            git pull --rebase origin "$GITHUB_REF_NAME"
+          done
+
+          echo "Failed to push state updates after retries."
+          exit 1
