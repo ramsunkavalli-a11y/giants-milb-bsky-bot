@@ -21,6 +21,11 @@ on:
         required: false
         default: false
         type: boolean
+      force_post:
+        description: "Alias of force_repost to force posting when already posted"
+        required: false
+        default: false
+        type: boolean
       debug_wpa:
         description: "Enable WPA debug logging"
         required: false
@@ -75,6 +80,7 @@ jobs:
           echo "override_date='${{ github.event.inputs.override_date || '' }}'"
           echo "dry_run='${{ github.event.inputs.dry_run || 'false' }}'"
           echo "force_repost='${{ github.event.inputs.force_repost || 'false' }}'"
+          echo "force_post='${{ github.event.inputs.force_post || 'false' }}'"
           echo "debug_wpa='${{ github.event.inputs.debug_wpa || 'false' }}'"
 
       - name: Run DSL Orange box score pipeline
@@ -85,6 +91,7 @@ jobs:
           OVERRIDE_DATE: ${{ github.event.inputs.override_date || '' }}
           DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
           FORCE_REPOST: ${{ github.event.inputs.force_repost == 'true' && '1' || '0' }}
+          FORCE_POST: ${{ github.event.inputs.force_post == 'true' && '1' || '0' }}
           DEBUG_WPA: ${{ github.event.inputs.debug_wpa == 'true' && '1' || '0' }}
         run: Rscript scripts/dsl_orange_gameday.R
 

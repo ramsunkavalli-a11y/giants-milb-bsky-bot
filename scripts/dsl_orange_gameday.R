@@ -427,7 +427,9 @@ main <- function() {
   override_date <- Sys.getenv("OVERRIDE_DATE", "")
   dry_run <- Sys.getenv("DRY_RUN", "0") == "1"
   force_repost <- Sys.getenv("FORCE_REPOST", "0") == "1"
+  force_post <- Sys.getenv("FORCE_POST", "0") == "1"
   debug_wpa <- Sys.getenv("DEBUG_WPA", "0") == "1"
+  force_any_post <- force_repost || force_post
 
   state <- load_state()
   prospects <- load_prospects()
@@ -435,7 +437,9 @@ main <- function() {
 
   today <- Sys.Date()
   games <- fetch_schedule(as.character(today - 2), as.character(today), override_date)
-  if (nzchar(override_gamepk)) games <- Filter(function(g) as.character(g$gamePk %||% "") == override_gamepk, games)
+  if (nzchar(override_gamepk)) {
+    games <- Filter(function(g) as.character(g$gamePk %||% "") == override_gamepk, games)
+  }
 
   if (length(games) == 0) {
     cat("No target games found.\n")
@@ -445,55 +449,76 @@ main <- function() {
     return(invisible(NULL))
   }
 
-  target <- games[[length(games)]]
-  game_pk <- as.character(target$gamePk)
-  feed <- fetch_feed(game_pk)
-  terminal <- status_class(feed)
-  if (is.null(terminal)) {
-    cat("Game is not terminal yet.\n")
-    return(invisible(NULL))
+  games <- games[order(vapply(games, function(g) g$gameDate %||% "", character(1)), decreasing = TRUE)]
+
+  posted_count <- 0L
+  terminal_seen <- FALSE
+
+  for (target in games) {
+    game_pk <- as.character(target$gamePk %||% "")
+    if (!nzchar(game_pk)) next
+
+    feed <- tryCatch(fetch_feed(game_pk), error = function(e) {
+      cat(sprintf("Skipping game %s after feed error: %s\n", game_pk, conditionMessage(e)))
+      NULL
+    })
+    if (is.null(feed)) next
+
+    terminal <- status_class(feed)
+    if (is.null(terminal)) {
+      cat(sprintf("Game %s not terminal yet; skipping.\n", game_pk))
+      next
+    }
+    terminal_seen <- TRUE
+
+    if (is.null(state$posted_games[[game_pk]])) {
+      state$posted_games[[game_pk]] <- list(posted_final = FALSE, posted_suspended = FALSE, last_status = terminal)
+    }
+    gstate <- state$posted_games[[game_pk]]
+
+    already <- if (terminal == "Final") isTRUE(gstate$posted_final) else isTRUE(gstate$posted_suspended)
+    if (already && !force_any_post) {
+      cat(sprintf("Already posted for game %s (%s); set FORCE_REPOST=1 or FORCE_POST=1 to override.\n", game_pk, terminal))
+      gstate$last_status <- terminal
+      gstate$last_seen_iso <- format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
+      state$posted_games[[game_pk]] <- gstate
+      next
+    }
+
+    tms <- extract_teams(feed)
+    hitters <- extract_hitters(tms$orange$players %||% list(), prospects)
+    pitch_res <- extract_pitchers(tms$orange$players %||% list(), prospects, cache)
+    pitchers <- pitch_res$rows
+    cache <- pitch_res$cache
+    moments <- compute_wpa(feed, tms$orange_is_home, debug_wpa)
+
+    render_card(feed, hitters, pitchers, moments, out_image)
+
+    prospect_lines <- build_prospect_lines(hitters, pitchers)
+    post_text <- build_post_text(feed, prospect_lines, tms$orange_is_home)
+    alt <- "DSL Giants Orange game box score with batting, pitching, and key win-probability moments."
+
+    if (!dry_run) {
+      auth <- bs_auth(Sys.getenv("BSKY_HANDLE"), Sys.getenv("BSKY_APP_PASSWORD"))
+      bs_post(text = post_text, images = c(out_image), images_alt = c(alt), auth = auth)
+      cat(sprintf("Posted game %s (%s) to Bluesky.\n", game_pk, terminal))
+    } else {
+      cat(sprintf("DRY_RUN enabled for game %s; skipping Bluesky post.\n", game_pk))
+      cat(post_text, "\n")
+    }
+
+    gstate$last_status <- terminal
+    gstate$last_seen_iso <- format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
+    if (terminal == "Final") gstate$posted_final <- TRUE
+    if (terminal == "Suspended") gstate$posted_suspended <- TRUE
+    state$posted_games[[game_pk]] <- gstate
+    posted_count <- posted_count + 1L
   }
 
-  if (is.null(state$posted_games[[game_pk]])) state$posted_games[[game_pk]] <- list(posted_final = FALSE, posted_suspended = FALSE, last_status = terminal)
-  gstate <- state$posted_games[[game_pk]]
+  if (!terminal_seen) cat("No Final/Suspended games found in current window.\n")
+  cat(sprintf("Processed %d games; posted %d updates.\n", length(games), posted_count))
 
-  already <- if (terminal == "Final") isTRUE(gstate$posted_final) else isTRUE(gstate$posted_suspended)
-  if (already && !force_repost) {
-    cat("Already posted for this game/status.\n")
-    state$last_run_iso <- format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
-    save_json(state_path, state)
-    save_json(player_cache_path, cache)
-    return(invisible(NULL))
-  }
-
-  tms <- extract_teams(feed)
-  hitters <- extract_hitters(tms$orange$players %||% list(), prospects)
-  pitch_res <- extract_pitchers(tms$orange$players %||% list(), prospects, cache)
-  pitchers <- pitch_res$rows
-  cache <- pitch_res$cache
-  moments <- compute_wpa(feed, tms$orange_is_home, debug_wpa)
-
-  render_card(feed, hitters, pitchers, moments, out_image)
-
-  prospect_lines <- build_prospect_lines(hitters, pitchers)
-  post_text <- build_post_text(feed, prospect_lines, tms$orange_is_home)
-  alt <- "DSL Giants Orange game box score with batting, pitching, and key win-probability moments."
-
-  if (!dry_run) {
-    auth <- bs_auth(Sys.getenv("BSKY_HANDLE"), Sys.getenv("BSKY_APP_PASSWORD"))
-    bs_post(text = post_text, images = c(out_image), images_alt = c(alt), auth = auth)
-  } else {
-    cat("DRY_RUN enabled; skipping Bluesky post.\n")
-    cat(post_text, "\n")
-  }
-
-  gstate$last_status <- terminal
-  gstate$last_seen_iso <- format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
-  if (terminal == "Final") gstate$posted_final <- TRUE
-  if (terminal == "Suspended") gstate$posted_suspended <- TRUE
-  state$posted_games[[game_pk]] <- gstate
   state$last_run_iso <- format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
-
   save_json(state_path, state)
   save_json(player_cache_path, cache)
 }
