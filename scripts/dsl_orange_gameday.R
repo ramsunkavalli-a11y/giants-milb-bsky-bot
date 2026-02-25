@@ -436,9 +436,11 @@ main <- function() {
   cache <- load_cache()
 
   today <- Sys.Date()
-  games <- fetch_schedule(as.character(today - 2), as.character(today), override_date)
   if (nzchar(override_gamepk)) {
-    games <- Filter(function(g) as.character(g$gamePk %||% "") == override_gamepk, games)
+    cat(sprintf("Using OVERRIDE_GAMEPK=%s\n", override_gamepk))
+    games <- list(list(gamePk = override_gamepk, gameDate = ""))
+  } else {
+    games <- fetch_schedule(as.character(today - 2), as.character(today), override_date)
   }
 
   if (length(games) == 0) {
