@@ -207,7 +207,10 @@ extract_hitters <- function(players, prospects) {
       game_line = sprintf("%s %d-%d, %d R, %d BB, %d K", paste(trimws(pos), name), as_int(st$hits %||% 0), as_int(st$atBats %||% 0), as_int(st$runs %||% 0), as_int(st$baseOnBalls %||% 0), as_int(st$strikeOuts %||% 0))
     )
   }
-  rows[order(vapply(rows, `[[`, 1L, "slot"), vapply(rows, `[[`, 1L, "seq"))]
+  if (length(rows) == 0) return(rows)
+  slot_vec <- vapply(rows, function(r) as_int(r[["slot"]], 99L), integer(1))
+  seq_vec <- vapply(rows, function(r) as_int(r[["seq"]], 0L), integer(1))
+  rows[order(slot_vec, seq_vec)]
 }
 
 extract_pitchers <- function(players, prospects, cache) {
