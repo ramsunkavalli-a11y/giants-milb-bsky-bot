@@ -1,0 +1,89 @@
+:root {
+  --ink: #111;
+  --rule: #1f1f1f;
+  --bg: #fff;
+  --muted: #555;
+  --marker: #fde047;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+#card {
+  width: 1320px;
+  box-sizing: border-box;
+  padding: 20px 24px 18px;
+  background: #fff;
+}
+.masthead {
+  border-top: 6px solid var(--rule);
+  border-bottom: 2px solid var(--rule);
+  padding: 8px 0 10px;
+  margin-bottom: 10px;
+}
+.kicker { font-size: 12px; font-weight: 700; letter-spacing: .06em; color: var(--muted); }
+h1 { margin: 4px 0; font-size: 38px; line-height: 1.06; letter-spacing: -0.02em; }
+.meta { font-size: 16px; color: #333; }
+.section { margin-top: 10px; }
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  border-top: 2px solid var(--rule);
+  border-bottom: 1px solid #999;
+  padding: 5px 0 4px;
+  margin-bottom: 4px;
+}
+.box-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+.box-table thead th {
+  font-size: 12px;
+  border-bottom: 1px solid #999;
+  padding: 4px 6px;
+  text-align: right;
+}
+.box-table td {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 4px 6px;
+  text-align: right;
+  vertical-align: top;
+  white-space: nowrap;
+}
+.box-table .left { text-align: left; }
+.box-table .season-col { width: 300px; }
+.player-name.indent { padding-left: 18px; color: #2f2f2f; }
+.season { color: #444; font-size: 12px; }
+.prospect-name {
+  position: relative;
+  display: inline-block;
+  z-index: 0;
+  font-weight: 700;
+}
+.prospect-name::before {
+  content: "";
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  bottom: 1px;
+  height: .68em;
+  background: var(--marker);
+  opacity: .92;
+  z-index: -1;
+  transform: skew(-8deg);
+}
+.key-moments ol {
+  margin: 6px 0 0;
+  padding-left: 20px;
+}
+.key-moments li {
+  margin: 3px 0;
+  font-size: 14px;
+}
