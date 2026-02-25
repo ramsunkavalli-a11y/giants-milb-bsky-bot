@@ -383,10 +383,32 @@ render_card <- function(feed, hitters, pitchers, moments, outfile) {
 
   b <- ChromoteSession$new()
   on.exit(try(b$close(), silent = TRUE), add = TRUE)
+
+  # Load page robustly: Page.loadEventFired can be missed if listener attaches too late.
+  b$Page$enable()
+  b$Runtime$enable()
   b$Page$navigate(paste0("file://", normalizePath(html_file)))
-  b$Page$loadEventFired(wait_ = TRUE)
-  Sys.sleep(0.4)
-  rect <- b$Runtime$evaluate("(() => { const r=document.querySelector('#card').getBoundingClientRect(); return {x:r.x,y:r.y,width:r.width,height:r.height,scale:window.devicePixelRatio||1}; })()", returnByValue = TRUE)$result$value
+
+  ready <- FALSE
+  for (i in 1:50) {
+    st <- try(
+      b$Runtime$evaluate(
+        "(() => document.readyState === 'complete' && !!document.querySelector('#card'))()",
+        returnByValue = TRUE
+      )$result$value,
+      silent = TRUE
+    )
+    if (!inherits(st, "try-error") && isTRUE(st)) {
+      ready <- TRUE
+      break
+    }
+    Sys.sleep(0.1)
+  }
+  if (!ready) {
+    stop("Chromote: timed out waiting for #card to be ready")
+  }
+
+  rect <- b$Runtime$evaluate("(() => { const el=document.querySelector('#card'); const r=el.getBoundingClientRect(); return {x:r.x,y:r.y,width:Math.max(1,r.width),height:Math.max(1,r.height),scale:window.devicePixelRatio||1}; })()", returnByValue = TRUE)$result$value
   clip <- list(x = rect$x, y = rect$y, width = rect$width, height = rect$height, scale = rect$scale)
   png <- b$Page$captureScreenshot(format = "png", clip = clip, fromSurface = TRUE)$data
   writeBin(jsonlite::base64_dec(png), outfile)
