@@ -97,33 +97,42 @@ jobs:
 
       - name: Commit updated state
         run: |
-          if git diff --quiet; then
-            echo "No state changes."
+          if git diff --quiet -- state.json player_cache.json; then
+            echo "No state/cache changes."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+          tmpdir=$(mktemp -d)
+          cp state.json "$tmpdir/state.json"
+          cp player_cache.json "$tmpdir/player_cache.json"
+
           for attempt in 1 2 3; do
             echo "Commit/push attempt ${attempt}"
 
+            git fetch origin "$GITHUB_REF_NAME"
+            git reset --hard "origin/$GITHUB_REF_NAME"
+
+            cp "$tmpdir/state.json" state.json
+            cp "$tmpdir/player_cache.json" player_cache.json
+
             git add state.json player_cache.json
             if git diff --cached --quiet; then
-              echo "No staged state/cache changes to commit."
+              echo "No staged state/cache changes to commit after syncing with origin."
               exit 0
             fi
 
-            git commit -m "Update DSL Orange R gameday state" || true
+            git commit -m "Update DSL Orange R gameday state"
 
-            if git push; then
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then
               echo "Push succeeded."
               exit 0
             fi
 
-            echo "Push failed (likely non-fast-forward). Rebasing and retrying..."
-            git fetch origin "$GITHUB_REF_NAME"
-            git pull --rebase origin "$GITHUB_REF_NAME"
+            echo "Push failed due to remote race; retrying..."
+            sleep 2
           done
 
           echo "Failed to push state updates after retries."
