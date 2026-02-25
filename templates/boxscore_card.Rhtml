@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="boxscore_card.css" />
+  <title>DSL Giants Orange Box Score</title>
+</head>
+<body>
+  <div id="card">
+    <div class="masthead">
+      <div class="kicker">DSL GIANTS ORANGE BOX SCORE</div>
+      <h1>{{headline}}</h1>
+      <div class="meta">{{meta_line}}</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Batters</div>
+      <table class="box-table hitters">
+        <thead>
+          <tr>
+            <th class="left">Player</th>
+            <th>PA</th><th>AB</th><th>R</th><th>H</th><th>BB</th><th>K</th><th>SB</th>
+            <th class="left season-col">Season</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{hitters_rows}}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Pitchers</div>
+      <table class="box-table pitchers">
+        <thead>
+          <tr>
+            <th class="left">Player</th>
+            <th>IP</th><th>H</th><th>R</th><th>ER</th><th>BB</th><th>K</th><th>BF</th><th>SwStr</th><th>GB</th>
+            <th class="left season-col">Season</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{pitchers_rows}}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section key-moments">
+      <div class="section-title">Key Moments (Tom Tango WE)</div>
+      <ol>
+        {{moments_rows}}
+      </ol>
+    </div>
+  </div>
+</body>
+</html>
