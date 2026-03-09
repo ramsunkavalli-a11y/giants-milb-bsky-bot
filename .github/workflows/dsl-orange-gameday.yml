@@ -47,6 +47,10 @@ jobs:
           pip install -r requirements.txt
           python -m playwright install --with-deps chromium
 
+      - name: Verify Playwright runtime
+        run: |
+          python -c "import playwright; print('playwright-python', playwright.__version__)"
+          python -m playwright --version
 
       - name: Show effective run settings
         run: |
@@ -54,6 +58,7 @@ jobs:
           echo "override_date='${{ github.event.inputs.override_date || '' }}'"
           echo "dry_run='${{ github.event.inputs.dry_run || 'false' }}'"
           echo "force_repost='${{ github.event.inputs.force_repost || 'false' }}'"
+          echo "render_engine='playwright'"
 
       - name: Run DSL Orange gameday bot
         env:
@@ -63,6 +68,8 @@ jobs:
           OVERRIDE_DATE: ${{ github.event.inputs.override_date || '' }}
           DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
           FORCE_REPOST: ${{ github.event.inputs.force_repost == 'true' && '1' || '0' }}
+          RENDER_ENGINE: playwright
+          RENDER_FAIL_ON_FALLBACK: '1'
         run: python gameday_dsl_orange.py
 
       - name: Commit updated state
