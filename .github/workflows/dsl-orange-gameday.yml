@@ -69,6 +69,7 @@ jobs:
           DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
           FORCE_REPOST: ${{ github.event.inputs.force_repost == 'true' && '1' || '0' }}
           RENDER_ENGINE: playwright
+          RENDER_FAIL_ON_FALLBACK: '1'
         run: python gameday_dsl_orange.py
 
       - name: Commit updated state

@@ -971,7 +971,10 @@ def render_boxscore_card_image(
     except Exception as exc:
         print(f"ERROR: Playwright render failed; falling back to Pillow. Exception: {exc!r}")
         print(traceback.format_exc())
+        if os.getenv("RENDER_FAIL_ON_FALLBACK", "0") == "1":
+            raise RuntimeError("Playwright renderer failed and RENDER_FAIL_ON_FALLBACK=1") from exc
 
+    print("RENDER_ENGINE result: using Pillow fallback renderer")
     img = Image.new("RGB", (1080, 1600), "white")
     d = ImageDraw.Draw(img)
     f = ImageFont.load_default()
