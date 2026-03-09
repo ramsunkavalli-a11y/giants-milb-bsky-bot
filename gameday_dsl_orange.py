@@ -939,8 +939,8 @@ def render_boxscore_card_image(
     pitchers: List[Dict[str, Any]],
     key_moments: List[str],
 ) -> str:
-    engine = (os.getenv("RENDER_ENGINE") or "matplotlib").strip().lower()
-    if engine != "playwright":
+    engine = (os.getenv("RENDER_ENGINE") or "playwright").strip().lower()
+    if engine == "matplotlib":
         return render_boxscore_card_matplotlib(output_path, matchup, game_date, status, score_line, linescore, hitters, pitchers, key_moments)
 
     html_doc = _render_html_card(matchup, game_date, status, score_line, linescore, hitters, pitchers, key_moments)
@@ -949,7 +949,7 @@ def render_boxscore_card_image(
 
         with sync_playwright() as pw:
             browser = pw.chromium.launch(headless=True)
-            page = browser.new_page(viewport={"width": 1200, "height": 5000})
+            page = browser.new_page(viewport={"width": 1100, "height": 5000})
             page.set_content(html_doc, wait_until="load")
             card = page.locator("#card")
             box = card.bounding_box()
