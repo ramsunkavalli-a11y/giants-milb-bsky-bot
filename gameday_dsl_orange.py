@@ -3,6 +3,7 @@ import html
 import json
 import os
 import time
+import traceback
 import unicodedata
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -939,17 +940,21 @@ def render_boxscore_card_image(
     pitchers: List[Dict[str, Any]],
     key_moments: List[str],
 ) -> str:
-    engine = (os.getenv("RENDER_ENGINE") or "matplotlib").strip().lower()
-    if engine != "playwright":
+    engine = (os.getenv("RENDER_ENGINE") or "playwright").strip().lower()
+    print(f"RENDER_ENGINE selected: {engine}")
+
+    if engine == "matplotlib":
+        print("RENDER_ENGINE result: using matplotlib renderer")
         return render_boxscore_card_matplotlib(output_path, matchup, game_date, status, score_line, linescore, hitters, pitchers, key_moments)
 
+    print(f"RENDER_ENGINE result: attempting Playwright renderer with template {CARD_TEMPLATE_PATH}")
     html_doc = _render_html_card(matchup, game_date, status, score_line, linescore, hitters, pitchers, key_moments)
     try:
         from playwright.sync_api import sync_playwright
 
         with sync_playwright() as pw:
             browser = pw.chromium.launch(headless=True)
-            page = browser.new_page(viewport={"width": 1200, "height": 5000})
+            page = browser.new_page(viewport={"width": 1100, "height": 5000})
             page.set_content(html_doc, wait_until="load")
             card = page.locator("#card")
             box = card.bounding_box()
@@ -961,9 +966,11 @@ def render_boxscore_card_image(
                 quality -= 7
                 card.screenshot(path=output_path, type="jpeg", quality=quality, scale="device")
             browser.close()
+        print("RENDER_ENGINE result: Playwright render succeeded")
         return output_path
     except Exception as exc:
-        print(f"WARNING: Playwright render failed ({exc}); using Pillow fallback")
+        print(f"ERROR: Playwright render failed; falling back to Pillow. Exception: {exc!r}")
+        print(traceback.format_exc())
 
     img = Image.new("RGB", (1080, 1600), "white")
     d = ImageDraw.Draw(img)

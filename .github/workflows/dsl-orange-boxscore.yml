@@ -1,4 +1,4 @@
-name: DSL Giants Orange R Box Score
+name: DSL Giants Orange R Box Score (manual/backfill)
 
 on:
   workflow_dispatch:
@@ -31,9 +31,6 @@ on:
         required: false
         default: false
         type: boolean
-  schedule:
-    - cron: "*/30 * * * *"
-
 concurrency:
   group: dsl-orange-r-boxscore
   cancel-in-progress: true
