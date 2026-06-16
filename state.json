@@ -1,6 +1,6 @@
 {
   "bootstrapped": true,
-  "last_run_iso": "2026-06-16T17:19:27.244016+00:00",
+  "last_run_iso": "2026-06-16T18:52:42.799682+00:00",
   "posted_games": {
     "811804": {
       "last_seen_iso": "2026-03-09T21:55:27Z",
@@ -457,6 +457,10 @@
     "2026-06-14": {
       "note": "no_games",
       "posted": false
+    },
+    "2026-06-15": {
+      "at": "2026-06-16T18:52:42.799652+00:00",
+      "posted": true
     }
   },
   "seen_transaction_ids": [
