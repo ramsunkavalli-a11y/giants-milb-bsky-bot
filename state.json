@@ -493,6 +493,10 @@
     "2026-06-23": {
       "at": "2026-06-24T17:00:49.829175+00:00",
       "posted": true
+    },
+    "2026-06-24": {
+      "note": "no_games",
+      "posted": false
     }
   },
   "seen_transaction_ids": [
