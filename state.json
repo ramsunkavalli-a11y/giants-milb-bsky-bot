@@ -605,6 +605,10 @@
     "2026-07-21": {
       "at": "2026-07-22T16:15:58.049734+00:00",
       "posted": true
+    },
+    "2026-07-22": {
+      "note": "no_games",
+      "posted": false
     }
   },
   "seen_transaction_ids": [
