@@ -649,6 +649,10 @@
     "2026-08-01": {
       "at": "2026-08-02T15:55:04.099386+00:00",
       "posted": true
+    },
+    "2026-08-02": {
+      "note": "no_games",
+      "posted": false
     }
   },
   "seen_transaction_ids": [
