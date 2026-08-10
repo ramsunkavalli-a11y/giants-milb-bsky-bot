@@ -673,6 +673,10 @@
     "2026-08-08": {
       "at": "2026-08-09T15:22:57.089020+00:00",
       "posted": true
+    },
+    "2026-08-09": {
+      "note": "no_games",
+      "posted": false
     }
   },
   "seen_transaction_ids": [
