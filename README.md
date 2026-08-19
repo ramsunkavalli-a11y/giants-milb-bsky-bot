@@ -1,62 +1,51 @@
 # giants-milb-bsky-bot
 
-Bluesky automation for Giants MiLB updates:
-- Transactions bot (`bot.py`)
-- DSL Giants Orange automated final/suspended box score bot (`gameday_dsl_orange.py`)
-- DSL Giants Orange daily recap mode (`gameday_dsl_orange.py --recap`)
+Bluesky automation for San Francisco Giants minor-league updates.
 
-## Local run
+## Active production bot: MiLB transactions
 
-### Transactions
+`bot.py` polls MLB's transaction feed for Giants affiliates and posts new organization moves to Bluesky.
+
+The bot now treats MLB's transaction as the fact and adds context without guessing organizational intent:
+
+- affiliate assignments are described neutrally rather than automatically labeled promotions/demotions;
+- level changes can include the player's season line at the departing team plus a meaningful last-14-days split;
+- hitters use AVG/OBP/SLG + PA (and HR on the season line); pitchers use IP/ERA + K%/BB%;
+- duplicate-looking MLB rows are deduped by both transaction ID and normalized event key;
+- IL/releases/other routine moves remain compact and can be grouped by affiliate;
+- transaction state and recent audit history live in `transaction_state.json` once production creates it;
+- empty hourly runs do not create state-only commits.
+
+See [`docs/TRANSACTIONS.md`](docs/TRANSACTIONS.md) for the formatting rules, stats thresholds, state migration, and validation details.
+
+### Local / manual checks
+
 ```bash
-python bot.py
+pip install -r requirements-transactions.txt
+python -m unittest -v test_bot.py
+DRY_RUN=1 python bot.py
+python scripts/validate_transaction_stats.py
 ```
 
-### DSL Orange gameday finals/suspended
+Manual GitHub Actions runs of **Giants MiLB Transactions Bot** default to dry-run mode. Scheduled runs remain live.
+
+## Legacy DSL Orange tools
+
+The repository also contains the older DSL Giants Orange box-score and daily-recap code (`gameday_dsl_orange.py`) and its workflows. Those tools are separate from the active transaction workflow.
+
+### DSL local examples
+
 ```bash
 python gameday_dsl_orange.py
-```
-
-### Override testing with real 2025 DSL Orange data
-```bash
 DRY_RUN=1 OVERRIDE_GAMEPK=811804 python gameday_dsl_orange.py
 DRY_RUN=1 OVERRIDE_DATE=2025-07-18 python gameday_dsl_orange.py
-```
-
-### Repost / WPA debug
-```bash
-DRY_RUN=1 FORCE_REPOST=1 DEBUG_WPA=1 OVERRIDE_GAMEPK=811804 python gameday_dsl_orange.py
-```
-
-### Daily recap
-```bash
 python gameday_dsl_orange.py --recap
 ```
 
-## Notes
-- `state.json` stores transaction seen IDs and DSL game/recap dedupe state.
-- `prospects.json` is editable and used to prioritize players in the DSL post text and image highlighting.
-- Prospect schema:
-  ```json
-  {
-    "updated": "YYYY-MM-DD",
-    "prospects": [
-      {"name": "Player Name", "priority": 1, "personId": 123456}
-    ]
-  }
-  ```
-- `player_cache.json` caches per-player metadata (pitch hand/position).
-- `data/tango_we.json` is the vendored WE lookup table used for WPA key moments (no live win-probability endpoint calls).
-- `templates/boxscore_card.html` controls the single-column sharp newspaper card style (tight crop of `#card`).
-- Box-score image rendering now defaults to Playwright/HTML for compact newspaper layout. Set `RENDER_ENGINE=matplotlib` only if you need the legacy fallback style.
-- In GitHub Actions gameday workflow, `RENDER_FAIL_ON_FALLBACK=1` is set so a Playwright failure aborts the run instead of silently posting a fallback image.
+### DSL supporting files
 
-### GitHub Actions (run now from GitHub web UI)
-1. Go to **Actions** → **DSL Giants Orange Final/Suspended Box Score**.
-2. Click **Run workflow**.
-3. Optionally set `override_gamepk` or `override_date`.
-4. For a real post now:
-   - set `dry_run=false`
-   - set `force_repost=true` if the game/status was already posted.
-
-If overrides are blank on manual run, the workflow picks the most recent DSL Orange game in the lookback window.
+- `state.json` remains the legacy DSL state file and the migration source for historical transaction IDs.
+- `prospects.json` is used by DSL post highlighting.
+- `player_cache.json` caches DSL player metadata.
+- `data/tango_we.json` is the vendored win-expectancy lookup table.
+- `templates/boxscore_card.html` controls the DSL box-score card.

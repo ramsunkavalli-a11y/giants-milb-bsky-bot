@@ -1,0 +1,43 @@
+name: Transactions Validation
+
+on:
+  pull_request:
+    paths:
+      - "bot.py"
+      - "test_bot.py"
+      - "requirements-transactions.txt"
+      - "scripts/validate_transaction_stats.py"
+      - ".github/workflows/bot.yml"
+      - ".github/workflows/transactions-validation.yml"
+      - "docs/TRANSACTIONS.md"
+      - "README.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install transaction bot deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-transactions.txt
+
+      - name: Unit tests
+        run: python -m unittest -v test_bot.py
+
+      - name: Live MLB StatsAPI smoke test
+        run: python scripts/validate_transaction_stats.py
+
+      - name: Live dry-run discovery
+        env:
+          DRY_RUN: "1"
+        run: python bot.py
