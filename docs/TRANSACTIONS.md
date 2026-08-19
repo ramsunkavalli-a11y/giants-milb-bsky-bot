@@ -1,6 +1,6 @@
 # MiLB transactions bot
 
-This document describes the active Giants MiLB transactions bot (`bot.py`). The DSL game/recap code is separate and is not part of this workflow.
+This document describes the production Giants MiLB transactions bot (`bot.py`). It is the sole supported bot in this repository.
 
 ## Purpose
 
@@ -18,7 +18,7 @@ Core rule: **the bot reports the transaction and adds factual context; it does n
 
 ## Level-change context
 
-For an assignment, option, or recall between organization levels, the bot attempts to fetch stats from the team the player is leaving, through the day before the transaction.
+For an assignment, option, or recall between organization levels, the bot attempts to fetch stats from the team the player is leaving, through the day before the transaction. MLB stat requests are scoped by both the departing affiliate and the affiliate's MiLB `sportId`, which is required for reliable minor-league player stats.
 
 Hitters:
 - season line at departing team: AVG/OBP/SLG, PA, HR when nonzero;
@@ -60,24 +60,30 @@ Explicit MLB transaction language is preserved where it matters. For example, a 
 
 ## Dedupe and state
 
-`transaction_state.json` is the active bot's persistent state. On first use it migrates the legacy `seen_transaction_ids` from `state.json`, so existing transactions are not reposted.
+`transaction_state.json` is the only persistent production state file.
 
 State stores:
 - MLB transaction IDs;
 - normalized event keys, which catch equivalent duplicate transaction rows with different IDs;
 - a capped recent-event audit trail with the normalized transaction, rendered post text, and Bluesky URI when available.
 
-The bot no longer writes a `last_run` timestamp on every empty hourly run. A no-news run therefore creates no repository commit.
+The committed state was seeded from the previously seen transaction IDs when the legacy game/recap implementation was removed. Older IDs outside the 14-day discovery window are not needed for dedupe.
+
+The bot does not write a `last_run` timestamp on empty hourly runs, so a no-news run creates no repository commit.
 
 State is saved after each successful Bluesky post. The workflow's state-commit step runs even if a later post fails, reducing the chance that an already-published post is repeated on the next run.
 
 ## Workflows and testing
 
-The active hourly workflow is `.github/workflows/bot.yml` and installs only `requirements-transactions.txt`; the heavier DSL rendering dependencies are not installed hourly.
+The hourly production workflow is `.github/workflows/bot.yml` and installs only `requirements-transactions.txt`.
 
 Manual runs default to dry-run mode. Dry run performs discovery and formatting but does not log into Bluesky or mutate state.
 
 Validation:
 - `python -m unittest -v test_bot.py` covers parsing, dedupe, formatting, stats thresholds, and packing.
-- `scripts/validate_transaction_stats.py` is a live MLB StatsAPI smoke test using historical Giants-org hitter and pitcher stints.
+- `scripts/validate_transaction_stats.py` is a live MLB StatsAPI smoke test using historical Giants-org hitter and pitcher stints, including recent-window checks.
 - `.github/workflows/transactions-validation.yml` runs both checks plus a live bot dry run on transaction-bot pull requests.
+
+## Removed scope
+
+The former DSL Orange box-score and daily-recap implementation, workflows, rendering templates, win-expectancy data, prospect/cache files, and combined legacy state were deleted. They should not be treated as a base for future work. A future game/recap bot should start from a fresh design and can reuse only ideas that are independently revalidated.
