@@ -105,6 +105,23 @@ class BotTests(unittest.TestCase):
         self.assertEqual(posts[0].event_ids, [1])
         self.assertIn("SJ season:", posts[0].text)
 
+    def test_single_long_plain_transaction_never_exceeds_limit(self):
+        event = self.event(
+            event_type="other",
+            from_id=bot.RICHMOND,
+            from_name="Richmond Flying Squirrels",
+            to_id=None,
+            to_name=None,
+            display_team_id=bot.RICHMOND,
+            header="Richmond",
+            description="Richmond Flying Squirrels " + ("very long administrative transaction wording " * 20),
+            stats_lines=[],
+        )
+        posts = bot.build_posts([event])
+        self.assertEqual(len(posts), 1)
+        self.assertLessEqual(len(posts[0].text), bot.MAX_CHARS)
+        self.assertTrue(posts[0].text.endswith("…"))
+
     def test_grouped_post_continuation_keeps_header(self):
         events = []
         for i in range(8):
