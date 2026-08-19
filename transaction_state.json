@@ -36,10 +36,23 @@
       "to_team": "San Francisco",
       "transaction_id": 938455,
       "type": "selected"
+    },
+    {
+      "effective_date": "2026-08-19",
+      "event_key": "2026-08-19|681924|il_activated|0|3410|richmond flying squirrels activated rhp r.j. dabovich from 60-day injured list",
+      "from_team": "",
+      "player": "R.J. Dabovich",
+      "post_text": "Richmond\n\u2022 activated RHP R.J. Dabovich from the 60-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mthvfc73qm2h",
+      "recorded_at": "2026-08-19T23:34:00.446020+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 938520,
+      "type": "il_activated"
     }
   ],
   "seen_event_keys": [
     "2026-08-19|665665|optioned|137|105|san francisco giants optioned lhp reiver sanmartin to sacramento river cats",
+    "2026-08-19|681924|il_activated|0|3410|richmond flying squirrels activated rhp r.j. dabovich from 60-day injured list",
     "2026-08-19|683363|selected|105|137|san francisco giants selected contract of lhp matt wilkinson from sacramento river cats",
     "2026-08-19|691769|optioned|137|105|san francisco giants optioned lhp philip abner to sacramento river cats"
   ],
@@ -217,7 +230,8 @@
     938351,
     938455,
     938456,
-    938458
+    938458,
+    938520
   ],
-  "updated_at": "2026-08-19T20:43:02.627752+00:00"
+  "updated_at": "2026-08-19T23:34:00.446048+00:00"
 }
