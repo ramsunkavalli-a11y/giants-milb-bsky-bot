@@ -1,7 +1,48 @@
 {
   "bootstrapped": true,
-  "recent_events": [],
-  "seen_event_keys": [],
+  "recent_events": [
+    {
+      "effective_date": "2026-08-19",
+      "event_key": "2026-08-19|665665|optioned|137|105|san francisco giants optioned lhp reiver sanmartin to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Reiver Sanmartin",
+      "post_text": "SF optioned LHP Reiver Sanmartin to Triple-A Sacramento\nSF season: 9.2 IP, 7.45 ERA \u00b7 21.7% K, 6.5% BB\nLast 14d: 5.0 IP, 7.20 ERA \u00b7 20.8% K, 4.2% BB",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mthltihdvs2d",
+      "recorded_at": "2026-08-19T20:42:59.335018+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 938456,
+      "type": "optioned"
+    },
+    {
+      "effective_date": "2026-08-19",
+      "event_key": "2026-08-19|691769|optioned|137|105|san francisco giants optioned lhp philip abner to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Philip Abner",
+      "post_text": "SF optioned LHP Philip Abner to Triple-A Sacramento\nSF season: 14.1 IP, 6.28 ERA \u00b7 9.4% K, 12.5% BB\nLast 14d: 5.0 IP, 5.40 ERA \u00b7 4.3% K, 8.7% BB",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mthltjmxrh22",
+      "recorded_at": "2026-08-19T20:43:00.565506+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 938458,
+      "type": "optioned"
+    },
+    {
+      "effective_date": "2026-08-19",
+      "event_key": "2026-08-19|683363|selected|105|137|san francisco giants selected contract of lhp matt wilkinson from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Matt Wilkinson",
+      "post_text": "Sacramento\n\u2022 selected the contract of LHP Matt Wilkinson from Sacramento River Cats.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mthltksj6k2d",
+      "recorded_at": "2026-08-19T20:43:02.627716+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 938455,
+      "type": "selected"
+    }
+  ],
+  "seen_event_keys": [
+    "2026-08-19|665665|optioned|137|105|san francisco giants optioned lhp reiver sanmartin to sacramento river cats",
+    "2026-08-19|683363|selected|105|137|san francisco giants selected contract of lhp matt wilkinson from sacramento river cats",
+    "2026-08-19|691769|optioned|137|105|san francisco giants optioned lhp philip abner to sacramento river cats"
+  ],
   "seen_transaction_ids": [
     928051,
     928223,
@@ -173,7 +214,10 @@
     938296,
     938297,
     938298,
-    938351
+    938351,
+    938455,
+    938456,
+    938458
   ],
-  "updated_at": "2026-08-19T01:50:48.553829+00:00"
+  "updated_at": "2026-08-19T20:43:02.627752+00:00"
 }
