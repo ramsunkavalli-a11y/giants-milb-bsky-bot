@@ -84,6 +84,18 @@ TEAM_STAT_LABEL: Dict[int, str] = {
     SF: "SF",
 }
 
+# MLB StatsAPI needs a sport/level context to return MiLB player stats.
+TEAM_SPORT_ID: Dict[int, int] = {
+    SF: 1,
+    SACRAMENTO: 11,
+    RICHMOND: 12,
+    EUGENE: 13,
+    SAN_JOSE: 14,
+    ACL: 16,
+    DSL_BLACK: 16,
+    DSL_ORANGE: 16,
+}
+
 SECTION_ORDER = ["DSL Giants", "ACL Giants", "San Jose", "Eugene", "Richmond", "Sacramento"]
 
 POSITION_RE = re.compile(r"\b(LHP|RHP|P|C|1B|2B|3B|SS|LF|CF|RF|OF|IF|INF|DH)\b", re.IGNORECASE)
@@ -385,12 +397,16 @@ def fetch_date_range_stats(
 ) -> Dict[str, Any]:
     if end_date < start_date:
         return {}
+    sport_id = TEAM_SPORT_ID.get(team_id)
+    if sport_id is None:
+        return {}
     try:
         r = s.get(
             f"{API_BASE}/people/{person_id}/stats",
             params={
                 "stats": "byDateRange",
                 "group": group,
+                "sportId": str(sport_id),
                 "startDate": start_date.isoformat(),
                 "endDate": end_date.isoformat(),
                 "teamId": str(team_id),
