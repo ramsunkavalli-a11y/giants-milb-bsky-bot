@@ -1,4 +1,9 @@
+import sys
 from datetime import date
+from pathlib import Path
+
+# Allow direct execution as `python scripts/validate_transaction_stats.py`.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from bot import EUGENE, fetch_date_range_stats, format_hitter_stats, format_pitcher_stats, make_session
 
