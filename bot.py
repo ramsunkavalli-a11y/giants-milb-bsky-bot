@@ -514,6 +514,15 @@ def level_change_text(event: TxnEvent) -> str:
     return "\n".join(lines)
 
 
+def _plain_bullet(event: TxnEvent) -> str:
+    text = make_compact_line(event)
+    longest_header = f"{event.header} (cont.)"
+    max_text = MAX_CHARS - len(longest_header) - len("\n• ")
+    if len(text) > max_text:
+        text = text[: max_text - 1].rstrip() + "…"
+    return f"• {text}"
+
+
 def _pack_plain_events(events: List[TxnEvent]) -> List[PostBundle]:
     by_header: Dict[str, List[TxnEvent]] = {}
     for event in events:
@@ -528,7 +537,7 @@ def _pack_plain_events(events: List[TxnEvent]) -> List[PostBundle]:
         lines = [header]
         ids: List[int] = []
         for event in items:
-            lines.append(f"• {make_compact_line(event)}")
+            lines.append(_plain_bullet(event))
             ids.append(event.id)
         sections.append((lines, ids))
 
