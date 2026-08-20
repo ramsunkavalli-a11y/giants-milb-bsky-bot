@@ -84,6 +84,30 @@
       "to_team": "San Francisco",
       "transaction_id": 938602,
       "type": "recalled"
+    },
+    {
+      "effective_date": "2026-08-20",
+      "event_key": "2026-08-20|823185|assignment|461|3410|ss zane zielinski assigned to richmond flying squirrels from eugene emeralds",
+      "from_team": "High-A Eugene",
+      "player": "Zane Zielinski",
+      "post_text": "SS Zane Zielinski \u2192 Double-A Richmond\nFrom High-A Eugene\nEUG season: .258/.343/.314 in 184 PA\nLast 14d: .108/.175/.162 in 41 PA",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtk7jcocgc2l",
+      "recorded_at": "2026-08-20T21:40:32.062258+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 938666,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-08-20",
+      "event_key": "2026-08-20|694552|il_placed|0|3410|richmond flying squirrels placed 1b jack payton on 7-day injured list",
+      "from_team": "",
+      "player": "Jack Payton",
+      "post_text": "Richmond\n\u2022 placed 1B Jack Payton on the 7-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtk7jdvdq32m",
+      "recorded_at": "2026-08-20T21:40:33.341127+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 938665,
+      "type": "il_placed"
     }
   ],
   "seen_event_keys": [
@@ -93,7 +117,9 @@
     "2026-08-19|691769|optioned|137|105|san francisco giants optioned lhp philip abner to sacramento river cats",
     "2026-08-19|807275|assignment|408|461|3b dalton wentz assigned to eugene emeralds from acl giants",
     "2026-08-19|821640|il_placed|0|2134|dsl giants black placed rhp elkyns villarreal on 7-day injured list",
-    "2026-08-20|665665|recalled|105|137|san francisco giants recalled lhp reiver sanmartin from sacramento river cats"
+    "2026-08-20|665665|recalled|105|137|san francisco giants recalled lhp reiver sanmartin from sacramento river cats",
+    "2026-08-20|694552|il_placed|0|3410|richmond flying squirrels placed 1b jack payton on 7-day injured list",
+    "2026-08-20|823185|assignment|461|3410|ss zane zielinski assigned to richmond flying squirrels from eugene emeralds"
   ],
   "seen_transaction_ids": [
     928051,
@@ -274,7 +300,9 @@
     938537,
     938539,
     938602,
-    938630
+    938630,
+    938665,
+    938666
   ],
-  "updated_at": "2026-08-20T18:55:54.307011+00:00"
+  "updated_at": "2026-08-20T21:40:33.341162+00:00"
 }
