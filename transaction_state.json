@@ -48,13 +48,26 @@
       "to_team": "Double-A Richmond",
       "transaction_id": 938520,
       "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-08-19",
+      "event_key": "2026-08-19|807275|assignment|408|461|3b dalton wentz assigned to eugene emeralds from acl giants",
+      "from_team": "ACL Giants",
+      "player": "Dalton Wentz",
+      "post_text": "Eugene\n\u2022 3B Dalton Wentz \u2192 High-A Eugene from ACL Giants.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mti4wdvpzb2x",
+      "recorded_at": "2026-08-20T01:48:48.840208+00:00",
+      "to_team": "High-A Eugene",
+      "transaction_id": 938537,
+      "type": "assignment"
     }
   ],
   "seen_event_keys": [
     "2026-08-19|665665|optioned|137|105|san francisco giants optioned lhp reiver sanmartin to sacramento river cats",
     "2026-08-19|681924|il_activated|0|3410|richmond flying squirrels activated rhp r.j. dabovich from 60-day injured list",
     "2026-08-19|683363|selected|105|137|san francisco giants selected contract of lhp matt wilkinson from sacramento river cats",
-    "2026-08-19|691769|optioned|137|105|san francisco giants optioned lhp philip abner to sacramento river cats"
+    "2026-08-19|691769|optioned|137|105|san francisco giants optioned lhp philip abner to sacramento river cats",
+    "2026-08-19|807275|assignment|408|461|3b dalton wentz assigned to eugene emeralds from acl giants"
   ],
   "seen_transaction_ids": [
     928051,
@@ -231,7 +244,8 @@
     938455,
     938456,
     938458,
-    938520
+    938520,
+    938537
   ],
-  "updated_at": "2026-08-19T23:34:00.446048+00:00"
+  "updated_at": "2026-08-20T01:48:48.840237+00:00"
 }
