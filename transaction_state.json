@@ -144,6 +144,30 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 938876,
       "type": "other"
+    },
+    {
+      "effective_date": "2026-08-19",
+      "event_key": "2026-08-19|836072|other|0|476|san jose giants transferred rhp garrett langrell from 7-day injured list to 60-day injured list",
+      "from_team": "",
+      "player": "Garrett Langrell",
+      "post_text": "San Jose\n\u2022 transferred RHP Garrett Langrell from the 7-day IL to the 60-day IL.\n\nRichmond\n\u2022 transferred LHP Tyler Switalski from the 7-day IL to the 60-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtolxj6yl22j",
+      "recorded_at": "2026-08-22T15:33:52.514290+00:00",
+      "to_team": "Low-A San Jose",
+      "transaction_id": 938902,
+      "type": "other"
+    },
+    {
+      "effective_date": "2026-08-21",
+      "event_key": "2026-08-21|802000|other|0|3410|richmond flying squirrels transferred lhp tyler switalski from 7-day injured list to 60-day injured list",
+      "from_team": "",
+      "player": "Tyler Switalski",
+      "post_text": "San Jose\n\u2022 transferred RHP Garrett Langrell from the 7-day IL to the 60-day IL.\n\nRichmond\n\u2022 transferred LHP Tyler Switalski from the 7-day IL to the 60-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtolxj6yl22j",
+      "recorded_at": "2026-08-22T15:33:52.514300+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 938903,
+      "type": "other"
     }
   ],
   "seen_event_keys": [
@@ -153,10 +177,12 @@
     "2026-08-19|691769|optioned|137|105|san francisco giants optioned lhp philip abner to sacramento river cats",
     "2026-08-19|807275|assignment|408|461|3b dalton wentz assigned to eugene emeralds from acl giants",
     "2026-08-19|821640|il_placed|0|2134|dsl giants black placed rhp elkyns villarreal on 7-day injured list",
+    "2026-08-19|836072|other|0|476|san jose giants transferred rhp garrett langrell from 7-day injured list to 60-day injured list",
     "2026-08-20|665665|recalled|105|137|san francisco giants recalled lhp reiver sanmartin from sacramento river cats",
     "2026-08-20|694552|il_placed|0|3410|richmond flying squirrels placed 1b jack payton on 7-day injured list",
     "2026-08-20|823185|assignment|461|3410|ss zane zielinski assigned to richmond flying squirrels from eugene emeralds",
     "2026-08-21|691769|other|0|105|sacramento river cats activated lhp philip abner",
+    "2026-08-21|802000|other|0|3410|richmond flying squirrels transferred lhp tyler switalski from 7-day injured list to 60-day injured list",
     "2026-08-21|823352|assignment|408|476|2b luke nixon assigned to san jose giants from acl giants",
     "2026-08-21|835227|assignment|408|476|of peyton bonds assigned to san jose giants from acl giants"
   ],
@@ -344,7 +370,9 @@
     938666,
     938841,
     938842,
-    938876
+    938876,
+    938902,
+    938903
   ],
-  "updated_at": "2026-08-22T01:47:42.788797+00:00"
+  "updated_at": "2026-08-22T15:33:52.514323+00:00"
 }
