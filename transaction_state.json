@@ -132,6 +132,18 @@
       "to_team": "Low-A San Jose",
       "transaction_id": 938842,
       "type": "assignment"
+    },
+    {
+      "effective_date": "2026-08-21",
+      "event_key": "2026-08-21|691769|other|0|105|sacramento river cats activated lhp philip abner",
+      "from_team": "",
+      "player": "Philip Abner",
+      "post_text": "Sacramento\n\u2022 activated LHP Philip Abner.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtn5s7sw2i26",
+      "recorded_at": "2026-08-22T01:47:42.788772+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 938876,
+      "type": "other"
     }
   ],
   "seen_event_keys": [
@@ -144,6 +156,7 @@
     "2026-08-20|665665|recalled|105|137|san francisco giants recalled lhp reiver sanmartin from sacramento river cats",
     "2026-08-20|694552|il_placed|0|3410|richmond flying squirrels placed 1b jack payton on 7-day injured list",
     "2026-08-20|823185|assignment|461|3410|ss zane zielinski assigned to richmond flying squirrels from eugene emeralds",
+    "2026-08-21|691769|other|0|105|sacramento river cats activated lhp philip abner",
     "2026-08-21|823352|assignment|408|476|2b luke nixon assigned to san jose giants from acl giants",
     "2026-08-21|835227|assignment|408|476|of peyton bonds assigned to san jose giants from acl giants"
   ],
@@ -330,7 +343,8 @@
     938665,
     938666,
     938841,
-    938842
+    938842,
+    938876
   ],
-  "updated_at": "2026-08-21T22:38:23.081637+00:00"
+  "updated_at": "2026-08-22T01:47:42.788797+00:00"
 }
