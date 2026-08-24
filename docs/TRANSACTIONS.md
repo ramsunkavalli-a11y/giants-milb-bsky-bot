@@ -32,6 +32,8 @@ Pitchers:
 
 Stats are context only. A hot or cold 14-day line is never presented as the reason for a transaction. If the MLB stats request fails, the transaction still posts in the compact fallback format.
 
+Every stats split is verified against the requested originating team. MLB can return a valid-looking line for another club despite a `teamId` filter; in that case the bot omits stats rather than mislabeling them. Enriched posts include an MLB player-page link for verification.
+
 ### Example: assignment with hitter context
 
 ```text
@@ -68,6 +70,8 @@ State stores:
 - a capped recent-event audit trail with the normalized transaction, rendered post text, and Bluesky URI when available.
 
 The committed state was seeded from the previously seen transaction IDs when the legacy game/recap implementation was removed. Older IDs outside the 14-day discovery window are not needed for dedupe.
+
+To bound repository growth while allowing for delayed corrections, the bot retains the newest 1,000 transaction IDs and event keys from the last 45 days.
 
 The bot does not write a `last_run` timestamp on empty hourly runs, so a no-news run creates no repository commit.
 

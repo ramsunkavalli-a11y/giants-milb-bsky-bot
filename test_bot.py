@@ -68,6 +68,19 @@ class BotTests(unittest.TestCase):
         self.assertEqual(event.stats_lines[0], "SJ season: .282/.350/.462 in 250 PA, 9 HR")
         self.assertEqual(event.stats_lines[1], "Last 14d: .347/.418/.612 in 55 PA")
 
+    def test_stats_split_rejects_another_teams_line(self):
+        payload = {"stats": [{"splits": [{"team": {"id": 109}, "stat": {"era": "6.28"}}]}]}
+        self.assertEqual(bot._stats_split(payload, bot.SF), {})
+
+    def test_stats_split_uses_only_the_requested_team(self):
+        payload = {
+            "stats": [{"splits": [
+                {"team": {"id": 109}, "stat": {"era": "6.28"}},
+                {"team": {"id": bot.SF}, "stat": {"era": "3.25"}},
+            ]}]
+        }
+        self.assertEqual(bot._stats_split(payload, bot.SF), {"era": "3.25"})
+
     def test_hitter_recent_split_is_omitted_below_sample_threshold(self):
         event = self.event()
         season = {"plateAppearances": 100, "avg": ".250", "obp": ".330", "slg": ".410", "homeRuns": 4}
@@ -145,6 +158,12 @@ class BotTests(unittest.TestCase):
         self.assertGreaterEqual(len(posts), 2)
         self.assertTrue(posts[1].text.startswith("Richmond (cont.)"))
         self.assertTrue(all(len(p.text) <= bot.MAX_CHARS for p in posts))
+
+    def test_rehab_and_selected_posts_do_not_repeat_the_destination(self):
+        rehab = self.event(event_type="rehab", person_name="Matt Gage", position="LHP")
+        selected = self.event(event_type="selected", person_name="Matt Wilkinson", position="LHP")
+        self.assertEqual(bot.make_compact_line(rehab), "LHP Matt Gage began a rehab assignment.")
+        self.assertEqual(bot.make_compact_line(selected), "SF selected the contract of LHP Matt Wilkinson.")
 
 
 if __name__ == "__main__":

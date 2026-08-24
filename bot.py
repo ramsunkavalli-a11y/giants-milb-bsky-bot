@@ -23,8 +23,10 @@ MIN_RECENT_HITTER_PA = 20
 MIN_RECENT_PITCHER_IP = 5.0
 SLEEP_BETWEEN_POSTS_SEC = 1.2
 RECENT_EVENT_AUDIT_LIMIT = 200
+SEEN_TRANSACTION_ID_LIMIT = 1000
+SEEN_EVENT_KEY_RETENTION_DAYS = 45
 
-# STATE_PATH is retained because the disabled DSL code imports it.
+# STATE_PATH is retained only to migrate the earlier combined state file.
 STATE_PATH = "state.json"
 TRANSACTION_STATE_PATH = "transaction_state.json"
 API_BASE = "https://statsapi.mlb.com/api/v1"
@@ -158,6 +160,14 @@ def load_transaction_state() -> Dict[str, Any]:
 def save_transaction_state(state: Dict[str, Any]) -> None:
     state["updated_at"] = datetime.now(timezone.utc).isoformat()
     state["recent_events"] = state.get("recent_events", [])[-RECENT_EVENT_AUDIT_LIMIT:]
+    # Discovery covers 14 days. Retain a wider correction window without allowing
+    # the committed dedupe state to grow forever.
+    state["seen_transaction_ids"] = sorted({int(x) for x in state.get("seen_transaction_ids", [])})[-SEEN_TRANSACTION_ID_LIMIT:]
+    cutoff = datetime.now(ZoneInfo("America/Los_Angeles")).date() - timedelta(days=SEEN_EVENT_KEY_RETENTION_DAYS)
+    state["seen_event_keys"] = sorted(
+        key for key in set(state.get("seen_event_keys", []))
+        if parse_event_date(key.split("|", 1)[0]) >= cutoff
+    )
     _write_json(TRANSACTION_STATE_PATH, state)
 
 
@@ -355,6 +365,11 @@ def strip_affiliate_prefix(desc: str, header: str, from_name: Optional[str], to_
 def make_compact_line(event: TxnEvent) -> str:
     person = " ".join(x for x in [event.position, event.person_name] if x).strip() or event.person_name
 
+    if event.event_type == "rehab":
+        return f"{person} began a rehab assignment."
+    if event.event_type == "selected":
+        return f"SF selected the contract of {person}."
+
     if event.event_type == "assignment" and event.to_id in ORG_TEAM_IDS:
         origin = destination_name(event.from_id, event.from_name) if event.from_id else ""
         if origin and origin != "?":
@@ -379,11 +394,17 @@ def fetch_person_position(s: requests.Session, person_id: int) -> str:
         return ""
 
 
-def _stats_split(payload: Dict[str, Any]) -> Dict[str, Any]:
+def _stats_split(payload: Dict[str, Any], team_id: int) -> Dict[str, Any]:
+    """Return a split only when it belongs to the requested team.
+
+    MLB can return a player's line for another club even when teamId is supplied.
+    Omitting context is safer than assigning that line to the transaction origin.
+    """
     for group in payload.get("stats") or []:
         splits = group.get("splits") or []
-        if splits:
-            return splits[0].get("stat") or {}
+        for split in splits:
+            if (split.get("team") or {}).get("id") == team_id:
+                return split.get("stat") or {}
     return {}
 
 
@@ -414,7 +435,7 @@ def fetch_date_range_stats(
             timeout=30,
         )
         r.raise_for_status()
-        return _stats_split(r.json() or {})
+        return _stats_split(r.json() or {}, team_id)
     except requests.RequestException as exc:
         print(f"WARNING: stats fetch failed for {person_id} ({group}, team {team_id}): {exc}")
         return {}
@@ -523,11 +544,13 @@ def level_change_text(event: TxnEvent) -> str:
         lines = [f"{player} → {destination_name(event.to_id, event.to_name)}"]
         if event.from_id:
             lines.append(f"From {destination_name(event.from_id, event.from_name)}")
-    lines.extend(event.stats_lines)
-
-    while len("\n".join(lines)) > MAX_CHARS and len(lines) > 1:
-        lines.pop()
-    return "\n".join(lines)
+    stats_lines = event.stats_lines[:]
+    source_line = f"https://www.mlb.com/player/{event.person_id}" if event.person_id else ""
+    # Retain a verification link when space is tight; omit the least-important
+    # stats context first instead of silently dropping the source.
+    while len("\n".join(lines + stats_lines + ([source_line] if source_line else []))) > MAX_CHARS and stats_lines:
+        stats_lines.pop()
+    return "\n".join(lines + stats_lines + ([source_line] if source_line else []))
 
 
 def _plain_bullet(event: TxnEvent) -> str:
@@ -609,7 +632,13 @@ def build_posts(events: List[TxnEvent]) -> List[PostBundle]:
         else:
             plain.append(event)
 
-    return enriched + _pack_plain_events(plain)
+    event_order = {event.id: (event.sort_date, event.id) for event in events}
+    # Keep related MLB/Triple-A moves in the transaction timeline rather than
+    # putting every enriched post ahead of its companion transaction.
+    return sorted(
+        enriched + _pack_plain_events(plain),
+        key=lambda post: min(event_order[event_id] for event_id in post.event_ids),
+    )
 
 
 # -----------------------------

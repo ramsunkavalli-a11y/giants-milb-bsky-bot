@@ -34,3 +34,9 @@ Manual GitHub Actions runs of **Giants MiLB Transactions Bot** default to dry-ru
 ## Repository scope
 
 This repository supports the MiLB transactions bot only. The previous DSL Orange box-score/recap implementation was removed rather than retained as legacy code; any future game/recap bot should be rebuilt as a separate, intentionally designed implementation.
+
+## Bluesky profile
+
+Set the account display name to **Giants MiLB Transactions** and use this bio:
+
+> Automated San Francisco Giants minor-league roster moves. MLB StatsAPI; factual updates, no rumor or editorial judgment.
