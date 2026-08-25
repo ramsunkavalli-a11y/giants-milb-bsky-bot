@@ -264,6 +264,66 @@
       "to_team": "San Francisco",
       "transaction_id": 939213,
       "type": "recalled"
+    },
+    {
+      "effective_date": "2026-08-25",
+      "event_key": "2026-08-25|681060|released|0|476|san jose giants released rhp sam knowlton",
+      "from_team": "",
+      "player": "Sam Knowlton",
+      "post_text": "San Jose\n\u2022 released RHP Sam Knowlton.\n\nEugene\n\u2022 placed RHP Ramon Marquez on the 7-day IL.\n\nRichmond\n\u2022 activated SS Jose Astudillo from the 7-day IL.\n\u2022 placed SS Gavin Kilen on the 7-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtwvcukzfn26",
+      "recorded_at": "2026-08-25T22:42:35.116315+00:00",
+      "to_team": "Low-A San Jose",
+      "transaction_id": 939422,
+      "type": "released"
+    },
+    {
+      "effective_date": "2026-08-25",
+      "event_key": "2026-08-25|827408|il_placed|0|461|eugene emeralds placed rhp ramon marquez on 7-day injured list",
+      "from_team": "",
+      "player": "Ramon Marquez",
+      "post_text": "San Jose\n\u2022 released RHP Sam Knowlton.\n\nEugene\n\u2022 placed RHP Ramon Marquez on the 7-day IL.\n\nRichmond\n\u2022 activated SS Jose Astudillo from the 7-day IL.\n\u2022 placed SS Gavin Kilen on the 7-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtwvcukzfn26",
+      "recorded_at": "2026-08-25T22:42:35.116331+00:00",
+      "to_team": "High-A Eugene",
+      "transaction_id": 939397,
+      "type": "il_placed"
+    },
+    {
+      "effective_date": "2026-08-25",
+      "event_key": "2026-08-25|698973|il_activated|0|3410|richmond flying squirrels activated ss jose astudillo from 7-day injured list",
+      "from_team": "",
+      "player": "Jose Astudillo",
+      "post_text": "San Jose\n\u2022 released RHP Sam Knowlton.\n\nEugene\n\u2022 placed RHP Ramon Marquez on the 7-day IL.\n\nRichmond\n\u2022 activated SS Jose Astudillo from the 7-day IL.\n\u2022 placed SS Gavin Kilen on the 7-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtwvcukzfn26",
+      "recorded_at": "2026-08-25T22:42:35.116337+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 939413,
+      "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-08-25",
+      "event_key": "2026-08-25|702264|il_placed|0|3410|richmond flying squirrels placed ss gavin kilen on 7-day injured list",
+      "from_team": "",
+      "player": "Gavin Kilen",
+      "post_text": "San Jose\n\u2022 released RHP Sam Knowlton.\n\nEugene\n\u2022 placed RHP Ramon Marquez on the 7-day IL.\n\nRichmond\n\u2022 activated SS Jose Astudillo from the 7-day IL.\n\u2022 placed SS Gavin Kilen on the 7-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtwvcukzfn26",
+      "recorded_at": "2026-08-25T22:42:35.116341+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 939415,
+      "type": "il_placed"
+    },
+    {
+      "effective_date": "2026-08-25",
+      "event_key": "2026-08-25|702352|recalled|105|137|san francisco giants recalled rhp spencer bivens from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Spencer Bivens",
+      "post_text": "SF recalled RHP Spencer Bivens from Triple-A Sacramento\nSAC season: 68.0 IP, 5.16 ERA \u00b7 20.9% K, 8.3% BB\nLast 14d: 6.0 IP, 18.00 ERA \u00b7 14.3% K, 8.6% BB\nhttps://www.mlb.com/player/702352",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtwvcvrru42k",
+      "recorded_at": "2026-08-25T22:42:36.385742+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 939449,
+      "type": "recalled"
     }
   ],
   "seen_event_keys": [
@@ -288,7 +348,12 @@
     "2026-08-24|683627|recalled|105|137|san francisco giants recalled rhp anthony molina from sacramento river cats",
     "2026-08-24|687529|recalled|105|137|san francisco giants recalled cf grant mccray from sacramento river cats",
     "2026-08-24|694376|recalled|105|137|san francisco giants recalled 3b shay whitcomb from sacramento river cats",
-    "2026-08-24|801501|recalled|105|137|san francisco giants recalled 2b nate furman from sacramento river cats"
+    "2026-08-24|801501|recalled|105|137|san francisco giants recalled 2b nate furman from sacramento river cats",
+    "2026-08-25|681060|released|0|476|san jose giants released rhp sam knowlton",
+    "2026-08-25|698973|il_activated|0|3410|richmond flying squirrels activated ss jose astudillo from 7-day injured list",
+    "2026-08-25|702264|il_placed|0|3410|richmond flying squirrels placed ss gavin kilen on 7-day injured list",
+    "2026-08-25|702352|recalled|105|137|san francisco giants recalled rhp spencer bivens from sacramento river cats",
+    "2026-08-25|827408|il_placed|0|461|eugene emeralds placed rhp ramon marquez on 7-day injured list"
   ],
   "seen_transaction_ids": [
     928051,
@@ -485,7 +550,12 @@
     939210,
     939211,
     939212,
-    939213
+    939213,
+    939397,
+    939413,
+    939415,
+    939422,
+    939449
   ],
-  "updated_at": "2026-08-25T01:49:52.190073+00:00"
+  "updated_at": "2026-08-25T22:42:36.385779+00:00"
 }
