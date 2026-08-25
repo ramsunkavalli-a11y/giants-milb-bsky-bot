@@ -192,6 +192,78 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 939101,
       "type": "rehab"
+    },
+    {
+      "effective_date": "2026-08-24",
+      "event_key": "2026-08-24|683363|optioned|137|105|san francisco giants optioned lhp matt wilkinson to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Matt Wilkinson",
+      "post_text": "SF optioned LHP Matt Wilkinson to Triple-A Sacramento\nSF season: 5.2 IP, 6.35 ERA \u00b7 8.0% K, 0.0% BB\nLast 14d: 5.2 IP, 6.35 ERA \u00b7 8.0% K, 0.0% BB\nhttps://www.mlb.com/player/683363",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtupcniu6z2r",
+      "recorded_at": "2026-08-25T01:49:45.789836+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 939208,
+      "type": "optioned"
+    },
+    {
+      "effective_date": "2026-08-24",
+      "event_key": "2026-08-24|801501|recalled|105|137|san francisco giants recalled 2b nate furman from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Nate Furman",
+      "post_text": "SF recalled 2B Nate Furman from Triple-A Sacramento\nSAC season: .293/.377/.414 in 468 PA, 7 HR\nLast 14d: .414/.471/.517 in 34 PA\nhttps://www.mlb.com/player/801501",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtupcopvea2o",
+      "recorded_at": "2026-08-25T01:49:47.073355+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 939209,
+      "type": "recalled"
+    },
+    {
+      "effective_date": "2026-08-24",
+      "event_key": "2026-08-24|687529|recalled|105|137|san francisco giants recalled cf grant mccray from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Grant McCray",
+      "post_text": "SF recalled CF Grant McCray from Triple-A Sacramento\nSAC season: .233/.352/.356 in 244 PA, 4 HR\nLast 14d: .207/.303/.276 in 33 PA\nhttps://www.mlb.com/player/687529",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtupcpx4du2r",
+      "recorded_at": "2026-08-25T01:49:48.350476+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 939210,
+      "type": "recalled"
+    },
+    {
+      "effective_date": "2026-08-24",
+      "event_key": "2026-08-24|683627|recalled|105|137|san francisco giants recalled rhp anthony molina from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Anthony Molina",
+      "post_text": "SF recalled RHP Anthony Molina from Triple-A Sacramento\nSAC season: 9.0 IP, 3.00 ERA \u00b7 23.1% K, 5.1% BB\nLast 14d: 6.0 IP, 4.50 ERA \u00b7 17.9% K, 7.1% BB\nhttps://www.mlb.com/player/683627",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtupcr63tk2o",
+      "recorded_at": "2026-08-25T01:49:49.628796+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 939211,
+      "type": "recalled"
+    },
+    {
+      "effective_date": "2026-08-24",
+      "event_key": "2026-08-24|676254|recalled|105|137|san francisco giants recalled rhp ryan walker from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Ryan Walker",
+      "post_text": "SF recalled RHP Ryan Walker from Triple-A Sacramento\nSAC season: 27.2 IP, 1.63 ERA \u00b7 24.1% K, 8.3% BB\nLast 14d: 5.2 IP, 0.00 ERA \u00b7 43.8% K, 0.0% BB\nhttps://www.mlb.com/player/676254",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtupcsf3ea2o",
+      "recorded_at": "2026-08-25T01:49:50.908072+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 939212,
+      "type": "recalled"
+    },
+    {
+      "effective_date": "2026-08-24",
+      "event_key": "2026-08-24|694376|recalled|105|137|san francisco giants recalled 3b shay whitcomb from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Shay Whitcomb",
+      "post_text": "SF recalled 3B Shay Whitcomb from Triple-A Sacramento\nSAC season: .258/.314/.355 in 35 PA, 1 HR\nLast 14d: .258/.314/.355 in 35 PA\nhttps://www.mlb.com/player/694376",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtupctm7ya26",
+      "recorded_at": "2026-08-25T01:49:52.190030+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 939213,
+      "type": "recalled"
     }
   ],
   "seen_event_keys": [
@@ -210,7 +282,13 @@
     "2026-08-21|823352|assignment|408|476|2b luke nixon assigned to san jose giants from acl giants",
     "2026-08-21|835227|assignment|408|476|of peyton bonds assigned to san jose giants from acl giants",
     "2026-08-22|657424|rehab|137|105|san francisco giants sent lhp matt gage on a rehab assignment to sacramento river cats",
-    "2026-08-23|683679|rehab|137|105|san francisco giants sent c jesus rodriguez on a rehab assignment to sacramento river cats"
+    "2026-08-23|683679|rehab|137|105|san francisco giants sent c jesus rodriguez on a rehab assignment to sacramento river cats",
+    "2026-08-24|676254|recalled|105|137|san francisco giants recalled rhp ryan walker from sacramento river cats",
+    "2026-08-24|683363|optioned|137|105|san francisco giants optioned lhp matt wilkinson to sacramento river cats",
+    "2026-08-24|683627|recalled|105|137|san francisco giants recalled rhp anthony molina from sacramento river cats",
+    "2026-08-24|687529|recalled|105|137|san francisco giants recalled cf grant mccray from sacramento river cats",
+    "2026-08-24|694376|recalled|105|137|san francisco giants recalled 3b shay whitcomb from sacramento river cats",
+    "2026-08-24|801501|recalled|105|137|san francisco giants recalled 2b nate furman from sacramento river cats"
   ],
   "seen_transaction_ids": [
     928051,
@@ -401,7 +479,13 @@
     938903,
     938916,
     939007,
-    939101
+    939101,
+    939208,
+    939209,
+    939210,
+    939211,
+    939212,
+    939213
   ],
-  "updated_at": "2026-08-23T18:46:06.805037+00:00"
+  "updated_at": "2026-08-25T01:49:52.190073+00:00"
 }
