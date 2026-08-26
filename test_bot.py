@@ -165,6 +165,15 @@ class BotTests(unittest.TestCase):
         self.assertEqual(bot.make_compact_line(rehab), "LHP Matt Gage began a rehab assignment.")
         self.assertEqual(bot.make_compact_line(selected), "SF selected the contract of LHP Matt Wilkinson.")
 
+    def test_player_url_is_sent_as_clickable_rich_text(self):
+        url = "https://www.mlb.com/player/683363"
+        text = f"SF optioned LHP Matt Wilkinson\n{url}"
+        rich_text = bot.bsky_rich_text(text)
+        self.assertEqual(rich_text.build_text(), text)
+        facets = rich_text.build_facets()
+        self.assertEqual(len(facets), 1)
+        self.assertEqual(facets[0].features[0].uri, url)
+
 
 if __name__ == "__main__":
     unittest.main()

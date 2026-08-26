@@ -11,7 +11,7 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
-from atproto import Client
+from atproto import Client, client_utils
 
 # -----------------------------
 # Config
@@ -101,6 +101,7 @@ TEAM_SPORT_ID: Dict[int, int] = {
 SECTION_ORDER = ["DSL Giants", "ACL Giants", "San Jose", "Eugene", "Richmond", "Sacramento"]
 
 POSITION_RE = re.compile(r"\b(LHP|RHP|P|C|1B|2B|3B|SS|LF|CF|RF|OF|IF|INF|DH)\b", re.IGNORECASE)
+URL_RE = re.compile(r"https?://[^\s]+")
 
 
 # -----------------------------
@@ -650,6 +651,22 @@ def bsky_login() -> Client:
     return client
 
 
+def bsky_rich_text(text: str) -> client_utils.TextBuilder:
+    """Build clickable Bluesky link facets for every URL in a post.
+
+    Sending a plain URL string does not create a rich-text facet, so Bluesky
+    renders it as ordinary text rather than a link.
+    """
+    builder = client_utils.TextBuilder()
+    cursor = 0
+    for match in URL_RE.finditer(text):
+        builder.text(text[cursor:match.start()])
+        builder.link(match.group(0), match.group(0))
+        cursor = match.end()
+    builder.text(text[cursor:])
+    return builder
+
+
 def append_audit_event(state: Dict[str, Any], event: TxnEvent, post_text: str, post_uri: str = "") -> None:
     state.setdefault("recent_events", []).append(
         {
@@ -793,7 +810,7 @@ def main() -> None:
     client = bsky_login()
 
     for post in posts:
-        response = client.send_post(text=post.text)
+        response = client.send_post(text=bsky_rich_text(post.text))
         post_uri = getattr(response, "uri", "") or ""
         for event_id in post.event_ids:
             event = events_by_id.get(event_id)
