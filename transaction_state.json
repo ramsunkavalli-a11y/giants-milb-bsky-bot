@@ -336,6 +336,18 @@
       "to_team": "DSL Giants",
       "transaction_id": 939483,
       "type": "other"
+    },
+    {
+      "effective_date": "2026-08-26",
+      "event_key": "2026-08-26|694820|selected|105|137|san francisco giants selected contract of rhp braxton roxby from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Braxton Roxby",
+      "post_text": "Sacramento\n\u2022 SF selected the contract of RHP Braxton Roxby.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtz2arvbgy24",
+      "recorded_at": "2026-08-26T19:16:13.391996+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 939511,
+      "type": "selected"
     }
   ],
   "seen_event_keys": [
@@ -366,7 +378,8 @@
     "2026-08-25|702264|il_placed|0|3410|richmond flying squirrels placed ss gavin kilen on 7-day injured list",
     "2026-08-25|702352|recalled|105|137|san francisco giants recalled rhp spencer bivens from sacramento river cats",
     "2026-08-25|814295|other|0|2134|dsl giants black activated lhp luis custodio from restricted list",
-    "2026-08-25|827408|il_placed|0|461|eugene emeralds placed rhp ramon marquez on 7-day injured list"
+    "2026-08-25|827408|il_placed|0|461|eugene emeralds placed rhp ramon marquez on 7-day injured list",
+    "2026-08-26|694820|selected|105|137|san francisco giants selected contract of rhp braxton roxby from sacramento river cats"
   ],
   "seen_transaction_ids": [
     928051,
@@ -569,7 +582,8 @@
     939415,
     939422,
     939449,
-    939483
+    939483,
+    939511
   ],
-  "updated_at": "2026-08-26T14:59:48.974058+00:00"
+  "updated_at": "2026-08-26T19:16:13.392032+00:00"
 }
