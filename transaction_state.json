@@ -348,6 +348,42 @@
       "to_team": "San Francisco",
       "transaction_id": 939511,
       "type": "selected"
+    },
+    {
+      "effective_date": "2026-08-26",
+      "event_key": "2026-08-26|681924|assignment|3410|105|rhp r.j. dabovich assigned to sacramento river cats from richmond flying squirrels",
+      "from_team": "Double-A Richmond",
+      "player": "R.J. Dabovich",
+      "post_text": "RHP R.J. Dabovich \u2192 Triple-A Sacramento\nFrom Double-A Richmond\nRIC season: 3.1 IP, 5.40 ERA \u00b7 26.7% K, 20.0% BB\nhttps://www.mlb.com/player/681924",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtzifrsppq2h",
+      "recorded_at": "2026-08-26T23:29:33.443618+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 939579,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-08-26",
+      "event_key": "2026-08-26|801639|assignment|3410|105|rhp trystan vrieling assigned to sacramento river cats from richmond flying squirrels",
+      "from_team": "Double-A Richmond",
+      "player": "Trystan Vrieling",
+      "post_text": "RHP Trystan Vrieling \u2192 Triple-A Sacramento\nFrom Double-A Richmond\nRIC season: 106.1 IP, 4.23 ERA \u00b7 21.1% K, 13.3% BB\nLast 14d: 16.0 IP, 5.63 ERA \u00b7 23.3% K, 8.2% BB\nhttps://www.mlb.com/player/801639",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtzifsyc6426",
+      "recorded_at": "2026-08-26T23:29:34.675214+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 939580,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-08-26",
+      "event_key": "2026-08-26|700800|assignment|3410|105|rhp darien smith assigned to sacramento river cats from richmond flying squirrels",
+      "from_team": "Double-A Richmond",
+      "player": "Darien Smith",
+      "post_text": "RHP Darien Smith \u2192 Triple-A Sacramento\nFrom Double-A Richmond\nRIC season: 31.2 IP, 2.84 ERA \u00b7 23.4% K, 11.7% BB\nhttps://www.mlb.com/player/700800",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mtzifu5ucu26",
+      "recorded_at": "2026-08-26T23:29:35.912311+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 939581,
+      "type": "assignment"
     }
   ],
   "seen_event_keys": [
@@ -379,7 +415,10 @@
     "2026-08-25|702352|recalled|105|137|san francisco giants recalled rhp spencer bivens from sacramento river cats",
     "2026-08-25|814295|other|0|2134|dsl giants black activated lhp luis custodio from restricted list",
     "2026-08-25|827408|il_placed|0|461|eugene emeralds placed rhp ramon marquez on 7-day injured list",
-    "2026-08-26|694820|selected|105|137|san francisco giants selected contract of rhp braxton roxby from sacramento river cats"
+    "2026-08-26|681924|assignment|3410|105|rhp r.j. dabovich assigned to sacramento river cats from richmond flying squirrels",
+    "2026-08-26|694820|selected|105|137|san francisco giants selected contract of rhp braxton roxby from sacramento river cats",
+    "2026-08-26|700800|assignment|3410|105|rhp darien smith assigned to sacramento river cats from richmond flying squirrels",
+    "2026-08-26|801639|assignment|3410|105|rhp trystan vrieling assigned to sacramento river cats from richmond flying squirrels"
   ],
   "seen_transaction_ids": [
     928051,
@@ -583,7 +622,10 @@
     939422,
     939449,
     939483,
-    939511
+    939511,
+    939579,
+    939580,
+    939581
   ],
-  "updated_at": "2026-08-26T19:16:13.392032+00:00"
+  "updated_at": "2026-08-26T23:29:35.912347+00:00"
 }
