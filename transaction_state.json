@@ -384,6 +384,78 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 939581,
       "type": "assignment"
+    },
+    {
+      "effective_date": "2026-08-26",
+      "event_key": "2026-08-26|835611|assignment|408|476|rhp ian korn assigned to san jose giants from acl giants",
+      "from_team": "ACL Giants",
+      "player": "Ian Korn",
+      "post_text": "San Jose\n\u2022 RHP Ian Korn \u2192 Low-A San Jose from ACL Giants.\n\nEugene\n\u2022 activated SS Kaeden Kent.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mu2kk7grh62h",
+      "recorded_at": "2026-08-27T09:40:29.193975+00:00",
+      "to_team": "Low-A San Jose",
+      "transaction_id": 939602,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-08-26",
+      "event_key": "2026-08-26|809763|other|0|461|eugene emeralds activated ss kaeden kent",
+      "from_team": "",
+      "player": "Kaeden Kent",
+      "post_text": "San Jose\n\u2022 RHP Ian Korn \u2192 Low-A San Jose from ACL Giants.\n\nEugene\n\u2022 activated SS Kaeden Kent.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mu2kk7grh62h",
+      "recorded_at": "2026-08-27T09:40:29.193991+00:00",
+      "to_team": "High-A Eugene",
+      "transaction_id": 939593,
+      "type": "other"
+    },
+    {
+      "effective_date": "2026-08-26",
+      "event_key": "2026-08-26|804984|assignment|476|461|rhp sam bower assigned to eugene emeralds from san jose giants",
+      "from_team": "Low-A San Jose",
+      "player": "Sam Bower",
+      "post_text": "RHP Sam Bower \u2192 High-A Eugene\nFrom Low-A San Jose\nSJ season: 48.2 IP, 4.62 ERA \u00b7 25.6% K, 7.9% BB\nhttps://www.mlb.com/player/804984",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mu2kkanyq72l",
+      "recorded_at": "2026-08-27T09:40:30.477005+00:00",
+      "to_team": "High-A Eugene",
+      "transaction_id": 939594,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-08-26",
+      "event_key": "2026-08-26|676883|assignment|476|461|lhp hayden wynja assigned to eugene emeralds from san jose giants",
+      "from_team": "Low-A San Jose",
+      "player": "Hayden Wynja",
+      "post_text": "LHP Hayden Wynja \u2192 High-A Eugene\nFrom Low-A San Jose\nSJ season: 9.1 IP, 0.96 ERA \u00b7 35.3% K, 11.8% BB\nhttps://www.mlb.com/player/676883",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mu2kkbv5gt22",
+      "recorded_at": "2026-08-27T09:40:31.760429+00:00",
+      "to_team": "High-A Eugene",
+      "transaction_id": 939595,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-08-26",
+      "event_key": "2026-08-26|801592|assignment|461|105|3b zander darby assigned to sacramento river cats from eugene emeralds",
+      "from_team": "High-A Eugene",
+      "player": "Zander Darby",
+      "post_text": "3B Zander Darby \u2192 Triple-A Sacramento\nFrom High-A Eugene\nEUG season: .278/.343/.486 in 432 PA, 18 HR\nLast 14d: .318/.340/.614 in 47 PA\nhttps://www.mlb.com/player/801592",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mu2kkd4bcp2r",
+      "recorded_at": "2026-08-27T09:40:33.041898+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 939596,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-08-26",
+      "event_key": "2026-08-26|698952|assignment|408|476|rhp jose t. perez assigned to san jose giants from acl giants",
+      "from_team": "ACL Giants",
+      "player": "Jose T. Perez",
+      "post_text": "RHP Jose T. Perez \u2192 Low-A San Jose\nFrom ACL Giants\nACL season: 22.0 IP, 4.09 ERA \u00b7 35.3% K, 15.7% BB\nhttps://www.mlb.com/player/698952",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mu2kkede6w2h",
+      "recorded_at": "2026-08-27T09:40:34.324332+00:00",
+      "to_team": "Low-A San Jose",
+      "transaction_id": 939600,
+      "type": "assignment"
     }
   ],
   "seen_event_keys": [
@@ -415,10 +487,16 @@
     "2026-08-25|702352|recalled|105|137|san francisco giants recalled rhp spencer bivens from sacramento river cats",
     "2026-08-25|814295|other|0|2134|dsl giants black activated lhp luis custodio from restricted list",
     "2026-08-25|827408|il_placed|0|461|eugene emeralds placed rhp ramon marquez on 7-day injured list",
+    "2026-08-26|676883|assignment|476|461|lhp hayden wynja assigned to eugene emeralds from san jose giants",
     "2026-08-26|681924|assignment|3410|105|rhp r.j. dabovich assigned to sacramento river cats from richmond flying squirrels",
     "2026-08-26|694820|selected|105|137|san francisco giants selected contract of rhp braxton roxby from sacramento river cats",
+    "2026-08-26|698952|assignment|408|476|rhp jose t. perez assigned to san jose giants from acl giants",
     "2026-08-26|700800|assignment|3410|105|rhp darien smith assigned to sacramento river cats from richmond flying squirrels",
-    "2026-08-26|801639|assignment|3410|105|rhp trystan vrieling assigned to sacramento river cats from richmond flying squirrels"
+    "2026-08-26|801592|assignment|461|105|3b zander darby assigned to sacramento river cats from eugene emeralds",
+    "2026-08-26|801639|assignment|3410|105|rhp trystan vrieling assigned to sacramento river cats from richmond flying squirrels",
+    "2026-08-26|804984|assignment|476|461|rhp sam bower assigned to eugene emeralds from san jose giants",
+    "2026-08-26|809763|other|0|461|eugene emeralds activated ss kaeden kent",
+    "2026-08-26|835611|assignment|408|476|rhp ian korn assigned to san jose giants from acl giants"
   ],
   "seen_transaction_ids": [
     928051,
@@ -625,7 +703,13 @@
     939511,
     939579,
     939580,
-    939581
+    939581,
+    939593,
+    939594,
+    939595,
+    939596,
+    939600,
+    939602
   ],
-  "updated_at": "2026-08-26T23:29:35.912347+00:00"
+  "updated_at": "2026-08-27T09:40:34.324379+00:00"
 }
