@@ -456,6 +456,42 @@
       "to_team": "Low-A San Jose",
       "transaction_id": 939600,
       "type": "assignment"
+    },
+    {
+      "effective_date": "2026-08-27",
+      "event_key": "2026-08-27|694552|il_activated|0|3410|richmond flying squirrels activated 1b jack payton from 7-day injured list",
+      "from_team": "",
+      "player": "Jack Payton",
+      "post_text": "Richmond\n\u2022 activated 1B Jack Payton from the 7-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mu4mkc4xgo2o",
+      "recorded_at": "2026-08-28T05:21:38.955502+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 939730,
+      "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-08-27",
+      "event_key": "2026-08-27|805126|assignment|3410|105|3b charlie szykowny assigned to sacramento river cats from richmond flying squirrels",
+      "from_team": "Double-A Richmond",
+      "player": "Charlie Szykowny",
+      "post_text": "3B Charlie Szykowny \u2192 Triple-A Sacramento\nFrom Double-A Richmond\nRIC season: .252/.317/.417 in 482 PA, 14 HR\nLast 14d: .237/.341/.395 in 45 PA\nhttps://www.mlb.com/player/805126",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mu4mkdck3426",
+      "recorded_at": "2026-08-28T05:21:40.185598+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 939733,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-08-27",
+      "event_key": "2026-08-27|815298|assignment|461|3410|lhp jacob bresnahan assigned to richmond flying squirrels from eugene emeralds",
+      "from_team": "High-A Eugene",
+      "player": "Jacob Bresnahan",
+      "post_text": "LHP Jacob Bresnahan \u2192 Double-A Richmond\nFrom High-A Eugene\nEUG season: 98.2 IP, 2.92 ERA \u00b7 29.7% K, 9.6% BB\nLast 14d: 10.2 IP, 4.22 ERA \u00b7 30.4% K, 8.7% BB\nhttps://www.mlb.com/player/815298",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mu4mkei2ap22",
+      "recorded_at": "2026-08-28T05:21:41.414099+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 939734,
+      "type": "assignment"
     }
   ],
   "seen_event_keys": [
@@ -496,7 +532,10 @@
     "2026-08-26|801639|assignment|3410|105|rhp trystan vrieling assigned to sacramento river cats from richmond flying squirrels",
     "2026-08-26|804984|assignment|476|461|rhp sam bower assigned to eugene emeralds from san jose giants",
     "2026-08-26|809763|other|0|461|eugene emeralds activated ss kaeden kent",
-    "2026-08-26|835611|assignment|408|476|rhp ian korn assigned to san jose giants from acl giants"
+    "2026-08-26|835611|assignment|408|476|rhp ian korn assigned to san jose giants from acl giants",
+    "2026-08-27|694552|il_activated|0|3410|richmond flying squirrels activated 1b jack payton from 7-day injured list",
+    "2026-08-27|805126|assignment|3410|105|3b charlie szykowny assigned to sacramento river cats from richmond flying squirrels",
+    "2026-08-27|815298|assignment|461|3410|lhp jacob bresnahan assigned to richmond flying squirrels from eugene emeralds"
   ],
   "seen_transaction_ids": [
     928051,
@@ -709,7 +748,10 @@
     939595,
     939596,
     939600,
-    939602
+    939602,
+    939730,
+    939733,
+    939734
   ],
-  "updated_at": "2026-08-27T09:40:34.324379+00:00"
+  "updated_at": "2026-08-28T05:21:41.414137+00:00"
 }
