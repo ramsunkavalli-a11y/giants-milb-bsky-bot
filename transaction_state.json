@@ -492,6 +492,18 @@
       "to_team": "Double-A Richmond",
       "transaction_id": 939734,
       "type": "assignment"
+    },
+    {
+      "effective_date": "2026-08-28",
+      "event_key": "2026-08-28|702607|il_activated|0|3410|richmond flying squirrels activated of dakota jordan from 7-day injured list",
+      "from_team": "",
+      "player": "Dakota Jordan",
+      "post_text": "Richmond\n\u2022 activated OF Dakota Jordan from the 7-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mu6sazkhu42l",
+      "recorded_at": "2026-08-29T02:09:09.897260+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 939902,
+      "type": "il_activated"
     }
   ],
   "seen_event_keys": [
@@ -535,7 +547,8 @@
     "2026-08-26|835611|assignment|408|476|rhp ian korn assigned to san jose giants from acl giants",
     "2026-08-27|694552|il_activated|0|3410|richmond flying squirrels activated 1b jack payton from 7-day injured list",
     "2026-08-27|805126|assignment|3410|105|3b charlie szykowny assigned to sacramento river cats from richmond flying squirrels",
-    "2026-08-27|815298|assignment|461|3410|lhp jacob bresnahan assigned to richmond flying squirrels from eugene emeralds"
+    "2026-08-27|815298|assignment|461|3410|lhp jacob bresnahan assigned to richmond flying squirrels from eugene emeralds",
+    "2026-08-28|702607|il_activated|0|3410|richmond flying squirrels activated of dakota jordan from 7-day injured list"
   ],
   "seen_transaction_ids": [
     928051,
@@ -751,7 +764,8 @@
     939602,
     939730,
     939733,
-    939734
+    939734,
+    939902
   ],
-  "updated_at": "2026-08-28T05:21:41.414137+00:00"
+  "updated_at": "2026-08-29T02:09:09.897301+00:00"
 }
