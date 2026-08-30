@@ -564,6 +564,42 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 940058,
       "type": "optioned"
+    },
+    {
+      "effective_date": "2026-08-29",
+      "event_key": "2026-08-29|676883|assignment|461|105|lhp hayden wynja assigned to sacramento river cats from eugene emeralds",
+      "from_team": "High-A Eugene",
+      "player": "Hayden Wynja",
+      "post_text": "LHP Hayden Wynja \u2192 Triple-A Sacramento\nFrom High-A Eugene\nEUG season: 1.0 IP, 9.00 ERA \u00b7 40.0% K, 20.0% BB\nhttps://www.mlb.com/player/676883",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mubrofdwv52j",
+      "recorded_at": "2026-08-30T06:36:43.968785+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 940065,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-08-29",
+      "event_key": "2026-08-29|695421|assignment|461|105|rhp ryan slater assigned to sacramento river cats from eugene emeralds",
+      "from_team": "High-A Eugene",
+      "player": "Ryan Slater",
+      "post_text": "RHP Ryan Slater \u2192 Triple-A Sacramento\nFrom High-A Eugene\nEUG season: 29.0 IP, 4.03 ERA \u00b7 31.7% K, 8.3% BB\nhttps://www.mlb.com/player/695421",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mubrogkzh42o",
+      "recorded_at": "2026-08-30T06:36:45.247103+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 940066,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-08-29",
+      "event_key": "2026-08-29|698968|assignment|476|105|rhp samir chires assigned to sacramento river cats from san jose giants",
+      "from_team": "Low-A San Jose",
+      "player": "Samir Chires",
+      "post_text": "RHP Samir Chires \u2192 Triple-A Sacramento\nFrom Low-A San Jose\nSJ season: 21.2 IP, 2.08 ERA \u00b7 26.5% K, 3.6% BB\nhttps://www.mlb.com/player/698968",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mubrohryby24",
+      "recorded_at": "2026-08-30T06:36:46.524229+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 940067,
+      "type": "assignment"
     }
   ],
   "seen_event_keys": [
@@ -611,7 +647,10 @@
     "2026-08-28|702607|il_activated|0|3410|richmond flying squirrels activated of dakota jordan from 7-day injured list",
     "2026-08-29|675920|optioned|137|105|san francisco giants optioned lhp seth lonsway to sacramento river cats",
     "2026-08-29|675920|selected|105|137|san francisco giants selected contract of lhp seth lonsway from sacramento river cats",
+    "2026-08-29|676883|assignment|461|105|lhp hayden wynja assigned to sacramento river cats from eugene emeralds",
     "2026-08-29|683363|recalled|105|137|san francisco giants recalled lhp matt wilkinson from sacramento river cats",
+    "2026-08-29|695421|assignment|461|105|rhp ryan slater assigned to sacramento river cats from eugene emeralds",
+    "2026-08-29|698968|assignment|476|105|rhp samir chires assigned to sacramento river cats from san jose giants",
     "2026-08-29|702352|optioned|137|105|san francisco giants optioned rhp spencer bivens to sacramento river cats",
     "2026-08-29|805074|selected|3410|137|san francisco giants selected contract of rhp yunior marte from richmond flying squirrels"
   ],
@@ -835,7 +874,10 @@
     939968,
     939969,
     940057,
-    940058
+    940058,
+    940065,
+    940066,
+    940067
   ],
-  "updated_at": "2026-08-30T00:17:35.830791+00:00"
+  "updated_at": "2026-08-30T06:36:46.524270+00:00"
 }
