@@ -600,6 +600,54 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 940067,
       "type": "assignment"
+    },
+    {
+      "effective_date": "2026-08-30",
+      "event_key": "2026-08-30|683363|optioned|137|105|san francisco giants optioned lhp matt wilkinson to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Matt Wilkinson",
+      "post_text": "SF optioned LHP Matt Wilkinson to Triple-A Sacramento\nSF season: 11.2 IP, 4.63 ERA \u00b7 12.8% K, 4.3% BB\nLast 14d: 11.2 IP, 4.63 ERA \u00b7 12.8% K, 4.3% BB\nhttps://www.mlb.com/player/683363",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mudby3ouwp22",
+      "recorded_at": "2026-08-30T21:01:08.971257+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 940174,
+      "type": "optioned"
+    },
+    {
+      "effective_date": "2026-08-30",
+      "event_key": "2026-08-30|671083|other|137|105|san francisco giants sent 3b buddy kennedy outright to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Buddy Kennedy",
+      "post_text": "Sacramento\n\u2022 sent 3B Buddy Kennedy outright to Sacramento River Cats.\n\u2022 3B Buddy Kennedy elected free agency.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mudby4uiqv2r",
+      "recorded_at": "2026-08-30T21:01:10.200756+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 940189,
+      "type": "other"
+    },
+    {
+      "effective_date": "2026-08-30",
+      "event_key": "2026-08-30|671083|other|0|105|3b buddy kennedy elected free agency",
+      "from_team": "",
+      "player": "Buddy Kennedy",
+      "post_text": "Sacramento\n\u2022 sent 3B Buddy Kennedy outright to Sacramento River Cats.\n\u2022 3B Buddy Kennedy elected free agency.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mudby4uiqv2r",
+      "recorded_at": "2026-08-30T21:01:10.200772+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 940190,
+      "type": "other"
+    },
+    {
+      "effective_date": "2026-08-31",
+      "event_key": "2026-08-31|683363|recalled|105|137|san francisco giants recalled lhp matt wilkinson from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Matt Wilkinson",
+      "post_text": "SF recalled LHP Matt Wilkinson from Triple-A Sacramento\nSAC season: 43.2 IP, 5.15 ERA \u00b7 24.0% K, 9.5% BB\nhttps://www.mlb.com/player/683363",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mudby5zyth2x",
+      "recorded_at": "2026-08-30T21:01:11.430876+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 940191,
+      "type": "recalled"
     }
   ],
   "seen_event_keys": [
@@ -652,7 +700,11 @@
     "2026-08-29|695421|assignment|461|105|rhp ryan slater assigned to sacramento river cats from eugene emeralds",
     "2026-08-29|698968|assignment|476|105|rhp samir chires assigned to sacramento river cats from san jose giants",
     "2026-08-29|702352|optioned|137|105|san francisco giants optioned rhp spencer bivens to sacramento river cats",
-    "2026-08-29|805074|selected|3410|137|san francisco giants selected contract of rhp yunior marte from richmond flying squirrels"
+    "2026-08-29|805074|selected|3410|137|san francisco giants selected contract of rhp yunior marte from richmond flying squirrels",
+    "2026-08-30|671083|other|0|105|3b buddy kennedy elected free agency",
+    "2026-08-30|671083|other|137|105|san francisco giants sent 3b buddy kennedy outright to sacramento river cats",
+    "2026-08-30|683363|optioned|137|105|san francisco giants optioned lhp matt wilkinson to sacramento river cats",
+    "2026-08-31|683363|recalled|105|137|san francisco giants recalled lhp matt wilkinson from sacramento river cats"
   ],
   "seen_transaction_ids": [
     928051,
@@ -877,7 +929,11 @@
     940058,
     940065,
     940066,
-    940067
+    940067,
+    940174,
+    940189,
+    940190,
+    940191
   ],
-  "updated_at": "2026-08-30T06:36:46.524270+00:00"
+  "updated_at": "2026-08-30T21:01:11.430928+00:00"
 }
