@@ -648,6 +648,18 @@
       "to_team": "San Francisco",
       "transaction_id": 940191,
       "type": "recalled"
+    },
+    {
+      "effective_date": "2026-09-01",
+      "event_key": "2026-09-01|801592|assignment|105|3410|1b zander darby assigned to richmond flying squirrels from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Zander Darby",
+      "post_text": "1B Zander Darby \u2192 Double-A Richmond\nFrom Triple-A Sacramento\nSAC season: .000/.200/.000 in 5 PA\nhttps://www.mlb.com/player/801592",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3muifdssgap2r",
+      "recorded_at": "2026-09-01T21:44:42.260104+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 940650,
+      "type": "assignment"
     }
   ],
   "seen_event_keys": [
@@ -704,7 +716,8 @@
     "2026-08-30|671083|other|0|105|3b buddy kennedy elected free agency",
     "2026-08-30|671083|other|137|105|san francisco giants sent 3b buddy kennedy outright to sacramento river cats",
     "2026-08-30|683363|optioned|137|105|san francisco giants optioned lhp matt wilkinson to sacramento river cats",
-    "2026-08-31|683363|recalled|105|137|san francisco giants recalled lhp matt wilkinson from sacramento river cats"
+    "2026-08-31|683363|recalled|105|137|san francisco giants recalled lhp matt wilkinson from sacramento river cats",
+    "2026-09-01|801592|assignment|105|3410|1b zander darby assigned to richmond flying squirrels from sacramento river cats"
   ],
   "seen_transaction_ids": [
     928051,
@@ -933,7 +946,8 @@
     940174,
     940189,
     940190,
-    940191
+    940191,
+    940650
   ],
-  "updated_at": "2026-08-30T21:01:11.430928+00:00"
+  "updated_at": "2026-09-01T21:44:42.260142+00:00"
 }
