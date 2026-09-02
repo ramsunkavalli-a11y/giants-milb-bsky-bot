@@ -816,6 +816,30 @@
       "to_team": "High-A Eugene",
       "transaction_id": 940744,
       "type": "assignment"
+    },
+    {
+      "effective_date": "2026-09-01",
+      "event_key": "2026-09-01|803292|il_placed|0|3410|richmond flying squirrels placed rhp ben peterson on 7-day injured list",
+      "from_team": "",
+      "player": "Ben Peterson",
+      "post_text": "Richmond\n\u2022 placed RHP Ben Peterson on the 7-day IL.\n\nSacramento\n\u2022 2B Darren Baker \u2192 Triple-A Sacramento.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3muj4byr74i2h",
+      "recorded_at": "2026-09-02T04:35:17.442196+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 940752,
+      "type": "il_placed"
+    },
+    {
+      "effective_date": "2026-09-01",
+      "event_key": "2026-09-01|671117|assignment|0|105|2b darren baker assigned to sacramento river cats",
+      "from_team": "",
+      "player": "Darren Baker",
+      "post_text": "Richmond\n\u2022 placed RHP Ben Peterson on the 7-day IL.\n\nSacramento\n\u2022 2B Darren Baker \u2192 Triple-A Sacramento.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3muj4byr74i2h",
+      "recorded_at": "2026-09-02T04:35:17.442213+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 940747,
+      "type": "assignment"
     }
   ],
   "seen_event_keys": [
@@ -873,6 +897,7 @@
     "2026-08-30|671083|other|137|105|san francisco giants sent 3b buddy kennedy outright to sacramento river cats",
     "2026-08-30|683363|optioned|137|105|san francisco giants optioned lhp matt wilkinson to sacramento river cats",
     "2026-08-31|683363|recalled|105|137|san francisco giants recalled lhp matt wilkinson from sacramento river cats",
+    "2026-09-01|671117|assignment|0|105|2b darren baker assigned to sacramento river cats",
     "2026-09-01|676883|assignment|105|461|lhp hayden wynja assigned to eugene emeralds from sacramento river cats",
     "2026-09-01|681439|recalled|105|137|san francisco giants recalled c zach morgan from sacramento river cats",
     "2026-09-01|689425|assignment|0|476|c charlie muniz assigned to san jose giants",
@@ -883,6 +908,7 @@
     "2026-09-01|700248|assignment|461|3410|rhp marty gair assigned to richmond flying squirrels from eugene emeralds",
     "2026-09-01|702885|selected|105|137|san francisco giants selected contract of lhp cesar perdomo from sacramento river cats",
     "2026-09-01|801592|assignment|105|3410|1b zander darby assigned to richmond flying squirrels from sacramento river cats",
+    "2026-09-01|803292|il_placed|0|3410|richmond flying squirrels placed rhp ben peterson on 7-day injured list",
     "2026-09-01|814176|assignment|408|476|rhp jackson flora assigned to san jose giants from acl giants",
     "2026-09-01|815218|assignment|408|476|rhp alexander fuentes assigned to san jose giants from acl giants",
     "2026-09-01|822796|assignment|408|476|c scott gell assigned to san jose giants from acl giants",
@@ -1129,7 +1155,9 @@
     940742,
     940743,
     940744,
-    940746
+    940746,
+    940747,
+    940752
   ],
-  "updated_at": "2026-09-02T00:09:27.364396+00:00"
+  "updated_at": "2026-09-02T04:35:17.442271+00:00"
 }
