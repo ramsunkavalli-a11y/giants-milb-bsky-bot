@@ -840,6 +840,42 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 940747,
       "type": "assignment"
+    },
+    {
+      "effective_date": "2026-09-01",
+      "event_key": "2026-09-01|689425|assignment|0|461|c charlie muniz assigned to eugene emeralds",
+      "from_team": "",
+      "player": "Charlie Muniz",
+      "post_text": "Eugene\n\u2022 C Charlie Muniz \u2192 High-A Eugene.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mul62k7lep2r",
+      "recorded_at": "2026-09-03T00:12:14.256444+00:00",
+      "to_team": "High-A Eugene",
+      "transaction_id": 940923,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-09-02",
+      "event_key": "2026-09-02|692366|assignment|461|3410|c onil perez assigned to richmond flying squirrels from eugene emeralds",
+      "from_team": "High-A Eugene",
+      "player": "Onil Perez",
+      "post_text": "C Onil Perez \u2192 Double-A Richmond\nFrom High-A Eugene\nEUG season: .256/.315/.388 in 143 PA, 3 HR\nLast 14d: .286/.286/.333 in 21 PA\nhttps://www.mlb.com/player/692366",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mul62lf4ac2z",
+      "recorded_at": "2026-09-03T00:12:15.486311+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 940926,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-09-02",
+      "event_key": "2026-09-02|814803|assignment|3410|105|rhp logan martin assigned to sacramento river cats from richmond flying squirrels",
+      "from_team": "Double-A Richmond",
+      "player": "Logan Martin",
+      "post_text": "RHP Logan Martin \u2192 Triple-A Sacramento\nFrom Double-A Richmond\nRIC season: 49.0 IP, 4.59 ERA \u00b7 25.7% K, 14.3% BB\nLast 14d: 6.1 IP, 8.53 ERA \u00b7 16.1% K, 16.1% BB\nhttps://www.mlb.com/player/814803",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mul62mkmra2h",
+      "recorded_at": "2026-09-03T00:12:16.714585+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 940927,
+      "type": "assignment"
     }
   ],
   "seen_event_keys": [
@@ -900,6 +936,7 @@
     "2026-09-01|671117|assignment|0|105|2b darren baker assigned to sacramento river cats",
     "2026-09-01|676883|assignment|105|461|lhp hayden wynja assigned to eugene emeralds from sacramento river cats",
     "2026-09-01|681439|recalled|105|137|san francisco giants recalled c zach morgan from sacramento river cats",
+    "2026-09-01|689425|assignment|0|461|c charlie muniz assigned to eugene emeralds",
     "2026-09-01|689425|assignment|0|476|c charlie muniz assigned to san jose giants",
     "2026-09-01|692232|assignment|476|105|c fernando gonzalez assigned to sacramento river cats from san jose giants",
     "2026-09-01|695421|assignment|105|461|rhp ryan slater assigned to eugene emeralds from sacramento river cats",
@@ -912,7 +949,9 @@
     "2026-09-01|814176|assignment|408|476|rhp jackson flora assigned to san jose giants from acl giants",
     "2026-09-01|815218|assignment|408|476|rhp alexander fuentes assigned to san jose giants from acl giants",
     "2026-09-01|822796|assignment|408|476|c scott gell assigned to san jose giants from acl giants",
-    "2026-09-01|831149|assignment|476|461|lhp jordan gottesman assigned to eugene emeralds from san jose giants"
+    "2026-09-01|831149|assignment|476|461|lhp jordan gottesman assigned to eugene emeralds from san jose giants",
+    "2026-09-02|692366|assignment|461|3410|c onil perez assigned to richmond flying squirrels from eugene emeralds",
+    "2026-09-02|814803|assignment|3410|105|rhp logan martin assigned to sacramento river cats from richmond flying squirrels"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1157,7 +1196,10 @@
     940744,
     940746,
     940747,
-    940752
+    940752,
+    940923,
+    940926,
+    940927
   ],
-  "updated_at": "2026-09-02T04:35:17.442271+00:00"
+  "updated_at": "2026-09-03T00:12:16.714623+00:00"
 }
