@@ -912,6 +912,30 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 941104,
       "type": "optioned"
+    },
+    {
+      "effective_date": "2026-09-04",
+      "event_key": "2026-09-04|834682|il_activated|0|476|san jose giants activated rhp trey seeley from 7-day injured list",
+      "from_team": "",
+      "player": "Trey Seeley",
+      "post_text": "San Jose\n\u2022 activated RHP Trey Seeley from the 7-day IL.\n\u2022 RHP Eric Nachtsheim \u2192 Low-A San Jose from ACL Giants.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3muplfgbjwn22",
+      "recorded_at": "2026-09-04T18:21:36.844159+00:00",
+      "to_team": "Low-A San Jose",
+      "transaction_id": 941181,
+      "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-09-04",
+      "event_key": "2026-09-04|840033|assignment|408|476|rhp eric nachtsheim assigned to san jose giants from acl giants",
+      "from_team": "ACL Giants",
+      "player": "Eric Nachtsheim",
+      "post_text": "San Jose\n\u2022 activated RHP Trey Seeley from the 7-day IL.\n\u2022 RHP Eric Nachtsheim \u2192 Low-A San Jose from ACL Giants.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3muplfgbjwn22",
+      "recorded_at": "2026-09-04T18:21:36.844172+00:00",
+      "to_team": "Low-A San Jose",
+      "transaction_id": 941182,
+      "type": "assignment"
     }
   ],
   "seen_event_keys": [
@@ -990,7 +1014,9 @@
     "2026-09-02|692368|il_placed|0|105|sacramento river cats placed c adri\u00e1n sugastey on 7-day injured list",
     "2026-09-02|814803|assignment|3410|105|rhp logan martin assigned to sacramento river cats from richmond flying squirrels",
     "2026-09-02|834682|il_placed|0|476|san jose giants placed rhp trey seeley on 7-day injured list",
-    "2026-09-04|695391|optioned|137|105|san francisco giants optioned 3b brett harris to sacramento river cats"
+    "2026-09-04|695391|optioned|137|105|san francisco giants optioned 3b brett harris to sacramento river cats",
+    "2026-09-04|834682|il_activated|0|476|san jose giants activated rhp trey seeley from 7-day injured list",
+    "2026-09-04|840033|assignment|408|476|rhp eric nachtsheim assigned to san jose giants from acl giants"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1241,7 +1267,9 @@
     940927,
     940958,
     940959,
-    941104
+    941104,
+    941181,
+    941182
   ],
-  "updated_at": "2026-09-03T21:41:05.890720+00:00"
+  "updated_at": "2026-09-04T18:21:36.844208+00:00"
 }
