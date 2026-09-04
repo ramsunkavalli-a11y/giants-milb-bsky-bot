@@ -936,6 +936,18 @@
       "to_team": "Low-A San Jose",
       "transaction_id": 941182,
       "type": "assignment"
+    },
+    {
+      "effective_date": "2026-09-03",
+      "event_key": "2026-09-03|692352|other|0|3410|richmond flying squirrels transferred rhp manuel mercedes to development list",
+      "from_team": "",
+      "player": "Manuel Mercedes",
+      "post_text": "Richmond\n\u2022 transferred RHP Manuel Mercedes to the Development List.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mupvouk2fa23",
+      "recorded_at": "2026-09-04T21:25:51.205083+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 941302,
+      "type": "other"
     }
   ],
   "seen_event_keys": [
@@ -1014,6 +1026,7 @@
     "2026-09-02|692368|il_placed|0|105|sacramento river cats placed c adri\u00e1n sugastey on 7-day injured list",
     "2026-09-02|814803|assignment|3410|105|rhp logan martin assigned to sacramento river cats from richmond flying squirrels",
     "2026-09-02|834682|il_placed|0|476|san jose giants placed rhp trey seeley on 7-day injured list",
+    "2026-09-03|692352|other|0|3410|richmond flying squirrels transferred rhp manuel mercedes to development list",
     "2026-09-04|695391|optioned|137|105|san francisco giants optioned 3b brett harris to sacramento river cats",
     "2026-09-04|834682|il_activated|0|476|san jose giants activated rhp trey seeley from 7-day injured list",
     "2026-09-04|840033|assignment|408|476|rhp eric nachtsheim assigned to san jose giants from acl giants"
@@ -1269,7 +1282,8 @@
     940959,
     941104,
     941181,
-    941182
+    941182,
+    941302
   ],
-  "updated_at": "2026-09-04T18:21:36.844208+00:00"
+  "updated_at": "2026-09-04T21:25:51.205128+00:00"
 }
