@@ -960,6 +960,30 @@
       "to_team": "Double-A Richmond",
       "transaction_id": 941348,
       "type": "assignment"
+    },
+    {
+      "effective_date": "2026-09-04",
+      "event_key": "2026-09-04|835227|il_placed|0|476|san jose giants placed of peyton bonds on 7-day injured list",
+      "from_team": "",
+      "player": "Peyton Bonds",
+      "post_text": "San Jose\n\u2022 placed OF Peyton Bonds on the 7-day IL.\n\u2022 3B Drew Smith \u2192 Low-A San Jose from ACL Giants.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3muqmw66slm2i",
+      "recorded_at": "2026-09-05T04:21:32.282252+00:00",
+      "to_team": "Low-A San Jose",
+      "transaction_id": 941361,
+      "type": "il_placed"
+    },
+    {
+      "effective_date": "2026-09-04",
+      "event_key": "2026-09-04|805021|assignment|408|476|3b drew smith assigned to san jose giants from acl giants",
+      "from_team": "ACL Giants",
+      "player": "Drew Smith",
+      "post_text": "San Jose\n\u2022 placed OF Peyton Bonds on the 7-day IL.\n\u2022 3B Drew Smith \u2192 Low-A San Jose from ACL Giants.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3muqmw66slm2i",
+      "recorded_at": "2026-09-05T04:21:32.282266+00:00",
+      "to_team": "Low-A San Jose",
+      "transaction_id": 941362,
+      "type": "assignment"
     }
   ],
   "seen_event_keys": [
@@ -1041,7 +1065,9 @@
     "2026-09-03|692352|other|0|3410|richmond flying squirrels transferred rhp manuel mercedes to development list",
     "2026-09-04|678576|assignment|105|3410|rhp wilkin ramos assigned to richmond flying squirrels from sacramento river cats",
     "2026-09-04|695391|optioned|137|105|san francisco giants optioned 3b brett harris to sacramento river cats",
+    "2026-09-04|805021|assignment|408|476|3b drew smith assigned to san jose giants from acl giants",
     "2026-09-04|834682|il_activated|0|476|san jose giants activated rhp trey seeley from 7-day injured list",
+    "2026-09-04|835227|il_placed|0|476|san jose giants placed of peyton bonds on 7-day injured list",
     "2026-09-04|840033|assignment|408|476|rhp eric nachtsheim assigned to san jose giants from acl giants"
   ],
   "seen_transaction_ids": [
@@ -1297,7 +1323,9 @@
     941181,
     941182,
     941302,
-    941348
+    941348,
+    941361,
+    941362
   ],
-  "updated_at": "2026-09-05T00:01:15.259037+00:00"
+  "updated_at": "2026-09-05T04:21:32.282304+00:00"
 }
