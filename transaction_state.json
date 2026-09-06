@@ -1020,6 +1020,30 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 941437,
       "type": "other"
+    },
+    {
+      "effective_date": "2026-09-06",
+      "event_key": "2026-09-06|814451|il_activated|0|461|eugene emeralds activated 1b jakob christian from 7-day injured list",
+      "from_team": "",
+      "player": "Jakob Christian",
+      "post_text": "Eugene\n\u2022 activated 1B Jakob Christian from the 7-day IL.\n\u2022 activated 2B Isaiah Barkett from the 7-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3muuowip3sn23",
+      "recorded_at": "2026-09-06T19:08:09.725451+00:00",
+      "to_team": "High-A Eugene",
+      "transaction_id": 941493,
+      "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-09-06",
+      "event_key": "2026-09-06|701373|il_activated|0|461|eugene emeralds activated 2b isaiah barkett from 7-day injured list",
+      "from_team": "",
+      "player": "Isaiah Barkett",
+      "post_text": "Eugene\n\u2022 activated 1B Jakob Christian from the 7-day IL.\n\u2022 activated 2B Isaiah Barkett from the 7-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3muuowip3sn23",
+      "recorded_at": "2026-09-06T19:08:09.725466+00:00",
+      "to_team": "High-A Eugene",
+      "transaction_id": 941494,
+      "type": "il_activated"
     }
   ],
   "seen_event_keys": [
@@ -1107,7 +1131,9 @@
     "2026-09-04|840033|assignment|408|476|rhp eric nachtsheim assigned to san jose giants from acl giants",
     "2026-09-05|676254|optioned|137|105|san francisco giants optioned rhp ryan walker to sacramento river cats",
     "2026-09-05|695391|other|0|105|sacramento river cats activated 3b brett harris",
-    "2026-09-05|811229|assignment|461|105|rhp ubert mejias assigned to sacramento river cats from eugene emeralds"
+    "2026-09-05|811229|assignment|461|105|rhp ubert mejias assigned to sacramento river cats from eugene emeralds",
+    "2026-09-06|701373|il_activated|0|461|eugene emeralds activated 2b isaiah barkett from 7-day injured list",
+    "2026-09-06|814451|il_activated|0|461|eugene emeralds activated 1b jakob christian from 7-day injured list"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1367,7 +1393,9 @@
     941362,
     941371,
     941436,
-    941437
+    941437,
+    941493,
+    941494
   ],
-  "updated_at": "2026-09-06T04:33:10.926265+00:00"
+  "updated_at": "2026-09-06T19:08:09.725528+00:00"
 }
