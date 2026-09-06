@@ -996,6 +996,30 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 941371,
       "type": "optioned"
+    },
+    {
+      "effective_date": "2026-09-05",
+      "event_key": "2026-09-05|811229|assignment|461|105|rhp ubert mejias assigned to sacramento river cats from eugene emeralds",
+      "from_team": "High-A Eugene",
+      "player": "Ubert Mejias",
+      "post_text": "RHP Ubert Mejias \u2192 Triple-A Sacramento\nFrom High-A Eugene\nEUG season: 36.0 IP, 7.00 ERA \u00b7 22.1% K, 6.1% BB\nLast 14d: 8.2 IP, 9.35 ERA \u00b7 17.5% K, 10.0% BB\nhttps://www.mlb.com/player/811229",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mut5zuruav2q",
+      "recorded_at": "2026-09-06T04:33:09.698220+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 941436,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-09-05",
+      "event_key": "2026-09-05|695391|other|0|105|sacramento river cats activated 3b brett harris",
+      "from_team": "",
+      "player": "Brett Harris",
+      "post_text": "Sacramento\n\u2022 activated 3B Brett Harris.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mut5zvxfke2c",
+      "recorded_at": "2026-09-06T04:33:10.926213+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 941437,
+      "type": "other"
     }
   ],
   "seen_event_keys": [
@@ -1081,7 +1105,9 @@
     "2026-09-04|834682|il_activated|0|476|san jose giants activated rhp trey seeley from 7-day injured list",
     "2026-09-04|835227|il_placed|0|476|san jose giants placed of peyton bonds on 7-day injured list",
     "2026-09-04|840033|assignment|408|476|rhp eric nachtsheim assigned to san jose giants from acl giants",
-    "2026-09-05|676254|optioned|137|105|san francisco giants optioned rhp ryan walker to sacramento river cats"
+    "2026-09-05|676254|optioned|137|105|san francisco giants optioned rhp ryan walker to sacramento river cats",
+    "2026-09-05|695391|other|0|105|sacramento river cats activated 3b brett harris",
+    "2026-09-05|811229|assignment|461|105|rhp ubert mejias assigned to sacramento river cats from eugene emeralds"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1339,7 +1365,9 @@
     941348,
     941361,
     941362,
-    941371
+    941371,
+    941436,
+    941437
   ],
-  "updated_at": "2026-09-05T18:14:38.102640+00:00"
+  "updated_at": "2026-09-06T04:33:10.926265+00:00"
 }
