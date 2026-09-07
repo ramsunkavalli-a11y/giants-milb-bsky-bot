@@ -1044,6 +1044,30 @@
       "to_team": "High-A Eugene",
       "transaction_id": 941494,
       "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-09-07",
+      "event_key": "2026-09-07|694820|optioned|137|105|san francisco giants optioned rhp braxton roxby to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Braxton Roxby",
+      "post_text": "SF optioned RHP Braxton Roxby to Triple-A Sacramento\nSF season: 2.0 IP, 9.00 ERA \u00b7 18.2% K, 0.0% BB\nhttps://www.mlb.com/player/694820",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3muxnxbqiml23",
+      "recorded_at": "2026-09-07T23:28:41.463390+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 941547,
+      "type": "optioned"
+    },
+    {
+      "effective_date": "2026-09-07",
+      "event_key": "2026-09-07|691769|recalled|105|137|san francisco giants recalled lhp philip abner from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Philip Abner",
+      "post_text": "SF recalled LHP Philip Abner from Triple-A Sacramento\nSAC season: 5.1 IP, 1.69 ERA \u00b7 32.0% K, 12.0% BB\nhttps://www.mlb.com/player/691769",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3muxnxcxhot23",
+      "recorded_at": "2026-09-07T23:28:42.738552+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 941548,
+      "type": "recalled"
     }
   ],
   "seen_event_keys": [
@@ -1133,7 +1157,9 @@
     "2026-09-05|695391|other|0|105|sacramento river cats activated 3b brett harris",
     "2026-09-05|811229|assignment|461|105|rhp ubert mejias assigned to sacramento river cats from eugene emeralds",
     "2026-09-06|701373|il_activated|0|461|eugene emeralds activated 2b isaiah barkett from 7-day injured list",
-    "2026-09-06|814451|il_activated|0|461|eugene emeralds activated 1b jakob christian from 7-day injured list"
+    "2026-09-06|814451|il_activated|0|461|eugene emeralds activated 1b jakob christian from 7-day injured list",
+    "2026-09-07|691769|recalled|105|137|san francisco giants recalled lhp philip abner from sacramento river cats",
+    "2026-09-07|694820|optioned|137|105|san francisco giants optioned rhp braxton roxby to sacramento river cats"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1395,7 +1421,9 @@
     941436,
     941437,
     941493,
-    941494
+    941494,
+    941547,
+    941548
   ],
-  "updated_at": "2026-09-06T19:08:09.725528+00:00"
+  "updated_at": "2026-09-07T23:28:42.738615+00:00"
 }
