@@ -1092,6 +1092,18 @@
       "to_team": "Low-A San Jose",
       "transaction_id": 941592,
       "type": "other"
+    },
+    {
+      "effective_date": "2026-09-08",
+      "event_key": "2026-09-08|805149|il_activated|0|476|san jose giants activated rhp cody delvecchio from 60-day injured list",
+      "from_team": "",
+      "player": "Cody Delvecchio",
+      "post_text": "San Jose\n\u2022 activated RHP Cody Delvecchio from the 60-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3muzo3zymxc2i",
+      "recorded_at": "2026-09-08T18:36:40.569483+00:00",
+      "to_team": "Low-A San Jose",
+      "transaction_id": 941616,
+      "type": "il_activated"
     }
   ],
   "seen_event_keys": [
@@ -1185,7 +1197,8 @@
     "2026-09-07|691769|recalled|105|137|san francisco giants recalled lhp philip abner from sacramento river cats",
     "2026-09-07|694820|optioned|137|105|san francisco giants optioned rhp braxton roxby to sacramento river cats",
     "2026-09-07|698952|other|0|476|san jose giants transferred rhp jose t. perez to development list",
-    "2026-09-07|842179|other|0|476|san jose giants transferred of tanner mally to development list"
+    "2026-09-07|842179|other|0|476|san jose giants transferred of tanner mally to development list",
+    "2026-09-08|805149|il_activated|0|476|san jose giants activated rhp cody delvecchio from 60-day injured list"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1451,7 +1464,8 @@
     941547,
     941548,
     941591,
-    941592
+    941592,
+    941616
   ],
-  "updated_at": "2026-09-08T14:30:36.343665+00:00"
+  "updated_at": "2026-09-08T18:36:40.569531+00:00"
 }
