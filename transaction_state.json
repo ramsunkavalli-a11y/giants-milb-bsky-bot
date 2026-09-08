@@ -1104,6 +1104,54 @@
       "to_team": "Low-A San Jose",
       "transaction_id": 941616,
       "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-09-08",
+      "event_key": "2026-09-08|678576|assignment|3410|105|rhp wilkin ramos assigned to sacramento river cats from richmond flying squirrels",
+      "from_team": "Double-A Richmond",
+      "player": "Wilkin Ramos",
+      "post_text": "RHP Wilkin Ramos \u2192 Triple-A Sacramento\nFrom Double-A Richmond\nRIC season: 1.1 IP, 20.25 ERA \u00b7 22.2% K, 22.2% BB\nhttps://www.mlb.com/player/678576",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3muzyu5nr4g2l",
+      "recorded_at": "2026-09-08T21:49:07.142522+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 941669,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-09-08",
+      "event_key": "2026-09-08|811229|assignment|105|461|rhp ubert mejias assigned to eugene emeralds from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Ubert Mejias",
+      "post_text": "RHP Ubert Mejias \u2192 High-A Eugene\nFrom Triple-A Sacramento\nSAC season: 2.2 IP, 3.38 ERA \u00b7 25.0% K, 16.7% BB\nhttps://www.mlb.com/player/811229",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3muzyu6u2p22c",
+      "recorded_at": "2026-09-08T21:49:08.394156+00:00",
+      "to_team": "High-A Eugene",
+      "transaction_id": 941716,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-09-08",
+      "event_key": "2026-09-08|681439|optioned|137|105|san francisco giants optioned c zach morgan to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Zach Morgan",
+      "post_text": "Sacramento\n\u2022 optioned C Zach Morgan to Sacramento River Cats.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3muzyua2an523",
+      "recorded_at": "2026-09-08T21:49:09.644863+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 941725,
+      "type": "optioned"
+    },
+    {
+      "effective_date": "2026-09-08",
+      "event_key": "2026-09-08|695391|recalled|105|137|san francisco giants recalled 3b brett harris from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Brett Harris",
+      "post_text": "SF recalled 3B Brett Harris from Triple-A Sacramento\nSAC season: .125/.222/.125 in 9 PA\nhttps://www.mlb.com/player/695391",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3muzyubah2f23",
+      "recorded_at": "2026-09-08T21:49:10.895930+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 941726,
+      "type": "recalled"
     }
   ],
   "seen_event_keys": [
@@ -1198,7 +1246,11 @@
     "2026-09-07|694820|optioned|137|105|san francisco giants optioned rhp braxton roxby to sacramento river cats",
     "2026-09-07|698952|other|0|476|san jose giants transferred rhp jose t. perez to development list",
     "2026-09-07|842179|other|0|476|san jose giants transferred of tanner mally to development list",
-    "2026-09-08|805149|il_activated|0|476|san jose giants activated rhp cody delvecchio from 60-day injured list"
+    "2026-09-08|678576|assignment|3410|105|rhp wilkin ramos assigned to sacramento river cats from richmond flying squirrels",
+    "2026-09-08|681439|optioned|137|105|san francisco giants optioned c zach morgan to sacramento river cats",
+    "2026-09-08|695391|recalled|105|137|san francisco giants recalled 3b brett harris from sacramento river cats",
+    "2026-09-08|805149|il_activated|0|476|san jose giants activated rhp cody delvecchio from 60-day injured list",
+    "2026-09-08|811229|assignment|105|461|rhp ubert mejias assigned to eugene emeralds from sacramento river cats"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1465,7 +1517,11 @@
     941548,
     941591,
     941592,
-    941616
+    941616,
+    941669,
+    941716,
+    941725,
+    941726
   ],
-  "updated_at": "2026-09-08T18:36:40.569531+00:00"
+  "updated_at": "2026-09-08T21:49:10.896002+00:00"
 }
