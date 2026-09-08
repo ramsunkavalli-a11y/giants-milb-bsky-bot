@@ -1068,6 +1068,30 @@
       "to_team": "San Francisco",
       "transaction_id": 941548,
       "type": "recalled"
+    },
+    {
+      "effective_date": "2026-09-07",
+      "event_key": "2026-09-07|842179|other|0|476|san jose giants transferred of tanner mally to development list",
+      "from_team": "",
+      "player": "Tanner Mally",
+      "post_text": "San Jose\n\u2022 transferred OF Tanner Mally to the Development List.\n\u2022 transferred RHP Jose T. Perez to the Development List.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3muzadzphkt2f",
+      "recorded_at": "2026-09-08T14:30:36.343603+00:00",
+      "to_team": "Low-A San Jose",
+      "transaction_id": 941591,
+      "type": "other"
+    },
+    {
+      "effective_date": "2026-09-07",
+      "event_key": "2026-09-07|698952|other|0|476|san jose giants transferred rhp jose t. perez to development list",
+      "from_team": "",
+      "player": "Jose T. Perez",
+      "post_text": "San Jose\n\u2022 transferred OF Tanner Mally to the Development List.\n\u2022 transferred RHP Jose T. Perez to the Development List.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3muzadzphkt2f",
+      "recorded_at": "2026-09-08T14:30:36.343618+00:00",
+      "to_team": "Low-A San Jose",
+      "transaction_id": 941592,
+      "type": "other"
     }
   ],
   "seen_event_keys": [
@@ -1159,7 +1183,9 @@
     "2026-09-06|701373|il_activated|0|461|eugene emeralds activated 2b isaiah barkett from 7-day injured list",
     "2026-09-06|814451|il_activated|0|461|eugene emeralds activated 1b jakob christian from 7-day injured list",
     "2026-09-07|691769|recalled|105|137|san francisco giants recalled lhp philip abner from sacramento river cats",
-    "2026-09-07|694820|optioned|137|105|san francisco giants optioned rhp braxton roxby to sacramento river cats"
+    "2026-09-07|694820|optioned|137|105|san francisco giants optioned rhp braxton roxby to sacramento river cats",
+    "2026-09-07|698952|other|0|476|san jose giants transferred rhp jose t. perez to development list",
+    "2026-09-07|842179|other|0|476|san jose giants transferred of tanner mally to development list"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1423,7 +1449,9 @@
     941493,
     941494,
     941547,
-    941548
+    941548,
+    941591,
+    941592
   ],
-  "updated_at": "2026-09-07T23:28:42.738615+00:00"
+  "updated_at": "2026-09-08T14:30:36.343665+00:00"
 }
