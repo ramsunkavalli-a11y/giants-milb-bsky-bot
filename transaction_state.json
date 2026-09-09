@@ -1176,6 +1176,30 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 941785,
       "type": "rehab"
+    },
+    {
+      "effective_date": "2026-09-09",
+      "event_key": "2026-09-09|682674|rehab|137|105|san francisco giants sent lf victor bericoto on a rehab assignment to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Victor Bericoto",
+      "post_text": "Sacramento\n\u2022 LF Victor Bericoto began a rehab assignment.\n\u2022 RHP Duncan Davitt \u2192 Triple-A Sacramento.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mv4lpbqio32u",
+      "recorded_at": "2026-09-09T22:31:44.211988+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 941884,
+      "type": "rehab"
+    },
+    {
+      "effective_date": "2026-09-09",
+      "event_key": "2026-09-09|701474|assignment|0|105|rhp duncan davitt assigned to sacramento river cats",
+      "from_team": "",
+      "player": "Duncan Davitt",
+      "post_text": "Sacramento\n\u2022 LF Victor Bericoto began a rehab assignment.\n\u2022 RHP Duncan Davitt \u2192 Triple-A Sacramento.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mv4lpbqio32u",
+      "recorded_at": "2026-09-09T22:31:44.211998+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 941893,
+      "type": "assignment"
     }
   ],
   "seen_event_keys": [
@@ -1276,7 +1300,9 @@
     "2026-09-08|683679|rehab|137|105|san francisco giants sent c jesus rodriguez on a rehab assignment to sacramento river cats",
     "2026-09-08|695391|recalled|105|137|san francisco giants recalled 3b brett harris from sacramento river cats",
     "2026-09-08|805149|il_activated|0|476|san jose giants activated rhp cody delvecchio from 60-day injured list",
-    "2026-09-08|811229|assignment|105|461|rhp ubert mejias assigned to eugene emeralds from sacramento river cats"
+    "2026-09-08|811229|assignment|105|461|rhp ubert mejias assigned to eugene emeralds from sacramento river cats",
+    "2026-09-09|682674|rehab|137|105|san francisco giants sent lf victor bericoto on a rehab assignment to sacramento river cats",
+    "2026-09-09|701474|assignment|0|105|rhp duncan davitt assigned to sacramento river cats"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1549,7 +1575,9 @@
     941725,
     941726,
     941785,
-    941790
+    941790,
+    941884,
+    941893
   ],
-  "updated_at": "2026-09-09T05:57:20.818165+00:00"
+  "updated_at": "2026-09-09T22:31:44.212039+00:00"
 }
