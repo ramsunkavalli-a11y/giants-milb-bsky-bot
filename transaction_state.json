@@ -1152,6 +1152,30 @@
       "to_team": "San Francisco",
       "transaction_id": 941726,
       "type": "recalled"
+    },
+    {
+      "effective_date": "2026-09-07",
+      "event_key": "2026-09-07|694820|other|0|105|sacramento river cats activated rhp braxton roxby",
+      "from_team": "",
+      "player": "Braxton Roxby",
+      "post_text": "Sacramento\n\u2022 activated RHP Braxton Roxby.\n\u2022 C Jesus Rodriguez began a rehab assignment.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mv2u56c5t523",
+      "recorded_at": "2026-09-09T05:57:20.818109+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 941790,
+      "type": "other"
+    },
+    {
+      "effective_date": "2026-09-08",
+      "event_key": "2026-09-08|683679|rehab|137|105|san francisco giants sent c jesus rodriguez on a rehab assignment to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Jesus Rodriguez",
+      "post_text": "Sacramento\n\u2022 activated RHP Braxton Roxby.\n\u2022 C Jesus Rodriguez began a rehab assignment.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mv2u56c5t523",
+      "recorded_at": "2026-09-09T05:57:20.818121+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 941785,
+      "type": "rehab"
     }
   ],
   "seen_event_keys": [
@@ -1244,10 +1268,12 @@
     "2026-09-06|814451|il_activated|0|461|eugene emeralds activated 1b jakob christian from 7-day injured list",
     "2026-09-07|691769|recalled|105|137|san francisco giants recalled lhp philip abner from sacramento river cats",
     "2026-09-07|694820|optioned|137|105|san francisco giants optioned rhp braxton roxby to sacramento river cats",
+    "2026-09-07|694820|other|0|105|sacramento river cats activated rhp braxton roxby",
     "2026-09-07|698952|other|0|476|san jose giants transferred rhp jose t. perez to development list",
     "2026-09-07|842179|other|0|476|san jose giants transferred of tanner mally to development list",
     "2026-09-08|678576|assignment|3410|105|rhp wilkin ramos assigned to sacramento river cats from richmond flying squirrels",
     "2026-09-08|681439|optioned|137|105|san francisco giants optioned c zach morgan to sacramento river cats",
+    "2026-09-08|683679|rehab|137|105|san francisco giants sent c jesus rodriguez on a rehab assignment to sacramento river cats",
     "2026-09-08|695391|recalled|105|137|san francisco giants recalled 3b brett harris from sacramento river cats",
     "2026-09-08|805149|il_activated|0|476|san jose giants activated rhp cody delvecchio from 60-day injured list",
     "2026-09-08|811229|assignment|105|461|rhp ubert mejias assigned to eugene emeralds from sacramento river cats"
@@ -1521,7 +1547,9 @@
     941669,
     941716,
     941725,
-    941726
+    941726,
+    941785,
+    941790
   ],
-  "updated_at": "2026-09-08T21:49:10.896002+00:00"
+  "updated_at": "2026-09-09T05:57:20.818165+00:00"
 }
