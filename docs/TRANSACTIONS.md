@@ -18,14 +18,14 @@ Core rule: **the bot reports the transaction and adds factual context; it does n
 
 ## Level-change context
 
-For an assignment, option, or recall between organization levels, the bot attempts to fetch stats from the team the player is leaving, through the day before the transaction. MLB stat requests are scoped by both the departing affiliate and the affiliate's MiLB `sportId`, which is required for reliable minor-league player stats.
+For an assignment, option, recall, or contract selection between organization levels, the bot attempts to fetch stats from the team the player is leaving, through the day before the transaction. MLB stat requests are scoped by both the departing affiliate and the affiliate's MiLB `sportId`, which is required for reliable minor-league player stats.
 
-Hitters:
+Hitters (at least 20 PA):
 - season line at departing team: AVG/OBP/SLG, PA, HR when nonzero;
 - last 14 days: AVG/OBP/SLG and PA;
 - last-14 line is omitted below 20 PA.
 
-Pitchers:
+Pitchers (at least 5 IP):
 - season line at departing team: IP, ERA, K%, BB%;
 - last 14 days: IP, ERA, K%, BB%;
 - last-14 line is omitted below 5 IP.

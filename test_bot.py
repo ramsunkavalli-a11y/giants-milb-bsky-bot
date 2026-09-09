@@ -90,6 +90,22 @@ class BotTests(unittest.TestCase):
         self.assertEqual(len(event.stats_lines), 1)
         self.assertTrue(event.stats_lines[0].startswith("SJ season:"))
 
+    def test_season_stats_are_omitted_below_the_public_sample_threshold(self):
+        event = self.event()
+        season = {"plateAppearances": 19, "avg": ".400", "obp": ".500", "slg": ".700", "homeRuns": 2}
+        recent = {"plateAppearances": 19, "avg": ".400", "obp": ".500", "slg": ".700", "homeRuns": 2}
+        with patch("bot.fetch_date_range_stats", side_effect=[season, recent]):
+            bot.attach_stats_context(None, event)
+        self.assertEqual(event.stats_lines, [])
+
+    def test_pitcher_season_stats_are_omitted_below_the_public_sample_threshold(self):
+        event = self.event(position="RHP", person_name="Pitcher Example")
+        season = {"inningsPitched": "2.2", "era": "3.38", "strikeOuts": 3, "baseOnBalls": 2, "battersFaced": 12}
+        recent = season.copy()
+        with patch("bot.fetch_date_range_stats", side_effect=[season, recent]):
+            bot.attach_stats_context(None, event)
+        self.assertEqual(event.stats_lines, [])
+
     def test_pitcher_stats_context_uses_k_and_bb_rates(self):
         event = self.event(position="RHP", person_name="Pitcher Example")
         season = {
@@ -117,6 +133,28 @@ class BotTests(unittest.TestCase):
         self.assertEqual(len(posts), 1)
         self.assertEqual(posts[0].event_ids, [1])
         self.assertIn("SJ season:", posts[0].text)
+
+    def test_level_change_without_stats_still_keeps_the_origin_in_its_own_post(self):
+        event = self.event(stats_lines=[])
+        posts = bot.build_posts([event])
+        self.assertEqual(len(posts), 1)
+        self.assertEqual(posts[0].event_ids, [1])
+        self.assertEqual(posts[0].text.splitlines()[:2], ["SS Test Player → High-A Eugene", "From Low-A San Jose"])
+
+    def test_contract_selection_names_sf_and_the_originating_affiliate(self):
+        event = self.event(
+            event_type="selected",
+            from_id=bot.SACRAMENTO,
+            from_name="Sacramento River Cats",
+            to_id=bot.SF,
+            to_name="San Francisco Giants",
+            stats_lines=[],
+        )
+        self.assertTrue(event.is_level_change)
+        self.assertEqual(
+            bot.level_change_text(event).splitlines()[0],
+            "SF selected the contract of SS Test Player from Triple-A Sacramento",
+        )
 
     def test_single_long_plain_transaction_never_exceeds_limit(self):
         event = self.event(

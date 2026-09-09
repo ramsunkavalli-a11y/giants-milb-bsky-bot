@@ -21,6 +21,10 @@ LOOKBACK_DAYS = 14
 RECENT_DAYS = 14
 MIN_RECENT_HITTER_PA = 20
 MIN_RECENT_PITCHER_IP = 5.0
+# A season line from a handful of opportunities is more distracting than useful.
+# Use the same floor as the recent split before showing it in a public post.
+MIN_SEASON_HITTER_PA = 20
+MIN_SEASON_PITCHER_IP = 5.0
 SLEEP_BETWEEN_POSTS_SEC = 1.2
 RECENT_EVENT_AUDIT_LIMIT = 200
 SEEN_TRANSACTION_ID_LIMIT = 1000
@@ -199,7 +203,7 @@ class TxnEvent:
             self.from_id in ORG_TEAM_IDS
             and self.to_id in ORG_TEAM_IDS
             and self.from_id != self.to_id
-            and self.event_type in {"assignment", "optioned", "recalled"}
+            and self.event_type in {"assignment", "optioned", "recalled", "selected"}
         )
 
 
@@ -519,10 +523,11 @@ def attach_stats_context(s: requests.Session, event: TxnEvent) -> None:
     label = TEAM_STAT_LABEL.get(int(event.from_id), short_team(event.from_id, event.from_name))
 
     if is_pitcher:
-        season_text = format_pitcher_stats(season)
+        season_text = format_pitcher_stats(season) if innings_as_float(season) >= MIN_SEASON_PITCHER_IP else ""
         recent_text = format_pitcher_stats(recent) if innings_as_float(recent) >= MIN_RECENT_PITCHER_IP else ""
     else:
-        season_text = format_hitter_stats(season, include_power=True)
+        season_pa = int(_to_float(season.get("plateAppearances")))
+        season_text = format_hitter_stats(season, include_power=True) if season_pa >= MIN_SEASON_HITTER_PA else ""
         recent_pa = int(_to_float(recent.get("plateAppearances")))
         recent_text = format_hitter_stats(recent, include_power=False) if recent_pa >= MIN_RECENT_HITTER_PA else ""
 
@@ -541,8 +546,15 @@ def level_change_text(event: TxnEvent) -> str:
         lines = [f"SF recalled {player} from {destination_name(event.from_id, event.from_name)}"]
     elif event.event_type == "optioned":
         lines = [f"SF optioned {player} to {destination_name(event.to_id, event.to_name)}"]
+    elif event.event_type == "selected" and event.to_id == SF:
+        lines = [f"SF selected the contract of {player} from {destination_name(event.from_id, event.from_name)}"]
     else:
-        lines = [f"{player} → {destination_name(event.to_id, event.to_name)}"]
+        destination = destination_name(event.to_id, event.to_name)
+        if event.from_id:
+            lines = [f"{player} → {destination}"]
+        else:
+            # Do not imply an undisclosed originating club with an arrow.
+            lines = [f"{player} assigned to {destination}"]
         if event.from_id:
             lines.append(f"From {destination_name(event.from_id, event.from_name)}")
     stats_lines = event.stats_lines[:]
@@ -628,7 +640,10 @@ def build_posts(events: List[TxnEvent]) -> List[PostBundle]:
     plain: List[TxnEvent] = []
 
     for event in sorted(events, key=lambda x: (x.sort_date, x.id)):
-        if event.is_level_change and event.stats_lines:
+        # Cross-level moves are useful even when the player has no meaningful
+        # stat sample. Keep their origin/destination in a standalone post rather
+        # than letting a grouped fallback hide that context.
+        if event.is_level_change:
             enriched.append(PostBundle(level_change_text(event), [event.id]))
         else:
             plain.append(event)

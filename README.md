@@ -9,7 +9,7 @@ Bluesky automation for San Francisco Giants minor-league transactions.
 The bot treats MLB's transaction as the fact and adds context without guessing organizational intent:
 
 - affiliate assignments are described neutrally rather than automatically labeled promotions/demotions;
-- level changes can include the player's season line at the departing team plus a meaningful last-14-days split;
+- level changes can include the player's season line at the departing team plus a meaningful last-14-days split; both use minimum sample sizes;
 - hitters use AVG/OBP/SLG + PA (and HR on the season line); pitchers use IP/ERA + K%/BB%;
 - MLB stat queries are scoped to the departing affiliate and MiLB level;
 - duplicate-looking MLB rows are deduped by both transaction ID and normalized event key;
