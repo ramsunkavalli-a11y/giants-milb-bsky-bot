@@ -1200,6 +1200,18 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 941893,
       "type": "assignment"
+    },
+    {
+      "effective_date": "2026-09-10",
+      "event_key": "2026-09-10|692352|other|0|3410|richmond flying squirrels activated rhp manuel mercedes from development list",
+      "from_team": "",
+      "player": "Manuel Mercedes",
+      "post_text": "Richmond\n\u2022 activated RHP Manuel Mercedes from the Development List.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mv74acjqtu2w",
+      "recorded_at": "2026-09-10T22:32:54.810173+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 941984,
+      "type": "other"
     }
   ],
   "seen_event_keys": [
@@ -1302,7 +1314,8 @@
     "2026-09-08|805149|il_activated|0|476|san jose giants activated rhp cody delvecchio from 60-day injured list",
     "2026-09-08|811229|assignment|105|461|rhp ubert mejias assigned to eugene emeralds from sacramento river cats",
     "2026-09-09|682674|rehab|137|105|san francisco giants sent lf victor bericoto on a rehab assignment to sacramento river cats",
-    "2026-09-09|701474|assignment|0|105|rhp duncan davitt assigned to sacramento river cats"
+    "2026-09-09|701474|assignment|0|105|rhp duncan davitt assigned to sacramento river cats",
+    "2026-09-10|692352|other|0|3410|richmond flying squirrels activated rhp manuel mercedes from development list"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1577,7 +1590,8 @@
     941785,
     941790,
     941884,
-    941893
+    941893,
+    941984
   ],
-  "updated_at": "2026-09-09T22:31:44.212039+00:00"
+  "updated_at": "2026-09-10T22:32:54.810232+00:00"
 }
