@@ -1260,6 +1260,18 @@
       "to_team": "Double-A Richmond",
       "transaction_id": 942068,
       "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-09-11",
+      "event_key": "2026-09-11|663941|il_activated|0|105|sacramento river cats activated rhp tristan beck from 7-day injured list",
+      "from_team": "",
+      "player": "Tristan Beck",
+      "post_text": "Sacramento\n\u2022 activated RHP Tristan Beck from the 7-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvdkwu76kh2c",
+      "recorded_at": "2026-09-12T17:06:42.902576+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 942120,
+      "type": "il_activated"
     }
   ],
   "seen_event_keys": [
@@ -1366,6 +1378,7 @@
     "2026-09-10|692352|other|0|3410|richmond flying squirrels activated rhp manuel mercedes from development list",
     "2026-09-10|835227|il_activated|0|476|san jose giants activated of peyton bonds from 7-day injured list",
     "2026-09-10|843411|assignment|0|615|ss jeremi rodriguez assigned to dsl giants orange",
+    "2026-09-11|663941|il_activated|0|105|sacramento river cats activated rhp tristan beck from 7-day injured list",
     "2026-09-11|692352|other|0|3410|richmond flying squirrels transferred rhp manuel mercedes to development list",
     "2026-09-11|702264|il_activated|0|3410|richmond flying squirrels activated ss gavin kilen from 7-day injured list"
   ],
@@ -1647,7 +1660,8 @@
     942001,
     942011,
     942067,
-    942068
+    942068,
+    942120
   ],
-  "updated_at": "2026-09-11T22:32:32.037148+00:00"
+  "updated_at": "2026-09-12T17:06:42.902632+00:00"
 }
