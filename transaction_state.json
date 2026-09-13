@@ -1284,6 +1284,102 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 942214,
       "type": "other"
+    },
+    {
+      "effective_date": "2026-09-13",
+      "event_key": "2026-09-13|835227|other|0|476|san jose giants transferred of peyton bonds to development list",
+      "from_team": "",
+      "player": "Peyton Bonds",
+      "post_text": "San Jose\n\u2022 transferred OF Peyton Bonds to the Development List.\n\nRichmond\n\u2022 transferred C Onil Perez to the Development List.\n\u2022 activated C Ty Hanchey from the 7-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvgd7rngz72s",
+      "recorded_at": "2026-09-13T19:26:31.479422+00:00",
+      "to_team": "Low-A San Jose",
+      "transaction_id": 942244,
+      "type": "other"
+    },
+    {
+      "effective_date": "2026-09-13",
+      "event_key": "2026-09-13|692366|other|0|3410|richmond flying squirrels transferred c onil perez to development list",
+      "from_team": "",
+      "player": "Onil Perez",
+      "post_text": "San Jose\n\u2022 transferred OF Peyton Bonds to the Development List.\n\nRichmond\n\u2022 transferred C Onil Perez to the Development List.\n\u2022 activated C Ty Hanchey from the 7-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvgd7rngz72s",
+      "recorded_at": "2026-09-13T19:26:31.479433+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 942249,
+      "type": "other"
+    },
+    {
+      "effective_date": "2026-09-13",
+      "event_key": "2026-09-13|800643|il_activated|0|3410|richmond flying squirrels activated c ty hanchey from 7-day injured list",
+      "from_team": "",
+      "player": "Ty Hanchey",
+      "post_text": "San Jose\n\u2022 transferred OF Peyton Bonds to the Development List.\n\nRichmond\n\u2022 transferred C Onil Perez to the Development List.\n\u2022 activated C Ty Hanchey from the 7-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvgd7rngz72s",
+      "recorded_at": "2026-09-13T19:26:31.479438+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 942250,
+      "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-09-13",
+      "event_key": "2026-09-13|814176|assignment|476|3410|rhp jackson flora assigned to richmond flying squirrels from san jose giants",
+      "from_team": "Low-A San Jose",
+      "player": "Jackson Flora",
+      "post_text": "RHP Jackson Flora \u2192 Double-A Richmond\nFrom Low-A San Jose\nhttps://www.mlb.com/player/814176",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvgd7su2j42l",
+      "recorded_at": "2026-09-13T19:26:32.743123+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 942245,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-09-13",
+      "event_key": "2026-09-13|827515|assignment|408|476|lhp beau bryans assigned to san jose giants from acl giants",
+      "from_team": "ACL Giants",
+      "player": "Beau Bryans",
+      "post_text": "LHP Beau Bryans \u2192 Low-A San Jose\nFrom ACL Giants\nhttps://www.mlb.com/player/827515",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvgd7u2kya2r",
+      "recorded_at": "2026-09-13T19:26:34.004813+00:00",
+      "to_team": "Low-A San Jose",
+      "transaction_id": 942246,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-09-13",
+      "event_key": "2026-09-13|842051|assignment|408|476|of charlie bussey iii assigned to san jose giants from acl giants",
+      "from_team": "ACL Giants",
+      "player": "Charlie Bussey III",
+      "post_text": "OF Charlie Bussey III \u2192 Low-A San Jose\nFrom ACL Giants\nhttps://www.mlb.com/player/842051",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvgd7vb4s72v",
+      "recorded_at": "2026-09-13T19:26:35.267707+00:00",
+      "to_team": "Low-A San Jose",
+      "transaction_id": 942247,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-09-13",
+      "event_key": "2026-09-13|823185|assignment|3410|105|ss zane zielinski assigned to sacramento river cats from richmond flying squirrels",
+      "from_team": "Double-A Richmond",
+      "player": "Zane Zielinski",
+      "post_text": "SS Zane Zielinski \u2192 Triple-A Sacramento\nFrom Double-A Richmond\nRIC season: .206/.250/.301 in 146 PA, 2 HR\nhttps://www.mlb.com/player/823185",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvgd7whnog2i",
+      "recorded_at": "2026-09-13T19:26:36.530717+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 942248,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-09-13",
+      "event_key": "2026-09-13|814154|selected|105|137|san francisco giants selected contract of lf scott bandura from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Scott Bandura",
+      "post_text": "SF selected the contract of LF Scott Bandura from Triple-A Sacramento\nSAC season: .318/.398/.492 in 430 PA, 10 HR\nLast 14d: .286/.415/.548 in 53 PA\nhttps://www.mlb.com/player/814154",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvgd7xo5gd2w",
+      "recorded_at": "2026-09-13T19:26:37.793130+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 942269,
+      "type": "selected"
     }
   ],
   "seen_event_keys": [
@@ -1393,7 +1489,15 @@
     "2026-09-11|663941|il_activated|0|105|sacramento river cats activated rhp tristan beck from 7-day injured list",
     "2026-09-11|692352|other|0|3410|richmond flying squirrels transferred rhp manuel mercedes to development list",
     "2026-09-11|702264|il_activated|0|3410|richmond flying squirrels activated ss gavin kilen from 7-day injured list",
-    "2026-09-12|701474|other|0|105|sacramento river cats activated rhp duncan davitt"
+    "2026-09-12|701474|other|0|105|sacramento river cats activated rhp duncan davitt",
+    "2026-09-13|692366|other|0|3410|richmond flying squirrels transferred c onil perez to development list",
+    "2026-09-13|800643|il_activated|0|3410|richmond flying squirrels activated c ty hanchey from 7-day injured list",
+    "2026-09-13|814154|selected|105|137|san francisco giants selected contract of lf scott bandura from sacramento river cats",
+    "2026-09-13|814176|assignment|476|3410|rhp jackson flora assigned to richmond flying squirrels from san jose giants",
+    "2026-09-13|823185|assignment|3410|105|ss zane zielinski assigned to sacramento river cats from richmond flying squirrels",
+    "2026-09-13|827515|assignment|408|476|lhp beau bryans assigned to san jose giants from acl giants",
+    "2026-09-13|835227|other|0|476|san jose giants transferred of peyton bonds to development list",
+    "2026-09-13|842051|assignment|408|476|of charlie bussey iii assigned to san jose giants from acl giants"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1675,7 +1779,15 @@
     942067,
     942068,
     942120,
-    942214
+    942214,
+    942244,
+    942245,
+    942246,
+    942247,
+    942248,
+    942249,
+    942250,
+    942269
   ],
-  "updated_at": "2026-09-13T11:46:51.297893+00:00"
+  "updated_at": "2026-09-13T19:26:37.793184+00:00"
 }
