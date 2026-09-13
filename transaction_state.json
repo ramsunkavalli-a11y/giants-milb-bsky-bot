@@ -1272,6 +1272,18 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 942120,
       "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-09-12",
+      "event_key": "2026-09-12|701474|other|0|105|sacramento river cats activated rhp duncan davitt",
+      "from_team": "",
+      "player": "Duncan Davitt",
+      "post_text": "Sacramento\n\u2022 activated RHP Duncan Davitt.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvfjjt4smv2r",
+      "recorded_at": "2026-09-13T11:46:51.297833+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 942214,
+      "type": "other"
     }
   ],
   "seen_event_keys": [
@@ -1380,7 +1392,8 @@
     "2026-09-10|843411|assignment|0|615|ss jeremi rodriguez assigned to dsl giants orange",
     "2026-09-11|663941|il_activated|0|105|sacramento river cats activated rhp tristan beck from 7-day injured list",
     "2026-09-11|692352|other|0|3410|richmond flying squirrels transferred rhp manuel mercedes to development list",
-    "2026-09-11|702264|il_activated|0|3410|richmond flying squirrels activated ss gavin kilen from 7-day injured list"
+    "2026-09-11|702264|il_activated|0|3410|richmond flying squirrels activated ss gavin kilen from 7-day injured list",
+    "2026-09-12|701474|other|0|105|sacramento river cats activated rhp duncan davitt"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1661,7 +1674,8 @@
     942011,
     942067,
     942068,
-    942120
+    942120,
+    942214
   ],
-  "updated_at": "2026-09-12T17:06:42.902632+00:00"
+  "updated_at": "2026-09-13T11:46:51.297893+00:00"
 }
