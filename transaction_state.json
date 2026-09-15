@@ -1380,6 +1380,54 @@
       "to_team": "San Francisco",
       "transaction_id": 942269,
       "type": "selected"
+    },
+    {
+      "effective_date": "2026-09-15",
+      "event_key": "2026-09-15|700649|assignment|461|3410|lhp henry lalane assigned to richmond flying squirrels from eugene emeralds",
+      "from_team": "High-A Eugene",
+      "player": "Henry Lalane",
+      "post_text": "LHP Henry Lalane \u2192 Double-A Richmond\nFrom High-A Eugene\nEUG season: 21.2 IP, 4.57 ERA \u00b7 16.8% K, 8.4% BB\nLast 14d: 5.0 IP, 0.00 ERA \u00b7 20.0% K, 5.0% BB\nhttps://www.mlb.com/player/700649",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvl7tlok7l2i",
+      "recorded_at": "2026-09-15T18:09:20.032194+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 942331,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-09-15",
+      "event_key": "2026-09-15|809763|assignment|461|3410|ss kaeden kent assigned to richmond flying squirrels from eugene emeralds",
+      "from_team": "High-A Eugene",
+      "player": "Kaeden Kent",
+      "post_text": "SS Kaeden Kent \u2192 Double-A Richmond\nFrom High-A Eugene\nEUG season: .267/.283/.489 in 46 PA, 2 HR\nLast 14d: .250/.286/.300 in 21 PA\nhttps://www.mlb.com/player/809763",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvl7tmwmcg2u",
+      "recorded_at": "2026-09-15T18:09:21.342697+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 942332,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-09-15",
+      "event_key": "2026-09-15|826052|other|0|3410|richmond flying squirrels transferred lhp charlie mcdaniel to development list",
+      "from_team": "",
+      "player": "Charlie McDaniel",
+      "post_text": "Richmond\n\u2022 transferred LHP Charlie McDaniel to the Development List.\n\u2022 transferred OF Jean Carlos Si\u00f3 to the Development List.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvl7to5eix23",
+      "recorded_at": "2026-09-15T18:09:22.616861+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 942333,
+      "type": "other"
+    },
+    {
+      "effective_date": "2026-09-15",
+      "event_key": "2026-09-15|805117|other|0|3410|richmond flying squirrels transferred of jean carlos si\u00f3 to development list",
+      "from_team": "",
+      "player": "Jean Carlos Si\u00f3",
+      "post_text": "Richmond\n\u2022 transferred LHP Charlie McDaniel to the Development List.\n\u2022 transferred OF Jean Carlos Si\u00f3 to the Development List.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvl7to5eix23",
+      "recorded_at": "2026-09-15T18:09:22.616878+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 942334,
+      "type": "other"
     }
   ],
   "seen_event_keys": [
@@ -1497,7 +1545,11 @@
     "2026-09-13|823185|assignment|3410|105|ss zane zielinski assigned to sacramento river cats from richmond flying squirrels",
     "2026-09-13|827515|assignment|408|476|lhp beau bryans assigned to san jose giants from acl giants",
     "2026-09-13|835227|other|0|476|san jose giants transferred of peyton bonds to development list",
-    "2026-09-13|842051|assignment|408|476|of charlie bussey iii assigned to san jose giants from acl giants"
+    "2026-09-13|842051|assignment|408|476|of charlie bussey iii assigned to san jose giants from acl giants",
+    "2026-09-15|700649|assignment|461|3410|lhp henry lalane assigned to richmond flying squirrels from eugene emeralds",
+    "2026-09-15|805117|other|0|3410|richmond flying squirrels transferred of jean carlos si\u00f3 to development list",
+    "2026-09-15|809763|assignment|461|3410|ss kaeden kent assigned to richmond flying squirrels from eugene emeralds",
+    "2026-09-15|826052|other|0|3410|richmond flying squirrels transferred lhp charlie mcdaniel to development list"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1787,7 +1839,11 @@
     942248,
     942249,
     942250,
-    942269
+    942269,
+    942331,
+    942332,
+    942333,
+    942334
   ],
-  "updated_at": "2026-09-13T19:26:37.793184+00:00"
+  "updated_at": "2026-09-15T18:09:22.616924+00:00"
 }
