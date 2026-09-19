@@ -1452,6 +1452,18 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 943200,
       "type": "rehab"
+    },
+    {
+      "effective_date": "2026-09-18",
+      "event_key": "2026-09-18|836072|other|0|476|rhp garrett langrell retired",
+      "from_team": "",
+      "player": "Garrett Langrell",
+      "post_text": "San Jose\n\u2022 RHP Garrett Langrell retired.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvvb4ge5rt2l",
+      "recorded_at": "2026-09-19T17:58:47.559228+00:00",
+      "to_team": "Low-A San Jose",
+      "transaction_id": 943216,
+      "type": "other"
     }
   ],
   "seen_event_keys": [
@@ -1575,7 +1587,8 @@
     "2026-09-15|809763|assignment|461|3410|ss kaeden kent assigned to richmond flying squirrels from eugene emeralds",
     "2026-09-15|826052|other|0|3410|richmond flying squirrels transferred lhp charlie mcdaniel to development list",
     "2026-09-18|656529|rehab|137|105|san francisco giants sent lhp sam hentges on a rehab assignment to sacramento river cats",
-    "2026-09-18|701474|recalled|105|137|san francisco giants recalled rhp duncan davitt from sacramento river cats"
+    "2026-09-18|701474|recalled|105|137|san francisco giants recalled rhp duncan davitt from sacramento river cats",
+    "2026-09-18|836072|other|0|476|rhp garrett langrell retired"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1871,7 +1884,8 @@
     942333,
     942334,
     943198,
-    943200
+    943200,
+    943216
   ],
-  "updated_at": "2026-09-19T05:50:01.028419+00:00"
+  "updated_at": "2026-09-19T17:58:47.559289+00:00"
 }
