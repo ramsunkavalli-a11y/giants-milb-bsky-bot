@@ -1428,6 +1428,30 @@
       "to_team": "Double-A Richmond",
       "transaction_id": 942334,
       "type": "other"
+    },
+    {
+      "effective_date": "2026-09-18",
+      "event_key": "2026-09-18|701474|recalled|105|137|san francisco giants recalled rhp duncan davitt from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Duncan Davitt",
+      "post_text": "SF recalled RHP Duncan Davitt from Triple-A Sacramento\nhttps://www.mlb.com/player/701474",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvtyfaapao23",
+      "recorded_at": "2026-09-19T05:49:59.744014+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 943198,
+      "type": "recalled"
+    },
+    {
+      "effective_date": "2026-09-18",
+      "event_key": "2026-09-18|656529|rehab|137|105|san francisco giants sent lhp sam hentges on a rehab assignment to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Sam Hentges",
+      "post_text": "Sacramento\n\u2022 LHP Sam Hentges began a rehab assignment.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvtyfbhwz523",
+      "recorded_at": "2026-09-19T05:50:01.028356+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 943200,
+      "type": "rehab"
     }
   ],
   "seen_event_keys": [
@@ -1549,7 +1573,9 @@
     "2026-09-15|700649|assignment|461|3410|lhp henry lalane assigned to richmond flying squirrels from eugene emeralds",
     "2026-09-15|805117|other|0|3410|richmond flying squirrels transferred of jean carlos si\u00f3 to development list",
     "2026-09-15|809763|assignment|461|3410|ss kaeden kent assigned to richmond flying squirrels from eugene emeralds",
-    "2026-09-15|826052|other|0|3410|richmond flying squirrels transferred lhp charlie mcdaniel to development list"
+    "2026-09-15|826052|other|0|3410|richmond flying squirrels transferred lhp charlie mcdaniel to development list",
+    "2026-09-18|656529|rehab|137|105|san francisco giants sent lhp sam hentges on a rehab assignment to sacramento river cats",
+    "2026-09-18|701474|recalled|105|137|san francisco giants recalled rhp duncan davitt from sacramento river cats"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1843,7 +1869,9 @@
     942331,
     942332,
     942333,
-    942334
+    942334,
+    943198,
+    943200
   ],
-  "updated_at": "2026-09-15T18:09:22.616924+00:00"
+  "updated_at": "2026-09-19T05:50:01.028419+00:00"
 }
