@@ -1500,6 +1500,30 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 943308,
       "type": "other"
+    },
+    {
+      "effective_date": "2026-09-20",
+      "event_key": "2026-09-20|691769|optioned|137|105|san francisco giants optioned lhp philip abner to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Philip Abner",
+      "post_text": "SF optioned LHP Philip Abner to Triple-A Sacramento\nhttps://www.mlb.com/player/691769",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvxwhdjtso2w",
+      "recorded_at": "2026-09-20T19:26:02.299053+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 943385,
+      "type": "optioned"
+    },
+    {
+      "effective_date": "2026-09-20",
+      "event_key": "2026-09-20|663941|recalled|105|137|san francisco giants recalled rhp tristan beck from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Tristan Beck",
+      "post_text": "SF recalled RHP Tristan Beck from Triple-A Sacramento\nSAC season: 39.2 IP, 4.54 ERA \u00b7 24.6% K, 11.4% BB\nhttps://www.mlb.com/player/663941",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvxwhfbbbv2u",
+      "recorded_at": "2026-09-20T19:26:03.580330+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 943386,
+      "type": "recalled"
     }
   ],
   "seen_event_keys": [
@@ -1627,7 +1651,9 @@
     "2026-09-18|836072|other|0|476|rhp garrett langrell retired",
     "2026-09-19|689359|assignment|3410|105|lhp dale stanavich assigned to sacramento river cats from richmond flying squirrels",
     "2026-09-19|700800|other|0|105|sacramento river cats transferred rhp darien smith to development list",
-    "2026-09-19|804922|assignment|3410|105|rhp tyler vogel assigned to sacramento river cats from richmond flying squirrels"
+    "2026-09-19|804922|assignment|3410|105|rhp tyler vogel assigned to sacramento river cats from richmond flying squirrels",
+    "2026-09-20|663941|recalled|105|137|san francisco giants recalled rhp tristan beck from sacramento river cats",
+    "2026-09-20|691769|optioned|137|105|san francisco giants optioned lhp philip abner to sacramento river cats"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1928,7 +1954,9 @@
     943274,
     943280,
     943281,
-    943308
+    943308,
+    943385,
+    943386
   ],
-  "updated_at": "2026-09-20T16:46:48.927749+00:00"
+  "updated_at": "2026-09-20T19:26:03.580396+00:00"
 }
