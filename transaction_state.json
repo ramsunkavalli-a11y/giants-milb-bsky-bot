@@ -1464,6 +1464,30 @@
       "to_team": "Low-A San Jose",
       "transaction_id": 943216,
       "type": "other"
+    },
+    {
+      "effective_date": "2026-09-19",
+      "event_key": "2026-09-19|689359|assignment|3410|105|lhp dale stanavich assigned to sacramento river cats from richmond flying squirrels",
+      "from_team": "Double-A Richmond",
+      "player": "Dale Stanavich",
+      "post_text": "LHP Dale Stanavich \u2192 Triple-A Sacramento\nFrom Double-A Richmond\nRIC season: 40.2 IP, 5.98 ERA \u00b7 31.5% K, 12.7% BB\nhttps://www.mlb.com/player/689359",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvvyvvkc4j2r",
+      "recorded_at": "2026-09-20T01:04:38.426023+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 943280,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-09-19",
+      "event_key": "2026-09-19|804922|assignment|3410|105|rhp tyler vogel assigned to sacramento river cats from richmond flying squirrels",
+      "from_team": "Double-A Richmond",
+      "player": "Tyler Vogel",
+      "post_text": "RHP Tyler Vogel \u2192 Triple-A Sacramento\nFrom Double-A Richmond\nRIC season: 52.2 IP, 3.25 ERA \u00b7 24.1% K, 14.0% BB\nhttps://www.mlb.com/player/804922",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvvyvwrfby2q",
+      "recorded_at": "2026-09-20T01:04:39.700503+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 943281,
+      "type": "assignment"
     }
   ],
   "seen_event_keys": [
@@ -1588,7 +1612,9 @@
     "2026-09-15|826052|other|0|3410|richmond flying squirrels transferred lhp charlie mcdaniel to development list",
     "2026-09-18|656529|rehab|137|105|san francisco giants sent lhp sam hentges on a rehab assignment to sacramento river cats",
     "2026-09-18|701474|recalled|105|137|san francisco giants recalled rhp duncan davitt from sacramento river cats",
-    "2026-09-18|836072|other|0|476|rhp garrett langrell retired"
+    "2026-09-18|836072|other|0|476|rhp garrett langrell retired",
+    "2026-09-19|689359|assignment|3410|105|lhp dale stanavich assigned to sacramento river cats from richmond flying squirrels",
+    "2026-09-19|804922|assignment|3410|105|rhp tyler vogel assigned to sacramento river cats from richmond flying squirrels"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1885,7 +1911,10 @@
     942334,
     943198,
     943200,
-    943216
+    943216,
+    943274,
+    943280,
+    943281
   ],
-  "updated_at": "2026-09-19T17:58:47.559289+00:00"
+  "updated_at": "2026-09-20T01:04:39.700566+00:00"
 }
