@@ -1488,6 +1488,18 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 943281,
       "type": "assignment"
+    },
+    {
+      "effective_date": "2026-09-19",
+      "event_key": "2026-09-19|700800|other|0|105|sacramento river cats transferred rhp darien smith to development list",
+      "from_team": "",
+      "player": "Darien Smith",
+      "post_text": "Sacramento\n\u2022 transferred RHP Darien Smith to the Development List.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mvxnknaupm2r",
+      "recorded_at": "2026-09-20T16:46:48.927692+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 943308,
+      "type": "other"
     }
   ],
   "seen_event_keys": [
@@ -1614,6 +1626,7 @@
     "2026-09-18|701474|recalled|105|137|san francisco giants recalled rhp duncan davitt from sacramento river cats",
     "2026-09-18|836072|other|0|476|rhp garrett langrell retired",
     "2026-09-19|689359|assignment|3410|105|lhp dale stanavich assigned to sacramento river cats from richmond flying squirrels",
+    "2026-09-19|700800|other|0|105|sacramento river cats transferred rhp darien smith to development list",
     "2026-09-19|804922|assignment|3410|105|rhp tyler vogel assigned to sacramento river cats from richmond flying squirrels"
   ],
   "seen_transaction_ids": [
@@ -1914,7 +1927,8 @@
     943216,
     943274,
     943280,
-    943281
+    943281,
+    943308
   ],
-  "updated_at": "2026-09-20T01:04:39.700566+00:00"
+  "updated_at": "2026-09-20T16:46:48.927749+00:00"
 }
