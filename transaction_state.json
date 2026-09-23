@@ -1536,6 +1536,18 @@
       "to_team": "San Francisco",
       "transaction_id": 943414,
       "type": "selected"
+    },
+    {
+      "effective_date": "2026-09-22",
+      "event_key": "2026-09-22|694820|recalled|105|137|san francisco giants recalled rhp braxton roxby from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Braxton Roxby",
+      "post_text": "SF recalled RHP Braxton Roxby from Triple-A Sacramento\nSAC season: 64.1 IP, 3.78 ERA \u00b7 23.1% K, 10.0% BB\nLast 14d: 7.1 IP, 1.23 ERA \u00b7 26.9% K, 0.0% BB\nhttps://www.mlb.com/player/694820",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mw5ibvnysd2c",
+      "recorded_at": "2026-09-23T00:28:25.493597+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 943695,
+      "type": "recalled"
     }
   ],
   "seen_event_keys": [
@@ -1666,7 +1678,8 @@
     "2026-09-19|804922|assignment|3410|105|rhp tyler vogel assigned to sacramento river cats from richmond flying squirrels",
     "2026-09-20|663941|recalled|105|137|san francisco giants recalled rhp tristan beck from sacramento river cats",
     "2026-09-20|691769|optioned|137|105|san francisco giants optioned lhp philip abner to sacramento river cats",
-    "2026-09-21|815589|selected|105|137|san francisco giants selected contract of lf bo davidson from sacramento river cats"
+    "2026-09-21|815589|selected|105|137|san francisco giants selected contract of lf bo davidson from sacramento river cats",
+    "2026-09-22|694820|recalled|105|137|san francisco giants recalled rhp braxton roxby from sacramento river cats"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1970,7 +1983,8 @@
     943308,
     943385,
     943386,
-    943414
+    943414,
+    943695
   ],
-  "updated_at": "2026-09-21T23:15:08.470081+00:00"
+  "updated_at": "2026-09-23T00:28:25.493660+00:00"
 }
