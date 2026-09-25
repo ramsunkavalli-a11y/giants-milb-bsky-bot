@@ -1548,6 +1548,18 @@
       "to_team": "San Francisco",
       "transaction_id": 943695,
       "type": "recalled"
+    },
+    {
+      "effective_date": "2026-09-22",
+      "event_key": "2026-09-22|692368|il_activated|0|105|sacramento river cats activated c adri\u00e1n sugastey from 7-day injured list",
+      "from_team": "",
+      "player": "Adri\u00e1n Sugastey",
+      "post_text": "Sacramento\n\u2022 activated C Adri\u00e1n Sugastey from the 7-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mwesd7o5m522",
+      "recorded_at": "2026-09-25T22:16:45.117929+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 943981,
+      "type": "il_activated"
     }
   ],
   "seen_event_keys": [
@@ -1679,6 +1691,7 @@
     "2026-09-20|663941|recalled|105|137|san francisco giants recalled rhp tristan beck from sacramento river cats",
     "2026-09-20|691769|optioned|137|105|san francisco giants optioned lhp philip abner to sacramento river cats",
     "2026-09-21|815589|selected|105|137|san francisco giants selected contract of lf bo davidson from sacramento river cats",
+    "2026-09-22|692368|il_activated|0|105|sacramento river cats activated c adri\u00e1n sugastey from 7-day injured list",
     "2026-09-22|694820|recalled|105|137|san francisco giants recalled rhp braxton roxby from sacramento river cats"
   ],
   "seen_transaction_ids": [
@@ -1984,7 +1997,8 @@
     943385,
     943386,
     943414,
-    943695
+    943695,
+    943981
   ],
-  "updated_at": "2026-09-23T00:28:25.493660+00:00"
+  "updated_at": "2026-09-25T22:16:45.117986+00:00"
 }
