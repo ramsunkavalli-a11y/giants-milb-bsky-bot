@@ -1644,6 +1644,30 @@
       "to_team": "High-A Eugene",
       "transaction_id": 944070,
       "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-09-26",
+      "event_key": "2026-09-26|805074|optioned|137|105|san francisco giants optioned rhp yunior marte to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Yunior Marte",
+      "post_text": "SF optioned RHP Yunior Marte to Triple-A Sacramento\nSF season: 24.1 IP, 4.44 ERA \u00b7 14.6% K, 9.7% BB\nLast 14d: 9.2 IP, 7.45 ERA \u00b7 13.6% K, 9.1% BB\nhttps://www.mlb.com/player/805074",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mwh2naag6v23",
+      "recorded_at": "2026-09-26T19:50:50.694048+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 944126,
+      "type": "optioned"
+    },
+    {
+      "effective_date": "2026-09-26",
+      "event_key": "2026-09-26|675920|recalled|105|137|san francisco giants recalled lhp seth lonsway from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Seth Lonsway",
+      "post_text": "SF recalled LHP Seth Lonsway from Triple-A Sacramento\nSAC season: 91.2 IP, 5.11 ERA \u00b7 14.1% K, 13.8% BB\nLast 14d: 8.0 IP, 1.13 ERA \u00b7 27.6% K, 13.8% BB\nhttps://www.mlb.com/player/675920",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mwh2nbhokb2x",
+      "recorded_at": "2026-09-26T19:50:51.977399+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 944127,
+      "type": "recalled"
     }
   ],
   "seen_event_keys": [
@@ -1783,7 +1807,9 @@
     "2026-09-22|805117|other|0|3410|richmond flying squirrels activated of jean carlos si\u00f3 from development list",
     "2026-09-22|826052|other|0|3410|richmond flying squirrels activated lhp charlie mcdaniel from development list",
     "2026-09-22|827408|il_activated|0|461|eugene emeralds activated rhp ramon marquez from 7-day injured list",
-    "2026-09-25|702885|optioned|137|105|san francisco giants optioned lhp cesar perdomo to sacramento river cats"
+    "2026-09-25|702885|optioned|137|105|san francisco giants optioned lhp cesar perdomo to sacramento river cats",
+    "2026-09-26|675920|recalled|105|137|san francisco giants recalled lhp seth lonsway from sacramento river cats",
+    "2026-09-26|805074|optioned|137|105|san francisco giants optioned rhp yunior marte to sacramento river cats"
   ],
   "seen_transaction_ids": [
     928051,
@@ -2096,7 +2122,9 @@
     944059,
     944060,
     944061,
-    944070
+    944070,
+    944126,
+    944127
   ],
-  "updated_at": "2026-09-26T17:07:22.368085+00:00"
+  "updated_at": "2026-09-26T19:50:51.977473+00:00"
 }
