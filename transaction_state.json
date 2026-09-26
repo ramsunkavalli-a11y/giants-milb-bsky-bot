@@ -1560,6 +1560,18 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 943981,
       "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-09-25",
+      "event_key": "2026-09-25|702885|optioned|137|105|san francisco giants optioned lhp cesar perdomo to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Cesar Perdomo",
+      "post_text": "SF optioned LHP Cesar Perdomo to Triple-A Sacramento\nSF season: 24.2 IP, 3.65 ERA \u00b7 13.5% K, 6.7% BB\nLast 14d: 14.2 IP, 5.52 ERA \u00b7 8.7% K, 7.2% BB\nhttps://www.mlb.com/player/702885",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mwf55jz4zq2d",
+      "recorded_at": "2026-09-26T01:30:25.795893+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 943998,
+      "type": "optioned"
     }
   ],
   "seen_event_keys": [
@@ -1692,7 +1704,8 @@
     "2026-09-20|691769|optioned|137|105|san francisco giants optioned lhp philip abner to sacramento river cats",
     "2026-09-21|815589|selected|105|137|san francisco giants selected contract of lf bo davidson from sacramento river cats",
     "2026-09-22|692368|il_activated|0|105|sacramento river cats activated c adri\u00e1n sugastey from 7-day injured list",
-    "2026-09-22|694820|recalled|105|137|san francisco giants recalled rhp braxton roxby from sacramento river cats"
+    "2026-09-22|694820|recalled|105|137|san francisco giants recalled rhp braxton roxby from sacramento river cats",
+    "2026-09-25|702885|optioned|137|105|san francisco giants optioned lhp cesar perdomo to sacramento river cats"
   ],
   "seen_transaction_ids": [
     928051,
@@ -1998,7 +2011,8 @@
     943386,
     943414,
     943695,
-    943981
+    943981,
+    943998
   ],
-  "updated_at": "2026-09-25T22:16:45.117986+00:00"
+  "updated_at": "2026-09-26T01:30:25.795935+00:00"
 }
