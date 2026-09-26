@@ -1572,6 +1572,78 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 943998,
       "type": "optioned"
+    },
+    {
+      "effective_date": "2026-09-22",
+      "event_key": "2026-09-22|803292|il_activated|0|3410|richmond flying squirrels activated rhp ben peterson from 7-day injured list",
+      "from_team": "",
+      "player": "Ben Peterson",
+      "post_text": "Richmond\n\u2022 activated RHP Ben Peterson from the 7-day IL.\n\u2022 activated LHP Charlie McDaniel from the Development List.\n\u2022 activated RHP Manuel Mercedes from the Development List.\n\u2022 activated C Onil Perez from the Development List.\n\u2022 activated OF Jean Carlos Si\u00f3 from the Development List.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mwgriv32be25",
+      "recorded_at": "2026-09-26T17:07:21.086637+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 944057,
+      "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-09-22",
+      "event_key": "2026-09-22|826052|other|0|3410|richmond flying squirrels activated lhp charlie mcdaniel from development list",
+      "from_team": "",
+      "player": "Charlie McDaniel",
+      "post_text": "Richmond\n\u2022 activated RHP Ben Peterson from the 7-day IL.\n\u2022 activated LHP Charlie McDaniel from the Development List.\n\u2022 activated RHP Manuel Mercedes from the Development List.\n\u2022 activated C Onil Perez from the Development List.\n\u2022 activated OF Jean Carlos Si\u00f3 from the Development List.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mwgriv32be25",
+      "recorded_at": "2026-09-26T17:07:21.086650+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 944058,
+      "type": "other"
+    },
+    {
+      "effective_date": "2026-09-22",
+      "event_key": "2026-09-22|692352|other|0|3410|richmond flying squirrels activated rhp manuel mercedes from development list",
+      "from_team": "",
+      "player": "Manuel Mercedes",
+      "post_text": "Richmond\n\u2022 activated RHP Ben Peterson from the 7-day IL.\n\u2022 activated LHP Charlie McDaniel from the Development List.\n\u2022 activated RHP Manuel Mercedes from the Development List.\n\u2022 activated C Onil Perez from the Development List.\n\u2022 activated OF Jean Carlos Si\u00f3 from the Development List.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mwgriv32be25",
+      "recorded_at": "2026-09-26T17:07:21.086655+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 944059,
+      "type": "other"
+    },
+    {
+      "effective_date": "2026-09-22",
+      "event_key": "2026-09-22|692366|other|0|3410|richmond flying squirrels activated c onil perez from development list",
+      "from_team": "",
+      "player": "Onil Perez",
+      "post_text": "Richmond\n\u2022 activated RHP Ben Peterson from the 7-day IL.\n\u2022 activated LHP Charlie McDaniel from the Development List.\n\u2022 activated RHP Manuel Mercedes from the Development List.\n\u2022 activated C Onil Perez from the Development List.\n\u2022 activated OF Jean Carlos Si\u00f3 from the Development List.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mwgriv32be25",
+      "recorded_at": "2026-09-26T17:07:21.086659+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 944060,
+      "type": "other"
+    },
+    {
+      "effective_date": "2026-09-22",
+      "event_key": "2026-09-22|805117|other|0|3410|richmond flying squirrels activated of jean carlos si\u00f3 from development list",
+      "from_team": "",
+      "player": "Jean Carlos Si\u00f3",
+      "post_text": "Richmond\n\u2022 activated RHP Ben Peterson from the 7-day IL.\n\u2022 activated LHP Charlie McDaniel from the Development List.\n\u2022 activated RHP Manuel Mercedes from the Development List.\n\u2022 activated C Onil Perez from the Development List.\n\u2022 activated OF Jean Carlos Si\u00f3 from the Development List.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mwgriv32be25",
+      "recorded_at": "2026-09-26T17:07:21.086662+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 944061,
+      "type": "other"
+    },
+    {
+      "effective_date": "2026-09-22",
+      "event_key": "2026-09-22|827408|il_activated|0|461|eugene emeralds activated rhp ramon marquez from 7-day injured list",
+      "from_team": "",
+      "player": "Ramon Marquez",
+      "post_text": "Eugene\n\u2022 activated RHP Ramon Marquez from the 7-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mwgriwcajm25",
+      "recorded_at": "2026-09-26T17:07:22.368010+00:00",
+      "to_team": "High-A Eugene",
+      "transaction_id": 944070,
+      "type": "il_activated"
     }
   ],
   "seen_event_keys": [
@@ -1703,8 +1775,14 @@
     "2026-09-20|663941|recalled|105|137|san francisco giants recalled rhp tristan beck from sacramento river cats",
     "2026-09-20|691769|optioned|137|105|san francisco giants optioned lhp philip abner to sacramento river cats",
     "2026-09-21|815589|selected|105|137|san francisco giants selected contract of lf bo davidson from sacramento river cats",
+    "2026-09-22|692352|other|0|3410|richmond flying squirrels activated rhp manuel mercedes from development list",
+    "2026-09-22|692366|other|0|3410|richmond flying squirrels activated c onil perez from development list",
     "2026-09-22|692368|il_activated|0|105|sacramento river cats activated c adri\u00e1n sugastey from 7-day injured list",
     "2026-09-22|694820|recalled|105|137|san francisco giants recalled rhp braxton roxby from sacramento river cats",
+    "2026-09-22|803292|il_activated|0|3410|richmond flying squirrels activated rhp ben peterson from 7-day injured list",
+    "2026-09-22|805117|other|0|3410|richmond flying squirrels activated of jean carlos si\u00f3 from development list",
+    "2026-09-22|826052|other|0|3410|richmond flying squirrels activated lhp charlie mcdaniel from development list",
+    "2026-09-22|827408|il_activated|0|461|eugene emeralds activated rhp ramon marquez from 7-day injured list",
     "2026-09-25|702885|optioned|137|105|san francisco giants optioned lhp cesar perdomo to sacramento river cats"
   ],
   "seen_transaction_ids": [
@@ -2012,7 +2090,13 @@
     943414,
     943695,
     943981,
-    943998
+    943998,
+    944057,
+    944058,
+    944059,
+    944060,
+    944061,
+    944070
   ],
-  "updated_at": "2026-09-26T01:30:25.795935+00:00"
+  "updated_at": "2026-09-26T17:07:22.368085+00:00"
 }
