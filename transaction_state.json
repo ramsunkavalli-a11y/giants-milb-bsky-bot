@@ -1740,6 +1740,102 @@
       "to_team": "Low-A San Jose",
       "transaction_id": 944234,
       "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-09-28",
+      "event_key": "2026-09-28|676254|recalled|105|137|san francisco giants recalled rhp ryan walker from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Ryan Walker",
+      "post_text": "SF recalled RHP Ryan Walker from Triple-A Sacramento\nSAC season: 35.2 IP, 2.52 ERA \u00b7 22.4% K, 7.7% BB\nhttps://www.mlb.com/player/676254",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mwooysdm4323",
+      "recorded_at": "2026-09-29T20:43:51.748389+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 944493,
+      "type": "recalled"
+    },
+    {
+      "effective_date": "2026-09-28",
+      "event_key": "2026-09-28|681439|recalled|105|137|san francisco giants recalled c zach morgan from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Zach Morgan",
+      "post_text": "SF recalled C Zach Morgan from Triple-A Sacramento\nSAC season: .226/.300/.323 in 140 PA, 2 HR\nhttps://www.mlb.com/player/681439",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mwooytjaqn22",
+      "recorded_at": "2026-09-29T20:43:52.972031+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 944494,
+      "type": "recalled"
+    },
+    {
+      "effective_date": "2026-09-28",
+      "event_key": "2026-09-28|700280|recalled|3410|137|san francisco giants recalled rhp miguel mendez from richmond flying squirrels",
+      "from_team": "Double-A Richmond",
+      "player": "Miguel Mendez",
+      "post_text": "SF recalled RHP Miguel Mendez from Double-A Richmond\nRIC season: 10.2 IP, 8.44 ERA \u00b7 28.8% K, 9.6% BB\nhttps://www.mlb.com/player/700280",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mwooyuol7s2f",
+      "recorded_at": "2026-09-29T20:43:54.194958+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 944495,
+      "type": "recalled"
+    },
+    {
+      "effective_date": "2026-09-28",
+      "event_key": "2026-09-28|702885|recalled|105|137|san francisco giants recalled lhp cesar perdomo from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Cesar Perdomo",
+      "post_text": "SF recalled LHP Cesar Perdomo from Triple-A Sacramento\nSAC season: 47.2 IP, 5.10 ERA \u00b7 16.9% K, 9.4% BB\nhttps://www.mlb.com/player/702885",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mwooyvtxen22",
+      "recorded_at": "2026-09-29T20:43:55.426323+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 944498,
+      "type": "recalled"
+    },
+    {
+      "effective_date": "2026-09-28",
+      "event_key": "2026-09-28|805074|recalled|105|137|san francisco giants recalled rhp yunior marte from sacramento river cats",
+      "from_team": "Triple-A Sacramento",
+      "player": "Yunior Marte",
+      "post_text": "SF recalled RHP Yunior Marte from Triple-A Sacramento\nhttps://www.mlb.com/player/805074",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mwooywzjc725",
+      "recorded_at": "2026-09-29T20:43:56.657226+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 944499,
+      "type": "recalled"
+    },
+    {
+      "effective_date": "2026-09-29",
+      "event_key": "2026-09-29|815336|il_activated|0|2134|dsl giants black activated rhp jose meza from 7-day injured list",
+      "from_team": "",
+      "player": "Jose Meza",
+      "post_text": "DSL Giants\n\u2022 activated RHP Jose Meza from the 7-day IL.\n\u2022 activated RHP Elkyns Villarreal from the 7-day IL.\n\nSacramento\n\u2022 activated RHP Darien Smith from the Development List.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mwooyy72tb2f",
+      "recorded_at": "2026-09-29T20:43:57.889083+00:00",
+      "to_team": "DSL Giants",
+      "transaction_id": 944722,
+      "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-09-29",
+      "event_key": "2026-09-29|821640|il_activated|0|2134|dsl giants black activated rhp elkyns villarreal from 7-day injured list",
+      "from_team": "",
+      "player": "Elkyns Villarreal",
+      "post_text": "DSL Giants\n\u2022 activated RHP Jose Meza from the 7-day IL.\n\u2022 activated RHP Elkyns Villarreal from the 7-day IL.\n\nSacramento\n\u2022 activated RHP Darien Smith from the Development List.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mwooyy72tb2f",
+      "recorded_at": "2026-09-29T20:43:57.889097+00:00",
+      "to_team": "DSL Giants",
+      "transaction_id": 944724,
+      "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-09-28",
+      "event_key": "2026-09-28|700800|other|0|105|sacramento river cats activated rhp darien smith from development list",
+      "from_team": "",
+      "player": "Darien Smith",
+      "post_text": "DSL Giants\n\u2022 activated RHP Jose Meza from the 7-day IL.\n\u2022 activated RHP Elkyns Villarreal from the 7-day IL.\n\nSacramento\n\u2022 activated RHP Darien Smith from the Development List.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mwooyy72tb2f",
+      "recorded_at": "2026-09-29T20:43:57.889105+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 944723,
+      "type": "other"
     }
   ],
   "seen_event_keys": [
@@ -1887,7 +1983,15 @@
     "2026-09-22|842179|other|0|476|san jose giants activated of tanner mally from development list",
     "2026-09-25|702885|optioned|137|105|san francisco giants optioned lhp cesar perdomo to sacramento river cats",
     "2026-09-26|675920|recalled|105|137|san francisco giants recalled lhp seth lonsway from sacramento river cats",
-    "2026-09-26|805074|optioned|137|105|san francisco giants optioned rhp yunior marte to sacramento river cats"
+    "2026-09-26|805074|optioned|137|105|san francisco giants optioned rhp yunior marte to sacramento river cats",
+    "2026-09-28|676254|recalled|105|137|san francisco giants recalled rhp ryan walker from sacramento river cats",
+    "2026-09-28|681439|recalled|105|137|san francisco giants recalled c zach morgan from sacramento river cats",
+    "2026-09-28|700280|recalled|3410|137|san francisco giants recalled rhp miguel mendez from richmond flying squirrels",
+    "2026-09-28|700800|other|0|105|sacramento river cats activated rhp darien smith from development list",
+    "2026-09-28|702885|recalled|105|137|san francisco giants recalled lhp cesar perdomo from sacramento river cats",
+    "2026-09-28|805074|recalled|105|137|san francisco giants recalled rhp yunior marte from sacramento river cats",
+    "2026-09-29|815336|il_activated|0|2134|dsl giants black activated rhp jose meza from 7-day injured list",
+    "2026-09-29|821640|il_activated|0|2134|dsl giants black activated rhp elkyns villarreal from 7-day injured list"
   ],
   "seen_transaction_ids": [
     928051,
@@ -2208,7 +2312,15 @@
     944231,
     944232,
     944233,
-    944234
+    944234,
+    944493,
+    944494,
+    944495,
+    944498,
+    944499,
+    944722,
+    944723,
+    944724
   ],
-  "updated_at": "2026-09-28T21:57:09.964678+00:00"
+  "updated_at": "2026-09-29T20:43:57.889174+00:00"
 }
