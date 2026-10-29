@@ -1848,26 +1848,45 @@
       "to_team": "DSL Giants",
       "transaction_id": 946942,
       "type": "assignment"
+    },
+    {
+      "effective_date": "2026-10-29",
+      "event_key": "2026-10-29|657424|other|137|105|san francisco giants sent lhp matt gage outright to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Matt Gage",
+      "post_text": "Sacramento\n\u2022 sent LHP Matt Gage outright to Sacramento River Cats.\n\u2022 sent 2B Osleivis Basabe outright to Sacramento River Cats.\n\u2022 sent RHP Jason Foley outright to Sacramento River Cats.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mz23fgk2lu2z",
+      "recorded_at": "2026-10-29T20:15:20.881434+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 947280,
+      "type": "other"
+    },
+    {
+      "effective_date": "2026-10-29",
+      "event_key": "2026-10-29|678545|other|137|105|san francisco giants sent 2b osleivis basabe outright to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Osleivis Basabe",
+      "post_text": "Sacramento\n\u2022 sent LHP Matt Gage outright to Sacramento River Cats.\n\u2022 sent 2B Osleivis Basabe outright to Sacramento River Cats.\n\u2022 sent RHP Jason Foley outright to Sacramento River Cats.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mz23fgk2lu2z",
+      "recorded_at": "2026-10-29T20:15:20.881447+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 947281,
+      "type": "other"
+    },
+    {
+      "effective_date": "2026-10-29",
+      "event_key": "2026-10-29|671345|other|137|105|san francisco giants sent rhp jason foley outright to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Jason Foley",
+      "post_text": "Sacramento\n\u2022 sent LHP Matt Gage outright to Sacramento River Cats.\n\u2022 sent 2B Osleivis Basabe outright to Sacramento River Cats.\n\u2022 sent RHP Jason Foley outright to Sacramento River Cats.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mz23fgk2lu2z",
+      "recorded_at": "2026-10-29T20:15:20.881452+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 947282,
+      "type": "other"
     }
   ],
   "seen_event_keys": [
-    "2026-09-09|682674|rehab|137|105|san francisco giants sent lf victor bericoto on a rehab assignment to sacramento river cats",
-    "2026-09-09|701474|assignment|0|105|rhp duncan davitt assigned to sacramento river cats",
-    "2026-09-10|692352|other|0|3410|richmond flying squirrels activated rhp manuel mercedes from development list",
-    "2026-09-10|835227|il_activated|0|476|san jose giants activated of peyton bonds from 7-day injured list",
-    "2026-09-10|843411|assignment|0|615|ss jeremi rodriguez assigned to dsl giants orange",
-    "2026-09-11|663941|il_activated|0|105|sacramento river cats activated rhp tristan beck from 7-day injured list",
-    "2026-09-11|692352|other|0|3410|richmond flying squirrels transferred rhp manuel mercedes to development list",
-    "2026-09-11|702264|il_activated|0|3410|richmond flying squirrels activated ss gavin kilen from 7-day injured list",
-    "2026-09-12|701474|other|0|105|sacramento river cats activated rhp duncan davitt",
-    "2026-09-13|692366|other|0|3410|richmond flying squirrels transferred c onil perez to development list",
-    "2026-09-13|800643|il_activated|0|3410|richmond flying squirrels activated c ty hanchey from 7-day injured list",
-    "2026-09-13|814154|selected|105|137|san francisco giants selected contract of lf scott bandura from sacramento river cats",
-    "2026-09-13|814176|assignment|476|3410|rhp jackson flora assigned to richmond flying squirrels from san jose giants",
-    "2026-09-13|823185|assignment|3410|105|ss zane zielinski assigned to sacramento river cats from richmond flying squirrels",
-    "2026-09-13|827515|assignment|408|476|lhp beau bryans assigned to san jose giants from acl giants",
-    "2026-09-13|835227|other|0|476|san jose giants transferred of peyton bonds to development list",
-    "2026-09-13|842051|assignment|408|476|of charlie bussey iii assigned to san jose giants from acl giants",
     "2026-09-15|700649|assignment|461|3410|lhp henry lalane assigned to richmond flying squirrels from eugene emeralds",
     "2026-09-15|805117|other|0|3410|richmond flying squirrels transferred of jean carlos si\u00f3 to development list",
     "2026-09-15|809763|assignment|461|3410|ss kaeden kent assigned to richmond flying squirrels from eugene emeralds",
@@ -1906,7 +1925,10 @@
     "2026-09-28|805074|recalled|105|137|san francisco giants recalled rhp yunior marte from sacramento river cats",
     "2026-09-29|815336|il_activated|0|2134|dsl giants black activated rhp jose meza from 7-day injured list",
     "2026-09-29|821640|il_activated|0|2134|dsl giants black activated rhp elkyns villarreal from 7-day injured list",
-    "2026-10-24|844410|assignment|0|615|of ruben bocio assigned to dsl giants orange"
+    "2026-10-24|844410|assignment|0|615|of ruben bocio assigned to dsl giants orange",
+    "2026-10-29|657424|other|137|105|san francisco giants sent lhp matt gage outright to sacramento river cats",
+    "2026-10-29|671345|other|137|105|san francisco giants sent rhp jason foley outright to sacramento river cats",
+    "2026-10-29|678545|other|137|105|san francisco giants sent 2b osleivis basabe outright to sacramento river cats"
   ],
   "seen_transaction_ids": [
     928051,
@@ -2236,7 +2258,10 @@
     944722,
     944723,
     944724,
-    946942
+    946942,
+    947280,
+    947281,
+    947282
   ],
-  "updated_at": "2026-10-24T16:33:37.808166+00:00"
+  "updated_at": "2026-10-29T20:15:20.881493+00:00"
 }
