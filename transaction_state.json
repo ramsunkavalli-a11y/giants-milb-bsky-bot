@@ -1884,6 +1884,18 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 947282,
       "type": "other"
+    },
+    {
+      "effective_date": "2026-10-30",
+      "event_key": "2026-10-30|668800|other|137|105|san francisco giants sent c andrew knizner outright to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Andrew Knizner",
+      "post_text": "Sacramento\n\u2022 sent C Andrew Knizner outright to Sacramento River Cats.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mz4xgw6g3b2a",
+      "recorded_at": "2026-10-30T23:42:35.054484+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 947497,
+      "type": "other"
     }
   ],
   "seen_event_keys": [
@@ -1928,7 +1940,8 @@
     "2026-10-24|844410|assignment|0|615|of ruben bocio assigned to dsl giants orange",
     "2026-10-29|657424|other|137|105|san francisco giants sent lhp matt gage outright to sacramento river cats",
     "2026-10-29|671345|other|137|105|san francisco giants sent rhp jason foley outright to sacramento river cats",
-    "2026-10-29|678545|other|137|105|san francisco giants sent 2b osleivis basabe outright to sacramento river cats"
+    "2026-10-29|678545|other|137|105|san francisco giants sent 2b osleivis basabe outright to sacramento river cats",
+    "2026-10-30|668800|other|137|105|san francisco giants sent c andrew knizner outright to sacramento river cats"
   ],
   "seen_transaction_ids": [
     928051,
@@ -2261,7 +2274,8 @@
     946942,
     947280,
     947281,
-    947282
+    947282,
+    947497
   ],
-  "updated_at": "2026-10-29T20:15:20.881493+00:00"
+  "updated_at": "2026-10-30T23:42:35.054525+00:00"
 }
