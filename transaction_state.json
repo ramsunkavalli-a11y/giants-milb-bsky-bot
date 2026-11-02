@@ -1896,13 +1896,21 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 947497,
       "type": "other"
+    },
+    {
+      "effective_date": "2026-11-02",
+      "event_key": "2026-11-02|801967|assignment|0|476|lhp tony neubeck assigned to san jose giants",
+      "from_team": "",
+      "player": "Tony Neubeck",
+      "post_text": "San Jose\n\u2022 LHP Tony Neubeck \u2192 Low-A San Jose.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mzdnwayzr22m",
+      "recorded_at": "2026-11-02T15:40:50.486941+00:00",
+      "to_team": "Low-A San Jose",
+      "transaction_id": 947638,
+      "type": "assignment"
     }
   ],
   "seen_event_keys": [
-    "2026-09-15|700649|assignment|461|3410|lhp henry lalane assigned to richmond flying squirrels from eugene emeralds",
-    "2026-09-15|805117|other|0|3410|richmond flying squirrels transferred of jean carlos si\u00f3 to development list",
-    "2026-09-15|809763|assignment|461|3410|ss kaeden kent assigned to richmond flying squirrels from eugene emeralds",
-    "2026-09-15|826052|other|0|3410|richmond flying squirrels transferred lhp charlie mcdaniel to development list",
     "2026-09-18|656529|rehab|137|105|san francisco giants sent lhp sam hentges on a rehab assignment to sacramento river cats",
     "2026-09-18|701474|recalled|105|137|san francisco giants recalled rhp duncan davitt from sacramento river cats",
     "2026-09-18|836072|other|0|476|rhp garrett langrell retired",
@@ -1941,7 +1949,8 @@
     "2026-10-29|657424|other|137|105|san francisco giants sent lhp matt gage outright to sacramento river cats",
     "2026-10-29|671345|other|137|105|san francisco giants sent rhp jason foley outright to sacramento river cats",
     "2026-10-29|678545|other|137|105|san francisco giants sent 2b osleivis basabe outright to sacramento river cats",
-    "2026-10-30|668800|other|137|105|san francisco giants sent c andrew knizner outright to sacramento river cats"
+    "2026-10-30|668800|other|137|105|san francisco giants sent c andrew knizner outright to sacramento river cats",
+    "2026-11-02|801967|assignment|0|476|lhp tony neubeck assigned to san jose giants"
   ],
   "seen_transaction_ids": [
     928051,
@@ -2275,7 +2284,8 @@
     947280,
     947281,
     947282,
-    947497
+    947497,
+    947638
   ],
-  "updated_at": "2026-10-30T23:42:35.054525+00:00"
+  "updated_at": "2026-11-02T15:40:50.486995+00:00"
 }
