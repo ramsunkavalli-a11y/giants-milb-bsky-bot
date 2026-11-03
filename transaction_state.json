@@ -1908,6 +1908,30 @@
       "to_team": "Low-A San Jose",
       "transaction_id": 947638,
       "type": "assignment"
+    },
+    {
+      "effective_date": "2026-11-02",
+      "event_key": "2026-11-02|669270|other|137|105|san francisco giants sent rhp joel kuhnel outright to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Joel Kuhnel",
+      "post_text": "Sacramento\n\u2022 sent RHP Joel Kuhnel outright to Sacramento River Cats.\n\u2022 sent LHP Seth Lonsway outright to Sacramento River Cats.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mzfa7zaqrl2a",
+      "recorded_at": "2026-11-03T06:41:04.996858+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 947657,
+      "type": "other"
+    },
+    {
+      "effective_date": "2026-11-02",
+      "event_key": "2026-11-02|675920|other|137|105|san francisco giants sent lhp seth lonsway outright to sacramento river cats",
+      "from_team": "San Francisco",
+      "player": "Seth Lonsway",
+      "post_text": "Sacramento\n\u2022 sent RHP Joel Kuhnel outright to Sacramento River Cats.\n\u2022 sent LHP Seth Lonsway outright to Sacramento River Cats.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mzfa7zaqrl2a",
+      "recorded_at": "2026-11-03T06:41:04.996871+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 947658,
+      "type": "other"
     }
   ],
   "seen_event_keys": [
@@ -1950,6 +1974,8 @@
     "2026-10-29|671345|other|137|105|san francisco giants sent rhp jason foley outright to sacramento river cats",
     "2026-10-29|678545|other|137|105|san francisco giants sent 2b osleivis basabe outright to sacramento river cats",
     "2026-10-30|668800|other|137|105|san francisco giants sent c andrew knizner outright to sacramento river cats",
+    "2026-11-02|669270|other|137|105|san francisco giants sent rhp joel kuhnel outright to sacramento river cats",
+    "2026-11-02|675920|other|137|105|san francisco giants sent lhp seth lonsway outright to sacramento river cats",
     "2026-11-02|801967|assignment|0|476|lhp tony neubeck assigned to san jose giants"
   ],
   "seen_transaction_ids": [
@@ -2285,7 +2311,9 @@
     947281,
     947282,
     947497,
-    947638
+    947638,
+    947657,
+    947658
   ],
-  "updated_at": "2026-11-02T15:40:50.486995+00:00"
+  "updated_at": "2026-11-03T06:41:04.996907+00:00"
 }
