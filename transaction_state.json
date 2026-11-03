@@ -1932,12 +1932,45 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 947658,
       "type": "other"
+    },
+    {
+      "effective_date": "2026-11-02",
+      "event_key": "2026-11-02|802000|il_activated|0|3410|richmond flying squirrels activated lhp tyler switalski from 60-day injured list",
+      "from_team": "",
+      "player": "Tyler Switalski",
+      "post_text": "Richmond\n\u2022 activated LHP Tyler Switalski from the 60-day IL.\n\nSacramento\n\u2022 activated LHP Reggie Crawford from the 60-day IL.\n\u2022 activated LHP John Michael Bertrand from the full-season IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mzgq3eysql2u",
+      "recorded_at": "2026-11-03T20:57:29.164226+00:00",
+      "to_team": "Double-A Richmond",
+      "transaction_id": 948117,
+      "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-11-02",
+      "event_key": "2026-11-02|686846|il_activated|0|105|sacramento river cats activated lhp reggie crawford from 60-day injured list",
+      "from_team": "",
+      "player": "Reggie Crawford",
+      "post_text": "Richmond\n\u2022 activated LHP Tyler Switalski from the 60-day IL.\n\nSacramento\n\u2022 activated LHP Reggie Crawford from the 60-day IL.\n\u2022 activated LHP John Michael Bertrand from the full-season IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mzgq3eysql2u",
+      "recorded_at": "2026-11-03T20:57:29.164242+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 948025,
+      "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-11-02",
+      "event_key": "2026-11-02|802609|il_activated|0|105|sacramento river cats activated lhp john michael bertrand from full-season injured list",
+      "from_team": "",
+      "player": "John Michael Bertrand",
+      "post_text": "Richmond\n\u2022 activated LHP Tyler Switalski from the 60-day IL.\n\nSacramento\n\u2022 activated LHP Reggie Crawford from the 60-day IL.\n\u2022 activated LHP John Michael Bertrand from the full-season IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mzgq3eysql2u",
+      "recorded_at": "2026-11-03T20:57:29.164245+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 948026,
+      "type": "il_activated"
     }
   ],
   "seen_event_keys": [
-    "2026-09-18|656529|rehab|137|105|san francisco giants sent lhp sam hentges on a rehab assignment to sacramento river cats",
-    "2026-09-18|701474|recalled|105|137|san francisco giants recalled rhp duncan davitt from sacramento river cats",
-    "2026-09-18|836072|other|0|476|rhp garrett langrell retired",
     "2026-09-19|689359|assignment|3410|105|lhp dale stanavich assigned to sacramento river cats from richmond flying squirrels",
     "2026-09-19|700800|other|0|105|sacramento river cats transferred rhp darien smith to development list",
     "2026-09-19|804922|assignment|3410|105|rhp tyler vogel assigned to sacramento river cats from richmond flying squirrels",
@@ -1976,7 +2009,10 @@
     "2026-10-30|668800|other|137|105|san francisco giants sent c andrew knizner outright to sacramento river cats",
     "2026-11-02|669270|other|137|105|san francisco giants sent rhp joel kuhnel outright to sacramento river cats",
     "2026-11-02|675920|other|137|105|san francisco giants sent lhp seth lonsway outright to sacramento river cats",
-    "2026-11-02|801967|assignment|0|476|lhp tony neubeck assigned to san jose giants"
+    "2026-11-02|686846|il_activated|0|105|sacramento river cats activated lhp reggie crawford from 60-day injured list",
+    "2026-11-02|801967|assignment|0|476|lhp tony neubeck assigned to san jose giants",
+    "2026-11-02|802000|il_activated|0|3410|richmond flying squirrels activated lhp tyler switalski from 60-day injured list",
+    "2026-11-02|802609|il_activated|0|105|sacramento river cats activated lhp john michael bertrand from full-season injured list"
   ],
   "seen_transaction_ids": [
     928051,
@@ -2313,7 +2349,10 @@
     947497,
     947638,
     947657,
-    947658
+    947658,
+    948025,
+    948026,
+    948117
   ],
-  "updated_at": "2026-11-03T06:41:04.996907+00:00"
+  "updated_at": "2026-11-03T20:57:29.164282+00:00"
 }
