@@ -1968,6 +1968,90 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 948026,
       "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-11-02",
+      "event_key": "2026-11-02|825095|other|0|476|san jose giants activated rhp drake george",
+      "from_team": "",
+      "player": "Drake George",
+      "post_text": "San Jose\n\u2022 activated RHP Drake George.\n\nEugene\n\u2022 activated RHP Josh Bostick from the 60-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mzh6nnoui72r",
+      "recorded_at": "2026-11-04T01:18:14.618412+00:00",
+      "to_team": "Low-A San Jose",
+      "transaction_id": 948458,
+      "type": "other"
+    },
+    {
+      "effective_date": "2026-11-02",
+      "event_key": "2026-11-02|701241|il_activated|0|461|eugene emeralds activated rhp josh bostick from 60-day injured list",
+      "from_team": "",
+      "player": "Josh Bostick",
+      "post_text": "San Jose\n\u2022 activated RHP Drake George.\n\nEugene\n\u2022 activated RHP Josh Bostick from the 60-day IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mzh6nnoui72r",
+      "recorded_at": "2026-11-04T01:18:14.618423+00:00",
+      "to_team": "High-A Eugene",
+      "transaction_id": 948203,
+      "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-11-02",
+      "event_key": "2026-11-02|831981|il_activated|0|2134|dsl giants black activated rhp jose de la rosa from 60-day injured list",
+      "from_team": "",
+      "player": "Jose De La Rosa",
+      "post_text": "DSL Giants\n\u2022 activated RHP Jose De La Rosa from the 60-day IL.\n\u2022 activated SS Anthony Tandron from the 60-day IL.\n\u2022 activated LHP Winkel Del Rosario from the 60-day IL.\n\nACL Giants\n\u2022 activated RHP Dilan Fernandez from the 60-day IL.\n\u2022 activated RHP Reid Worley from the full-season IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mzh6novcpf2u",
+      "recorded_at": "2026-11-04T01:18:15.881286+00:00",
+      "to_team": "DSL Giants",
+      "transaction_id": 948573,
+      "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-11-02",
+      "event_key": "2026-11-02|809779|il_activated|0|2134|dsl giants black activated ss anthony tandron from 60-day injured list",
+      "from_team": "",
+      "player": "Anthony Tandron",
+      "post_text": "DSL Giants\n\u2022 activated RHP Jose De La Rosa from the 60-day IL.\n\u2022 activated SS Anthony Tandron from the 60-day IL.\n\u2022 activated LHP Winkel Del Rosario from the 60-day IL.\n\nACL Giants\n\u2022 activated RHP Dilan Fernandez from the 60-day IL.\n\u2022 activated RHP Reid Worley from the full-season IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mzh6novcpf2u",
+      "recorded_at": "2026-11-04T01:18:15.881300+00:00",
+      "to_team": "DSL Giants",
+      "transaction_id": 948574,
+      "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-11-02",
+      "event_key": "2026-11-02|829815|il_activated|0|615|dsl giants orange activated lhp winkel del rosario from 60-day injured list",
+      "from_team": "",
+      "player": "Winkel Del Rosario",
+      "post_text": "DSL Giants\n\u2022 activated RHP Jose De La Rosa from the 60-day IL.\n\u2022 activated SS Anthony Tandron from the 60-day IL.\n\u2022 activated LHP Winkel Del Rosario from the 60-day IL.\n\nACL Giants\n\u2022 activated RHP Dilan Fernandez from the 60-day IL.\n\u2022 activated RHP Reid Worley from the full-season IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mzh6novcpf2u",
+      "recorded_at": "2026-11-04T01:18:15.881306+00:00",
+      "to_team": "DSL Giants",
+      "transaction_id": 948575,
+      "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-11-02",
+      "event_key": "2026-11-02|816403|il_activated|0|408|acl giants activated rhp dilan fernandez from 60-day injured list",
+      "from_team": "",
+      "player": "Dilan Fernandez",
+      "post_text": "DSL Giants\n\u2022 activated RHP Jose De La Rosa from the 60-day IL.\n\u2022 activated SS Anthony Tandron from the 60-day IL.\n\u2022 activated LHP Winkel Del Rosario from the 60-day IL.\n\nACL Giants\n\u2022 activated RHP Dilan Fernandez from the 60-day IL.\n\u2022 activated RHP Reid Worley from the full-season IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mzh6novcpf2u",
+      "recorded_at": "2026-11-04T01:18:15.881311+00:00",
+      "to_team": "ACL Giants",
+      "transaction_id": 948504,
+      "type": "il_activated"
+    },
+    {
+      "effective_date": "2026-11-02",
+      "event_key": "2026-11-02|828182|il_activated|0|408|acl giants activated rhp reid worley from full-season injured list",
+      "from_team": "",
+      "player": "Reid Worley",
+      "post_text": "DSL Giants\n\u2022 activated RHP Jose De La Rosa from the 60-day IL.\n\u2022 activated SS Anthony Tandron from the 60-day IL.\n\u2022 activated LHP Winkel Del Rosario from the 60-day IL.\n\nACL Giants\n\u2022 activated RHP Dilan Fernandez from the 60-day IL.\n\u2022 activated RHP Reid Worley from the full-season IL.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mzh6novcpf2u",
+      "recorded_at": "2026-11-04T01:18:15.881316+00:00",
+      "to_team": "ACL Giants",
+      "transaction_id": 948505,
+      "type": "il_activated"
     }
   ],
   "seen_event_keys": [
@@ -2010,9 +2094,16 @@
     "2026-11-02|669270|other|137|105|san francisco giants sent rhp joel kuhnel outright to sacramento river cats",
     "2026-11-02|675920|other|137|105|san francisco giants sent lhp seth lonsway outright to sacramento river cats",
     "2026-11-02|686846|il_activated|0|105|sacramento river cats activated lhp reggie crawford from 60-day injured list",
+    "2026-11-02|701241|il_activated|0|461|eugene emeralds activated rhp josh bostick from 60-day injured list",
     "2026-11-02|801967|assignment|0|476|lhp tony neubeck assigned to san jose giants",
     "2026-11-02|802000|il_activated|0|3410|richmond flying squirrels activated lhp tyler switalski from 60-day injured list",
-    "2026-11-02|802609|il_activated|0|105|sacramento river cats activated lhp john michael bertrand from full-season injured list"
+    "2026-11-02|802609|il_activated|0|105|sacramento river cats activated lhp john michael bertrand from full-season injured list",
+    "2026-11-02|809779|il_activated|0|2134|dsl giants black activated ss anthony tandron from 60-day injured list",
+    "2026-11-02|816403|il_activated|0|408|acl giants activated rhp dilan fernandez from 60-day injured list",
+    "2026-11-02|825095|other|0|476|san jose giants activated rhp drake george",
+    "2026-11-02|828182|il_activated|0|408|acl giants activated rhp reid worley from full-season injured list",
+    "2026-11-02|829815|il_activated|0|615|dsl giants orange activated lhp winkel del rosario from 60-day injured list",
+    "2026-11-02|831981|il_activated|0|2134|dsl giants black activated rhp jose de la rosa from 60-day injured list"
   ],
   "seen_transaction_ids": [
     928051,
@@ -2352,7 +2443,14 @@
     947658,
     948025,
     948026,
-    948117
+    948117,
+    948203,
+    948458,
+    948504,
+    948505,
+    948573,
+    948574,
+    948575
   ],
-  "updated_at": "2026-11-03T20:57:29.164282+00:00"
+  "updated_at": "2026-11-04T01:18:15.881365+00:00"
 }
