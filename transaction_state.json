@@ -2316,6 +2316,30 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 949149,
       "type": "other"
+    },
+    {
+      "effective_date": "2026-10-27",
+      "event_key": "2026-10-27|824714|assignment|0|105|rhp spencer bauer assigned to sacramento river cats",
+      "from_team": "",
+      "player": "Spencer Bauer",
+      "post_text": "Sacramento\n\u2022 RHP Spencer Bauer \u2192 Triple-A Sacramento.\n\u2022 RHP Joel Kuhnel elected free agency.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mzjjhum7tn2m",
+      "recorded_at": "2026-11-04T23:37:11.183679+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 949549,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-11-02",
+      "event_key": "2026-11-02|669270|other|0|105|rhp joel kuhnel elected free agency",
+      "from_team": "",
+      "player": "Joel Kuhnel",
+      "post_text": "Sacramento\n\u2022 RHP Spencer Bauer \u2192 Triple-A Sacramento.\n\u2022 RHP Joel Kuhnel elected free agency.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mzjjhum7tn2m",
+      "recorded_at": "2026-11-04T23:37:11.183690+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 949537,
+      "type": "other"
     }
   ],
   "seen_event_keys": [
@@ -2348,6 +2372,7 @@
     "2026-09-29|815336|il_activated|0|2134|dsl giants black activated rhp jose meza from 7-day injured list",
     "2026-09-29|821640|il_activated|0|2134|dsl giants black activated rhp elkyns villarreal from 7-day injured list",
     "2026-10-24|844410|assignment|0|615|of ruben bocio assigned to dsl giants orange",
+    "2026-10-27|824714|assignment|0|105|rhp spencer bauer assigned to sacramento river cats",
     "2026-10-29|657424|other|137|105|san francisco giants sent lhp matt gage outright to sacramento river cats",
     "2026-10-29|671345|other|137|105|san francisco giants sent rhp jason foley outright to sacramento river cats",
     "2026-10-29|678545|other|137|105|san francisco giants sent 2b osleivis basabe outright to sacramento river cats",
@@ -2355,6 +2380,7 @@
     "2026-11-02|622459|other|0|105|rhp cristian alvarado elected free agency",
     "2026-11-02|657424|other|0|105|lhp matt gage elected free agency",
     "2026-11-02|668800|other|0|105|c andrew knizner elected free agency",
+    "2026-11-02|669270|other|0|105|rhp joel kuhnel elected free agency",
     "2026-11-02|669270|other|137|105|san francisco giants sent rhp joel kuhnel outright to sacramento river cats",
     "2026-11-02|671117|other|0|105|2b darren baker elected free agency",
     "2026-11-02|675920|other|137|105|san francisco giants sent lhp seth lonsway outright to sacramento river cats",
@@ -2755,7 +2781,9 @@
     949024,
     949053,
     949102,
-    949149
+    949149,
+    949537,
+    949549
   ],
-  "updated_at": "2026-11-04T17:10:38.497674+00:00"
+  "updated_at": "2026-11-04T23:37:11.183729+00:00"
 }
