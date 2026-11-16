@@ -2352,6 +2352,30 @@
       "to_team": "High-A Eugene",
       "transaction_id": 950200,
       "type": "assignment"
+    },
+    {
+      "effective_date": "2026-11-15",
+      "event_key": "2026-11-15|815132|assignment|0|408|rhp gavin perry assigned to acl giants",
+      "from_team": "",
+      "player": "Gavin Perry",
+      "post_text": "ACL Giants\n\u2022 RHP Gavin Perry \u2192 ACL Giants.\n\nSacramento\n\u2022 RHP Blake Holub \u2192 Triple-A Sacramento.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3n2fgjkalgp2h",
+      "recorded_at": "2026-11-16T01:58:58.893565+00:00",
+      "to_team": "ACL Giants",
+      "transaction_id": 950286,
+      "type": "assignment"
+    },
+    {
+      "effective_date": "2026-11-15",
+      "event_key": "2026-11-15|700183|assignment|0|105|rhp blake holub assigned to sacramento river cats",
+      "from_team": "",
+      "player": "Blake Holub",
+      "post_text": "ACL Giants\n\u2022 RHP Gavin Perry \u2192 ACL Giants.\n\nSacramento\n\u2022 RHP Blake Holub \u2192 Triple-A Sacramento.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3n2fgjkalgp2h",
+      "recorded_at": "2026-11-16T01:58:58.893582+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 950289,
+      "type": "assignment"
     }
   ],
   "seen_event_keys": [
@@ -2397,7 +2421,9 @@
     "2026-11-03|821652|released|0|2134|dsl giants black released 2b boris sarduy",
     "2026-11-03|821758|released|0|615|dsl giants orange released ss jeyson moya",
     "2026-11-03|835950|released|0|615|dsl giants orange released rhp gerson rivero",
-    "2026-11-13|691263|assignment|0|461|lhp esmerlin vinicio assigned to eugene emeralds"
+    "2026-11-13|691263|assignment|0|461|lhp esmerlin vinicio assigned to eugene emeralds",
+    "2026-11-15|700183|assignment|0|105|rhp blake holub assigned to sacramento river cats",
+    "2026-11-15|815132|assignment|0|408|rhp gavin perry assigned to acl giants"
   ],
   "seen_transaction_ids": [
     928051,
@@ -2769,7 +2795,9 @@
     949149,
     949537,
     949549,
-    950200
+    950200,
+    950286,
+    950289
   ],
-  "updated_at": "2026-11-14T10:28:42.467428+00:00"
+  "updated_at": "2026-11-16T01:58:58.893626+00:00"
 }
