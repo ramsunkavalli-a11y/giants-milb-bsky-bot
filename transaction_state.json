@@ -3,18 +3,6 @@
   "recent_events": [
     {
       "effective_date": "2026-08-19",
-      "event_key": "2026-08-19|665665|optioned|137|105|san francisco giants optioned lhp reiver sanmartin to sacramento river cats",
-      "from_team": "San Francisco",
-      "player": "Reiver Sanmartin",
-      "post_text": "SF optioned LHP Reiver Sanmartin to Triple-A Sacramento\nSF season: 9.2 IP, 7.45 ERA \u00b7 21.7% K, 6.5% BB\nLast 14d: 5.0 IP, 7.20 ERA \u00b7 20.8% K, 4.2% BB",
-      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mthltihdvs2d",
-      "recorded_at": "2026-08-19T20:42:59.335018+00:00",
-      "to_team": "Triple-A Sacramento",
-      "transaction_id": 938456,
-      "type": "optioned"
-    },
-    {
-      "effective_date": "2026-08-19",
       "event_key": "2026-08-19|691769|optioned|137|105|san francisco giants optioned lhp philip abner to sacramento river cats",
       "from_team": "San Francisco",
       "player": "Philip Abner",
@@ -2376,6 +2364,42 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 950289,
       "type": "assignment"
+    },
+    {
+      "effective_date": "2026-11-17",
+      "event_key": "2026-11-17|700649|selected|3410|137|san francisco giants selected contract of lhp henry lalane from richmond flying squirrels",
+      "from_team": "Double-A Richmond",
+      "player": "Henry Lalane",
+      "post_text": "SF selected the contract of LHP Henry Lalane from Double-A Richmond\nhttps://www.mlb.com/player/700649",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3n2koydaqc22h",
+      "recorded_at": "2026-11-18T04:13:43.514595+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 950505,
+      "type": "selected"
+    },
+    {
+      "effective_date": "2026-11-17",
+      "event_key": "2026-11-17|700248|selected|3410|137|san francisco giants selected contract of rhp marty gair from richmond flying squirrels",
+      "from_team": "Double-A Richmond",
+      "player": "Marty Gair",
+      "post_text": "SF selected the contract of RHP Marty Gair from Double-A Richmond\nhttps://www.mlb.com/player/700248",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3n2koyei4jt2z",
+      "recorded_at": "2026-11-18T04:13:44.802964+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 950506,
+      "type": "selected"
+    },
+    {
+      "effective_date": "2026-11-17",
+      "event_key": "2026-11-17|701241|selected|461|137|san francisco giants selected contract of rhp josh bostick from eugene emeralds",
+      "from_team": "High-A Eugene",
+      "player": "Josh Bostick",
+      "post_text": "SF selected the contract of RHP Josh Bostick from High-A Eugene\nhttps://www.mlb.com/player/701241",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3n2koyfpgdt2z",
+      "recorded_at": "2026-11-18T04:13:46.090926+00:00",
+      "to_team": "San Francisco",
+      "transaction_id": 950507,
+      "type": "selected"
     }
   ],
   "seen_event_keys": [
@@ -2423,7 +2447,10 @@
     "2026-11-03|835950|released|0|615|dsl giants orange released rhp gerson rivero",
     "2026-11-13|691263|assignment|0|461|lhp esmerlin vinicio assigned to eugene emeralds",
     "2026-11-15|700183|assignment|0|105|rhp blake holub assigned to sacramento river cats",
-    "2026-11-15|815132|assignment|0|408|rhp gavin perry assigned to acl giants"
+    "2026-11-15|815132|assignment|0|408|rhp gavin perry assigned to acl giants",
+    "2026-11-17|700248|selected|3410|137|san francisco giants selected contract of rhp marty gair from richmond flying squirrels",
+    "2026-11-17|700649|selected|3410|137|san francisco giants selected contract of lhp henry lalane from richmond flying squirrels",
+    "2026-11-17|701241|selected|461|137|san francisco giants selected contract of rhp josh bostick from eugene emeralds"
   ],
   "seen_transaction_ids": [
     928051,
@@ -2797,7 +2824,10 @@
     949549,
     950200,
     950286,
-    950289
+    950289,
+    950505,
+    950506,
+    950507
   ],
-  "updated_at": "2026-11-16T01:58:58.893626+00:00"
+  "updated_at": "2026-11-18T04:13:46.090980+00:00"
 }
