@@ -3,18 +3,6 @@
   "recent_events": [
     {
       "effective_date": "2026-08-19",
-      "event_key": "2026-08-19|691769|optioned|137|105|san francisco giants optioned lhp philip abner to sacramento river cats",
-      "from_team": "San Francisco",
-      "player": "Philip Abner",
-      "post_text": "SF optioned LHP Philip Abner to Triple-A Sacramento\nSF season: 14.1 IP, 6.28 ERA \u00b7 9.4% K, 12.5% BB\nLast 14d: 5.0 IP, 5.40 ERA \u00b7 4.3% K, 8.7% BB",
-      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mthltjmxrh22",
-      "recorded_at": "2026-08-19T20:43:00.565506+00:00",
-      "to_team": "Triple-A Sacramento",
-      "transaction_id": 938458,
-      "type": "optioned"
-    },
-    {
-      "effective_date": "2026-08-19",
       "event_key": "2026-08-19|683363|selected|105|137|san francisco giants selected contract of lhp matt wilkinson from sacramento river cats",
       "from_team": "Triple-A Sacramento",
       "player": "Matt Wilkinson",
@@ -2400,6 +2388,18 @@
       "to_team": "San Francisco",
       "transaction_id": 950507,
       "type": "selected"
+    },
+    {
+      "effective_date": "2026-11-16",
+      "event_key": "2026-11-16|625510|assignment|0|105|rhp erick mejia assigned to sacramento river cats",
+      "from_team": "",
+      "player": "Erick Mejia",
+      "post_text": "Sacramento\n\u2022 RHP Erick Mejia \u2192 Triple-A Sacramento.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3n2oz7nsx7722",
+      "recorded_at": "2026-11-19T21:27:25.827660+00:00",
+      "to_team": "Triple-A Sacramento",
+      "transaction_id": 950663,
+      "type": "assignment"
     }
   ],
   "seen_event_keys": [
@@ -2448,6 +2448,7 @@
     "2026-11-13|691263|assignment|0|461|lhp esmerlin vinicio assigned to eugene emeralds",
     "2026-11-15|700183|assignment|0|105|rhp blake holub assigned to sacramento river cats",
     "2026-11-15|815132|assignment|0|408|rhp gavin perry assigned to acl giants",
+    "2026-11-16|625510|assignment|0|105|rhp erick mejia assigned to sacramento river cats",
     "2026-11-17|700248|selected|3410|137|san francisco giants selected contract of rhp marty gair from richmond flying squirrels",
     "2026-11-17|700649|selected|3410|137|san francisco giants selected contract of lhp henry lalane from richmond flying squirrels",
     "2026-11-17|701241|selected|461|137|san francisco giants selected contract of rhp josh bostick from eugene emeralds"
@@ -2827,7 +2828,8 @@
     950289,
     950505,
     950506,
-    950507
+    950507,
+    950663
   ],
-  "updated_at": "2026-11-18T04:13:46.090980+00:00"
+  "updated_at": "2026-11-19T21:27:25.827707+00:00"
 }
