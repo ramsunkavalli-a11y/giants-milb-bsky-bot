@@ -3,18 +3,6 @@
   "recent_events": [
     {
       "effective_date": "2026-08-19",
-      "event_key": "2026-08-19|683363|selected|105|137|san francisco giants selected contract of lhp matt wilkinson from sacramento river cats",
-      "from_team": "Triple-A Sacramento",
-      "player": "Matt Wilkinson",
-      "post_text": "Sacramento\n\u2022 selected the contract of LHP Matt Wilkinson from Sacramento River Cats.",
-      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3mthltksj6k2d",
-      "recorded_at": "2026-08-19T20:43:02.627716+00:00",
-      "to_team": "San Francisco",
-      "transaction_id": 938455,
-      "type": "selected"
-    },
-    {
-      "effective_date": "2026-08-19",
       "event_key": "2026-08-19|681924|il_activated|0|3410|richmond flying squirrels activated rhp r.j. dabovich from 60-day injured list",
       "from_team": "",
       "player": "R.J. Dabovich",
@@ -2400,6 +2388,18 @@
       "to_team": "Triple-A Sacramento",
       "transaction_id": 950663,
       "type": "assignment"
+    },
+    {
+      "effective_date": "2026-11-20",
+      "event_key": "2026-11-20|814006|assignment|0|408|rhp cole stokes assigned to acl giants",
+      "from_team": "",
+      "player": "Cole Stokes",
+      "post_text": "ACL Giants\n\u2022 RHP Cole Stokes \u2192 ACL Giants.",
+      "post_uri": "at://did:plc:khlz7uzgh22g6ztcxqgugxay/app.bsky.feed.post/3n2rx4wja6a2w",
+      "recorded_at": "2026-11-21T01:28:06.033181+00:00",
+      "to_team": "ACL Giants",
+      "transaction_id": 950792,
+      "type": "assignment"
     }
   ],
   "seen_event_keys": [
@@ -2451,7 +2451,8 @@
     "2026-11-16|625510|assignment|0|105|rhp erick mejia assigned to sacramento river cats",
     "2026-11-17|700248|selected|3410|137|san francisco giants selected contract of rhp marty gair from richmond flying squirrels",
     "2026-11-17|700649|selected|3410|137|san francisco giants selected contract of lhp henry lalane from richmond flying squirrels",
-    "2026-11-17|701241|selected|461|137|san francisco giants selected contract of rhp josh bostick from eugene emeralds"
+    "2026-11-17|701241|selected|461|137|san francisco giants selected contract of rhp josh bostick from eugene emeralds",
+    "2026-11-20|814006|assignment|0|408|rhp cole stokes assigned to acl giants"
   ],
   "seen_transaction_ids": [
     928051,
@@ -2829,7 +2830,8 @@
     950505,
     950506,
     950507,
-    950663
+    950663,
+    950792
   ],
-  "updated_at": "2026-11-19T21:27:25.827707+00:00"
+  "updated_at": "2026-11-21T01:28:06.033232+00:00"
 }
